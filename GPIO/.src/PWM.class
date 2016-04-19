@@ -4,3 +4,8 @@ Public Pin As Integer
 Public Wave As Integer
 Sub Start(Value As Integer)
 End Sub
+Sub ChangeDutyCycle(Value As Integer)
+End
+Sub ChangeFrequency(Value As Integer)
+End
+

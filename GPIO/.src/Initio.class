@@ -152,30 +152,33 @@ End Function
 ' #Motor Functions
 ' #
 ' #stop(): Stops both motors
-' def stop():
-'     p.ChangeDutyCycle(0)
-'     q.ChangeDutyCycle(0)
-'     a.ChangeDutyCycle(0)
-'     b.ChangeDutyCycle(0)
-'     
+Sub Stop()
+  p.ChangeDutyCycle(0)
+  q.ChangeDutyCycle(0)
+  a.ChangeDutyCycle(0)
+  b.ChangeDutyCycle(0)
+End Sub
+
 ' #forward(speed): Sets both motors To Move forward at speed.0 <= speed <= 100
-' def forward(speed):
-'     p.ChangeDutyCycle(speed)
-'     q.ChangeDutyCycle(0)
-'     a.ChangeDutyCycle(speed)
-'     b.ChangeDutyCycle(0)
-'     p.ChangeFrequency(speed + 5)
-'     a.ChangeFrequency(speed + 5)
-'     
+Sub Forward(Speed As Integer)
+  p.ChangeDutyCycle(Speed)
+  q.ChangeDutyCycle(0)
+  a.ChangeDutyCycle(Speed)
+  b.ChangeDutyCycle(0)
+  p.ChangeFrequency(Speed + 5)
+  a.ChangeFrequency(Speed + 5)
+End Sub
+
 ' #reverse(speed): Sets both motors To reverse at speed.0 <= speed <= 100
-' def reverse(speed):
-'     p.ChangeDutyCycle(0)
-'     q.ChangeDutyCycle(speed)
-'     a.ChangeDutyCycle(0)
-'     b.ChangeDutyCycle(speed)
-'     q.ChangeFrequency(speed + 5)
-'     b.ChangeFrequency(speed + 5)
-' 
+Sub Reverse(Speed As Integer)
+  p.ChangeDutyCycle(0)
+  q.ChangeDutyCycle(Speed)
+  a.ChangeDutyCycle(0)
+  b.ChangeDutyCycle(Speed)
+  q.ChangeFrequency(Speed + 5)
+  b.ChangeFrequency(Speed + 5)
+End Sub
+
 ' #spinLeft(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
 ' def spinLeft(speed):
 '     p.ChangeDutyCycle(0)
