@@ -7,5 +7,5 @@ End
 '   Board = 1
 ' End Enum
 
-' Sub SetMode(Mode As Modes)
-' End
+Sub SetMode(Mode As Integer)
+End
