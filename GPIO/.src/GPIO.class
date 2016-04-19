@@ -1,0 +1,11 @@
+' Gambas class file
+
+Sub SetWarnings(Value As Boolean)
+End
+
+'  Public Enum Modes As Integer
+'   Board = 1
+' End Enum
+
+' Sub SetMode(Mode As Modes)
+' End
