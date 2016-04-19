@@ -1,0 +1,6 @@
+' Gambas class file
+
+Public Pin As Integer
+Public Wave As Integer
+Sub Start(Value As Integer)
+End Sub

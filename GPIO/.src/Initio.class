@@ -86,51 +86,50 @@ Public lineLeft As Integer = 12
 Public Sonar As Integer = 8
 ' 
 Public ServosActive As Boolean = False
+
+Public p As PWM
+Public q As PWM
+Public a As PWM
+Public b As PWM
+
 ' 
 ' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 ' #General Functions
 ' #
 ' #init().Initialises GPIO pins, switches motors And LEDs Off, etc
 Sub Init()
-'     global p, q, a, b
-  ' Dim p
-  ' Dim q
-  ' Dim a
-  ' Dim b
 
   GPIO.SetWarnings(False)
-  
 
-'     #use physical pin numbering
-'     GPIO.setmode(GPIO.BOARD)
-'   GPIO.SetMode(GPIO.Modes.Board)
-'     #Print GPIO.RPI_REVISION
-' 
-'     #set up digital Line detectors As Inputs
-'     GPIO.setup(lineRight, GPIO.IN)#Right Line sensor
-'     GPIO.setup(lineLeft, GPIO.IN)#Left Line sensor
-' 
-'     #Set up IR obstacle sensors As Inputs
-'     GPIO.setup(irFL, GPIO.IN)#Left obstacle sensor
-'     GPIO.setup(irFR, GPIO.IN)#Right obstacle sensor
-' 
-'     #use pwm On inputs so motors don 't go too fast
-'     GPIO.setup(L1, GPIO.OUT)
-'     p = GPIO.PWM(L1, 20)
-'     p.start(0)
-' 
-'     GPIO.setup(L2, GPIO.OUT)
-'     q = GPIO.PWM(L2, 20)
-'     q.start(0)
-' 
-'     GPIO.setup(R1, GPIO.OUT)
-'     a = GPIO.PWM(R1, 20)
-'     a.start(0)
-' 
-'     GPIO.setup(R2, GPIO.OUT)
-'     b = GPIO.PWM(R2, 20)
-'     b.start(0)
-' 
+  'use physical pin numbering
+  GPIO.SetMode(GPIO.Board)
+  'Print GPIO.RPI_REVISION
+
+  'set up digital Line detectors As Inputs
+  GPIO.Setup(lineRight, GPIO.In)  'Right Line sensor
+  GPIO.Setup(lineLeft, GPIO.In)   'Left Line sensor
+
+  'Set up IR obstacle sensors As Inputs
+  GPIO.Setup(irFL, GPIO.In)  'Left obstacle sensor
+  GPIO.Setup(irFR, GPIO.In)  'Right obstacle sensor
+
+  'use pwm On inputs so motors don 't go too fast
+  GPIO.setup(L1, GPIO.Out)
+  p = GPIO.PWM(L1, 20)
+  p.Start(0)
+
+  GPIO.setup(L2, GPIO.Out)
+  q = GPIO.PWM(L2, 20)
+  q.Start(0)
+
+  GPIO.setup(R1, GPIO.Out)
+  a = GPIO.PWM(R1, 20)
+  a.Start(0)
+
+  GPIO.setup(R2, GPIO.Out)
+  b = GPIO.PWM(R2, 20)
+  b.Start(0)
+
 '     startServos()
 End Sub
 

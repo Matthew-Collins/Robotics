@@ -5,10 +5,13 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New Gambas GPIO Project\n---- This line and the following will be ignored ----\n\nA       .\nA       .directory\nA       .hidden\nA       .icon.png\nA       .project\nA       .settings\nA       .src\nA       .src/FMain.class\nA       .src/FMain.form"
+LastCommit="New SetMode GPIO Board Settings\n---- This line and the following will be ignored ----\n\nM       .src/GPIO.class"
 
 [OpenFile]
-Count=0
+Active=1
+File[1]=".src/GPIO.class:10.3"
+File[2]=".src/Initio.class:0.0"
+Count=2
 
 [VersionControl]
 User="Matthew-Collins"

@@ -3,9 +3,19 @@
 Sub SetWarnings(Value As Boolean)
 End
 
-'  Public Enum Modes As Integer
-'   Board = 1
-' End Enum
+Public Enum Board, Other
+Public Enum {In}, Out
 
 Sub SetMode(Mode As Integer)
 End
+
+Sub Setup(Pin As Integer, Direction As Integer)
+End Sub
+
+Function PWM(Pin As Integer, Wave As Integer) As PWM
+  Dim p As New PWM
+  p.Pin = Pin
+  p.Wave = Wave
+  Return p
+End
+
