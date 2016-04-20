@@ -135,9 +135,9 @@ End Sub
 
 ' #cleanup().Sets all motors off And sets GPIO To standard values
 Sub CleanUp()
-'     stop()
+  Stop()
 '     stopServos()
-'     GPIO.cleanup()
+  GPIO.Cleanup()
 End Sub
 
 ' #version().Returns 1. Invalid Until after init()has been called
@@ -180,41 +180,45 @@ Sub Reverse(Speed As Integer)
 End Sub
 
 ' #spinLeft(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-' def spinLeft(speed):
-'     p.ChangeDutyCycle(0)
-'     q.ChangeDutyCycle(speed)
-'     a.ChangeDutyCycle(speed)
-'     b.ChangeDutyCycle(0)
-'     q.ChangeFrequency(speed + 5)
-'     a.ChangeFrequency(speed + 5)
-'     
+Sub spinLeft(speed)
+    p.ChangeDutyCycle(0)
+    q.ChangeDutyCycle(speed)
+    a.ChangeDutyCycle(speed)
+    b.ChangeDutyCycle(0)
+    q.ChangeFrequency(speed + 5)
+    a.ChangeFrequency(speed + 5)
+End Sub
+
 ' #spinRight(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-' def spinRight(speed):
-'     p.ChangeDutyCycle(speed)
-'     q.ChangeDutyCycle(0)
-'     a.ChangeDutyCycle(0)
-'     b.ChangeDutyCycle(speed)
-'     p.ChangeFrequency(speed + 5)
-'     b.ChangeFrequency(speed + 5)
-'     
+Sub spinRight(speed)
+    p.ChangeDutyCycle(speed)
+    q.ChangeDutyCycle(0)
+    a.ChangeDutyCycle(0)
+    b.ChangeDutyCycle(speed)
+    p.ChangeFrequency(speed + 5)
+    b.ChangeFrequency(speed + 5)
+End Sub
+
 ' #turnForward(leftSpeed, rightSpeed): Moves forwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100
-' def turnForward(leftSpeed, rightSpeed):
-'     p.ChangeDutyCycle(leftSpeed)
-'     q.ChangeDutyCycle(0)
-'     a.ChangeDutyCycle(rightSpeed)
-'     b.ChangeDutyCycle(0)
-'     p.ChangeFrequency(leftSpeed + 5)
-'     a.ChangeFrequency(rightSpeed + 5)
-'     
-' #turnReverse(leftSpeed, rightSpeed): Moves backwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100
-' def turnReverse(leftSpeed, rightSpeed):
-'     p.ChangeDutyCycle(0)
-'     q.ChangeDutyCycle(leftSpeed)
-'     a.ChangeDutyCycle(0)
-'     b.ChangeDutyCycle(rightSpeed)
-'     q.ChangeFrequency(leftSpeed + 5)
-'     b.ChangeFrequency(rightSpeed + 5)
-' 
+Sub turnForward(leftSpeed, rightSpeed)
+    p.ChangeDutyCycle(leftSpeed)
+    q.ChangeDutyCycle(0)
+    a.ChangeDutyCycle(rightSpeed)
+    b.ChangeDutyCycle(0)
+    p.ChangeFrequency(leftSpeed + 5)
+    a.ChangeFrequency(rightSpeed + 5)
+End Sub
+
+' #turnReverse(leftSpeed, rightSpeed): Moves backwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100Sub 
+Sub turnReverse(leftSpeed, rightSpeed)
+    p.ChangeDutyCycle(0)
+    q.ChangeDutyCycle(leftSpeed)
+    a.ChangeDutyCycle(0)
+    b.ChangeDutyCycle(rightSpeed)
+    q.ChangeFrequency(leftSpeed + 5)
+    b.ChangeFrequency(rightSpeed + 5)
+End Sub
+
 ' #End Of Motor Functions
 ' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 ' 
