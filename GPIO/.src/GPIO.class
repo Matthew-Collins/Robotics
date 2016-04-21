@@ -10,12 +10,20 @@ Sub SetMode(Mode As Integer)
 End
 
 Sub SetUp(Pin As Integer, Direction As Integer)
+  Select Case Direction
+    Case In
+        Exec "GPIO -g mode " & Pin & " In"
+    Case Out
+        Exec "GPIO -g mode " & Pin & " Out"
+  End Select
+
 End Sub
 
-Function PWM(Pin As Integer, Wave As Integer) As PWM
+Function PWM(Pin As Integer, Frequency As Integer) As PWM
   Dim p As New PWM
   p.Pin = Pin
-  p.Wave = Wave
+  p.Frequency = Frequency
+  Exec "GPIO -g mode " & Pin & " PWM"
   Return p
 End
 

@@ -1,11 +1,18 @@
 ' Gambas class file
 
 Public Pin As Integer
-Public Wave As Integer
-Sub Start(Value As Integer)
+Public Frequency As Integer
+Public withevents Timer As New Timer
+
+Sub Start(Value As Integer) 
+  Timer.Delay = Me.Frequency
+  ChangeDutyCycle(value)
+  Timer.Start
 End Sub
 Sub ChangeDutyCycle(Value As Integer)
+  Exec "GPIO -g mode " & Pin & " PWM"
 End
 Sub ChangeFrequency(Value As Integer)
+ Me.Timer.Delay = Value
 End
 

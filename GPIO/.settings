@@ -5,13 +5,10 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New SetMode GPIO Board Settings\n---- This line and the following will be ignored ----\n\nM       .src/GPIO.class"
+LastCommit="GPIO Initio Motor Sub Complete\n---- This line and the following will be ignored ----\n\nM       .src/GPIO.class\nM       .src/Initio.class"
 
 [OpenFile]
-Active=1
-File[1]=".src/GPIO.class:10.3"
-File[2]=".src/Initio.class:0.0"
-Count=2
+Count=0
 
 [VersionControl]
 User="Matthew-Collins"
