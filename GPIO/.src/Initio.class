@@ -180,7 +180,7 @@ Sub Reverse(Speed As Integer)
 End Sub
 
 ' #spinLeft(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-Sub spinLeft(speed)
+Sub spinLeft(Speed As Integer)
     p.ChangeDutyCycle(0)
     q.ChangeDutyCycle(speed)
     a.ChangeDutyCycle(speed)
@@ -190,7 +190,7 @@ Sub spinLeft(speed)
 End Sub
 
 ' #spinRight(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-Sub spinRight(speed)
+Sub spinRight(Speed As Integer)
     p.ChangeDutyCycle(speed)
     q.ChangeDutyCycle(0)
     a.ChangeDutyCycle(0)
@@ -198,9 +198,9 @@ Sub spinRight(speed)
     p.ChangeFrequency(speed + 5)
     b.ChangeFrequency(speed + 5)
 End Sub
-
+ 
 ' #turnForward(leftSpeed, rightSpeed): Moves forwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100
-Sub turnForward(leftSpeed, rightSpeed)
+Sub turnForward(leftSpeed As Integer, rightSpeed As Integer)
     p.ChangeDutyCycle(leftSpeed)
     q.ChangeDutyCycle(0)
     a.ChangeDutyCycle(rightSpeed)
@@ -210,10 +210,10 @@ Sub turnForward(leftSpeed, rightSpeed)
 End Sub
 
 ' #turnReverse(leftSpeed, rightSpeed): Moves backwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100Sub 
-Sub turnReverse(leftSpeed, rightSpeed)
+Sub turnReverse(leftSpeed As Integer, rightSpeed As Integer)
     p.ChangeDutyCycle(0)
     q.ChangeDutyCycle(leftSpeed)
-    a.ChangeDutyCycle(0)
+    a.ChangeDutyCycle(0) 
     b.ChangeDutyCycle(rightSpeed)
     q.ChangeFrequency(leftSpeed + 5)
     b.ChangeFrequency(rightSpeed + 5)

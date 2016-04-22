@@ -11,7 +11,7 @@ End
 
 Sub SetUp(Pin As Integer, Direction As Integer)
   Select Case Direction
-    Case In
+    Case {In}
         Exec "GPIO -g mode " & Pin & " In"
     Case Out
         Exec "GPIO -g mode " & Pin & " Out"

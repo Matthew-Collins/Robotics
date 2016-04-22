@@ -3,10 +3,12 @@
 Public Pin As Integer
 Public Frequency As Integer
 Public Value As Integer
-Public withevents Timer As New Timer
+Public Timer As New Timer
+Public IsOn As Boolean
 
 Sub Start(Value As Integer) 
   Timer.Delay = Me.Frequency
+  ison = True
   ChangeDutyCycle(value)
   Timer.Start
 End Sub
@@ -16,5 +18,14 @@ Sub ChangeDutyCycle(Value As Integer)
 End
 Sub ChangeFrequency(Frequency As Integer)
  Me.Timer.Delay = Frequency
-End
+End 
+Public Sub Timer_Timer()
+ If Me.IsOn Then
+    Me.IsOn = False
+    ChangeDutyCycle(0)
+ Else
+    Me.IsOn = True
+    ChangeDutyCycle(Me.Value)
+ End If
+End Sub
 
