@@ -2,4 +2,4 @@
 
 Static Public Sub Main()
   Message("Test: Compile: Pass")
-End
+End Sub
