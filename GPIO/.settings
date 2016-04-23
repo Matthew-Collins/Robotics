@@ -8,9 +8,11 @@ Count=0
 LastCommit="Mew Motor Unit Test - Work in progress\n---- This line and the following will be ignored ----\n\nM       .project\nM       .src/UnitTests/Compile.class\nA       .src/UnitTests/MotorTest.class"
 
 [OpenFile]
-Active=1
-File[1]=".src/UnitTests/MotorTest.class:18.2"
-Count=1
+File[1]=".src/UnitTests/MotorTest.class:23.2"
+File[2]=".src/Initio.class:108.0"
+Active=3
+File[3]=".src/GPIO.class:14.12"
+Count=3
 
 [VersionControl]
 User="Matthew-Collins"

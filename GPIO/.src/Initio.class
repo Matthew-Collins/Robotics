@@ -93,11 +93,11 @@ Public a As PWM
 Public b As PWM
 
 ' 
-' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' # == == == == == == == Publi== == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 ' #General Functions
 ' #
 ' #init().Initialises GPIO pins, switches motors And LEDs Off, etc
-Sub Init()
+Public Sub Init()
 
   GPIO.SetWarnings(False)
 

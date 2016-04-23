@@ -1,32 +1,32 @@
 ' Gambas class file
 
-Sub SetWarnings(Value As Boolean)
+Public Sub SetWarnings(Value As Boolean)
 End
 
 Public Enum Board, Other
 Public Enum {In}, Out
 
-Sub SetMode(Mode As Integer)
-End
+Public Sub SetMode(Mode As Integer)
+End Sub
 
-Sub SetUp(Pin As Integer, Direction As Integer)
+Public Sub SetUp(Pin As Integer, Direction As Integer)
   Select Case Direction
     Case {In}
-        Exec "GPIO -g mode " & Pin & " In"
+        Exec ["GPIO -g mode " & Pin & " In"] Wait
     Case Out
-        Exec "GPIO -g mode " & Pin & " Out"
+        Exec ["GPIO -g mode " & Pin & " Out"] Wait
   End Select
 
 End Sub
 
-Function PWM(Pin As Integer, Frequency As Integer) As PWM
-  Dim p As New PWM
+Public Function PWM(Pin As Integer, Frequency As Integer) As PWM
+  Dim p As New PWM 
   p.Pin = Pin
   p.Frequency = Frequency
-  Exec "GPIO -g mode " & Pin & " PWM"
+  Exec ["GPIO -g mode " & Pin & " PWM"] Wait
   Return p
 End
 
-Sub CleanUp()
+Public Sub CleanUp()
 End
 

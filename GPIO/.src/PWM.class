@@ -6,19 +6,19 @@ Public Value As Integer
 Public Timer As New Timer
 Public IsOn As Boolean
 
-Sub Start(Value As Integer) 
+Public Sub Start(Value As Integer) 
   Timer.Delay = Me.Frequency
   ison = True
   ChangeDutyCycle(value)
   Timer.Start
 End Sub
-Sub ChangeDutyCycle(Value As Integer)
+Public Sub ChangeDutyCycle(Value As Integer)
   Me.Value = Value
-  Exec "GPIO -g PWM " & Pin & " " & Value
-End
-Sub ChangeFrequency(Frequency As Integer)
+  Exec ["GPIO -g PWM " & Pin & " " & Value] Wait
+End Sub
+Public Sub ChangeFrequency(Frequency As Integer)
  Me.Timer.Delay = Frequency
-End 
+End Sub
 Public Sub Timer_Timer()
  If Me.IsOn Then
     Me.IsOn = False
