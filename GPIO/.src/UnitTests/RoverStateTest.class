@@ -6,13 +6,13 @@ Static Public Sub Main()
   Do While True
     Select Case State
       Case Off
-        Wait(3)
+        Wait 3
         State = Looking
       Case Looking
-        Wait(5)
+        Wait 5
         State = Forward
       Case Sleeping
-        Wait(40)
+        Wait 40
         State = Forward
       Case Forward
         'Initio.Forward(20)
