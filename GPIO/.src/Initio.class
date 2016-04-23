@@ -134,7 +134,7 @@ Public Sub Init()
 End Sub
 
 ' #cleanup().Sets all motors off And sets GPIO To standard values
-Sub CleanUp()
+Public Sub CleanUp()
   Stop()
 '     stopServos()
   GPIO.Cleanup()
@@ -152,7 +152,7 @@ End Function
 ' #Motor Functions
 ' #
 ' #stop(): Stops both motors
-Sub Stop()
+Public Sub Stop()
   p.ChangeDutyCycle(0)
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(0)
@@ -160,7 +160,7 @@ Sub Stop()
 End Sub
 
 ' #forward(speed): Sets both motors To Move forward at speed.0 <= speed <= 100
-Sub Forward(Speed As Integer)
+Public Sub Forward(Speed As Integer)
   p.ChangeDutyCycle(Speed)
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(Speed)
@@ -170,7 +170,7 @@ Sub Forward(Speed As Integer)
 End Sub
 
 ' #reverse(speed): Sets both motors To reverse at speed.0 <= speed <= 100
-Sub Reverse(Speed As Integer)
+Public Sub Reverse(Speed As Integer)
   p.ChangeDutyCycle(0)
   q.ChangeDutyCycle(Speed)
   a.ChangeDutyCycle(0)
@@ -180,7 +180,7 @@ Sub Reverse(Speed As Integer)
 End Sub
 
 ' #spinLeft(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-Sub spinLeft(Speed As Integer)
+Public Sub spinLeft(Speed As Integer)
     p.ChangeDutyCycle(0)
     q.ChangeDutyCycle(speed)
     a.ChangeDutyCycle(speed)
@@ -190,7 +190,7 @@ Sub spinLeft(Speed As Integer)
 End Sub
 
 ' #spinRight(speed): Sets motors To turn opposite directions at speed.0 <= speed <= 100
-Sub spinRight(Speed As Integer)
+Public Sub spinRight(Speed As Integer)
     p.ChangeDutyCycle(speed)
     q.ChangeDutyCycle(0)
     a.ChangeDutyCycle(0)
@@ -200,7 +200,7 @@ Sub spinRight(Speed As Integer)
 End Sub
  
 ' #turnForward(leftSpeed, rightSpeed): Moves forwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100
-Sub turnForward(leftSpeed As Integer, rightSpeed As Integer)
+Public Sub turnForward(leftSpeed As Integer, rightSpeed As Integer)
     p.ChangeDutyCycle(leftSpeed)
     q.ChangeDutyCycle(0)
     a.ChangeDutyCycle(rightSpeed)
@@ -210,7 +210,7 @@ Sub turnForward(leftSpeed As Integer, rightSpeed As Integer)
 End Sub
 
 ' #turnReverse(leftSpeed, rightSpeed): Moves backwards In an arc by setting different speeds.0 <= leftSpeed, rightSpeed <= 100Sub 
-Sub turnReverse(leftSpeed As Integer, rightSpeed As Integer)
+Public Sub turnReverse(leftSpeed As Integer, rightSpeed As Integer)
     p.ChangeDutyCycle(0)
     q.ChangeDutyCycle(leftSpeed)
     a.ChangeDutyCycle(0) 

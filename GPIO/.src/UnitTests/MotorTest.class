@@ -49,3 +49,9 @@ Static Public Sub Main()
   'End Try
   Message("Test: MotorTest: Done")
 End Sub
+
+
+
+
+
+

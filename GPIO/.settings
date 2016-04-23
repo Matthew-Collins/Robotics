@@ -5,13 +5,10 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New Rover State Test\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nA       .src/UnitTests/RoverStateTeat.class"
+LastCommit="Fixed Wait and Renamed Test\n---- This line and the following will be ignored ----\n\nA       .hidden\nA       .hidden/dummy\nM       .project\nD       .src/UnitTests/RoverStateTeat.class\nA       .src/UnitTests/RoverStateTest.class"
 
 [OpenFile]
-Active=1
-File[1]=".src/UnitTests/RoverStateTeat.class:0.0"
-File[2]=".src/UnitTests/MotorTest.class:0.0"
-Count=2
+Count=0
 
 [VersionControl]
 User="Matthew-Collins"
