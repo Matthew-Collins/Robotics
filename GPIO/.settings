@@ -5,10 +5,12 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="GPIO Initio Motor Sub Complete\n---- This line and the following will be ignored ----\n\nM       .src/GPIO.class\nM       .src/Initio.class"
+LastCommit="Mew Motor Unit Test - Work in progress\n---- This line and the following will be ignored ----\n\nM       .project\nM       .src/UnitTests/Compile.class\nA       .src/UnitTests/MotorTest.class"
 
 [OpenFile]
-Count=0
+Active=1
+File[1]=".src/UnitTests/MotorTest.class:18.2"
+Count=1
 
 [VersionControl]
 User="Matthew-Collins"

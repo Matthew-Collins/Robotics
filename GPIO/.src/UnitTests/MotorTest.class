@@ -10,26 +10,27 @@
 ' #Also demonstrates writing To the LEDs
 ' #
 ' #To check wiring Is Correct ensure the order Of movement As Above Is Correct
-' #Run using: sudo python motorTest.py
+' #Run using: sudo python moto
+' motorTest.py
 ' 
 ' 
 ' import initio, Time
 
 Static Public Sub Main()
-  Message("Test: MotorTest: Starting")
 
   Dim Speed As Integer = 100
 
-  Dim Initio As New Initio()
-  Initio.Init
+  Dim Initio As New Initio
+  Initio.Init()
+
 
 ' #main Loop
-  Try
-'     While True:
+'  Try
+'    While True:
       Initio.Forward(Speed)
 '         Print 'Forward'
 '         time.sleep(3)
-      Wait(3000)
+      Wait 3
 '         initio.reverse(speed)
 '         Print 'Reverse'
 '         time.sleep(3)
@@ -42,8 +43,9 @@ Static Public Sub Main()
 '         initio.stop()
 '         Print 'Stop'
 '         time.sleep(3)
-  Catch
+  'Catch
 ' except KeyboardInterrupt:
 '     initio.cleanup()
-  End Try
+  'End Try
+  Message("Test: MotorTest: Done")
 End Sub
