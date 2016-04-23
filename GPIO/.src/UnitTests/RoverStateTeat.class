@@ -1,0 +1,29 @@
+' Gambas class file
+
+Public Enum Off, Looking, Sleeping, Forward, Moving
+Static Public State As Integer = Off
+Static Public Sub Main()
+  Do While True
+    Select Case State
+      Case Off
+        Wait(3)
+        State = Looking
+      Case Looking
+        Wait(5)
+        State = Forward
+      Case Sleeping
+        Wait(40)
+        State = Forward
+      Case Forward
+        'Initio.Forward(20)
+        state = Moving
+      Case Moving
+        If GetDistance < 25 Then
+          Stop
+          State = Looking
+        Endif
+        
+              
+    End Select
+  Loop
+End Sub
