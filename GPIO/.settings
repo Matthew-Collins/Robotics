@@ -5,10 +5,13 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="Mew Motor Unit Test - Work in progress\n---- This line and the following will be ignored ----\n\nM       .project\nM       .src/UnitTests/Compile.class\nA       .src/UnitTests/MotorTest.class"
+LastCommit="New Rover State Test\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nA       .src/UnitTests/RoverStateTeat.class"
 
 [OpenFile]
-Count=0
+Active=1
+File[1]=".src/UnitTests/RoverStateTeat.class:0.0"
+File[2]=".src/UnitTests/MotorTest.class:0.0"
+Count=2
 
 [VersionControl]
 User="Matthew-Collins"

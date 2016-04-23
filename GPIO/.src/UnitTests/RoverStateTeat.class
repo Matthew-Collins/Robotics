@@ -18,12 +18,10 @@ Static Public Sub Main()
         'Initio.Forward(20)
         state = Moving
       Case Moving
-        If GetDistance < 25 Then
-          Stop
+        'If GetDistance < 25 Then
+          'Stop
           State = Looking
-        Endif
-        
-              
+        'End If
     End Select
   Loop
 End Sub
