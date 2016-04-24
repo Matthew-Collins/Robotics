@@ -1,0 +1,5 @@
+' Gambas class file
+
+Static Public Sub Main()
+  Exec ["raspistill", "-o", "/home/pi/Pictures/Latest.jpg"]
+End Sub

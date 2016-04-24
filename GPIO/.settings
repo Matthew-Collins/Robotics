@@ -8,7 +8,11 @@ Count=0
 LastCommit="Fixed Wait and Renamed Test\n---- This line and the following will be ignored ----\n\nA       .hidden\nA       .hidden/dummy\nM       .project\nD       .src/UnitTests/RoverStateTeat.class\nA       .src/UnitTests/RoverStateTest.class"
 
 [OpenFile]
-Count=0
+Active=1
+File[1]=".src/GPIO.class:0.0"
+File[2]=".src/PWM.class:0.0"
+File[3]=".src/Initio.class:0.0"
+Count=3
 
 [VersionControl]
 User="Matthew-Collins"
