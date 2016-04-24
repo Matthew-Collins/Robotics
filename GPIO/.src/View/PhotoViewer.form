@@ -4,5 +4,12 @@
   MoveScaled(0,0,64,64)
   { PictureBox1 PictureBox
     MoveScaled(4,3,48,36)
+    #Translate = False
+    Stretch = True
+    Border = Border.Plain
+  }
+  { Timer1 #Timer
+    #MoveScaled(47,41)
+    Enabled = True
   }
 }
