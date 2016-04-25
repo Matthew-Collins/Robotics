@@ -1,0 +1,5 @@
+' Gambas class file
+
+Static Public Sub Main()
+  Exec ["raspivid", "-o", "/home/pi/Videos/Latest.h264"] Wait
+End Sub

@@ -1,0 +1,10 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  { MovieBox1 MovieBox
+    MoveScaled(6,6,50,37)
+    Path = "Videos/Latest.h264"
+    Border = Border.Plain
+  }
+}

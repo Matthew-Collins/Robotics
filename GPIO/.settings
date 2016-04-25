@@ -8,10 +8,12 @@ Count=0
 Geometry=[0,0,210,210]
 
 [FCommit]
-LastCommit="New Still Camera Viwer\n---- This line and the following will be ignored ----\n\nM       .src/UnitTests/PhotoTest.class\nM       .src/View/PhotoViewer.class\nM       .src/View/PhotoViewer.form"
+LastCommit="Improve Still Video Frame Rate\n---- This line and the following will be ignored ----\n\nM       .settings\nM       .src/View/PhotoViewer.class\nM       .src/View/PhotoViewer.form"
 
 [OpenFile]
-Count=0
+Active=1
+File[1]=".src/View/VideoViewer.form"
+Count=1
 
 [VersionControl]
 User="Matthew-Collins"
