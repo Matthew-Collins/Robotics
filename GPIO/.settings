@@ -4,15 +4,14 @@ Count=0
 [DebugWindow]
 Count=0
 
+[DebugWindow/Picture]
+Geometry=[0,0,210,210]
+
 [FCommit]
-LastCommit="Fixed Wait and Renamed Test\n---- This line and the following will be ignored ----\n\nA       .hidden\nA       .hidden/dummy\nM       .project\nD       .src/UnitTests/RoverStateTeat.class\nA       .src/UnitTests/RoverStateTest.class"
+LastCommit="New Still Camera Viwer\n---- This line and the following will be ignored ----\n\nM       .src/UnitTests/PhotoTest.class\nM       .src/View/PhotoViewer.class\nM       .src/View/PhotoViewer.form"
 
 [OpenFile]
-Active=1
-File[1]=".src/GPIO.class:0.0"
-File[2]=".src/PWM.class:0.0"
-File[3]=".src/Initio.class:0.0"
-Count=3
+Count=0
 
 [VersionControl]
 User="Matthew-Collins"

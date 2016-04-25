@@ -6,6 +6,6 @@ Public Sub Form_Open()
 End
 
 Public Sub Timer1_Timer()
- Exec ["raspistill", "-o", "/home/pi/Pictures/Latest.jpg"] Wait
+ Exec ["raspistill", "-n", "-t", "1", "-o", "/home/pi/Pictures/Latest.jpg"] Wait
  PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
 End

@@ -11,5 +11,6 @@
   { Timer1 #Timer
     #MoveScaled(47,41)
     Enabled = True
+    Delay = 10
   }
 }
