@@ -11,6 +11,10 @@
   { Timer1 #Timer
     #MoveScaled(47,41)
     Enabled = True
-    Delay = 10
+    Delay = 1
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(21,41,25,4)
+    Text = ("TextLabel1")
   }
 }

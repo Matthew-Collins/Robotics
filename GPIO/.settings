@@ -8,11 +8,11 @@ Count=0
 Geometry=[0,0,210,210]
 
 [FCommit]
-LastCommit="Improve Still Video Frame Rate\n---- This line and the following will be ignored ----\n\nM       .settings\nM       .src/View/PhotoViewer.class\nM       .src/View/PhotoViewer.form"
+LastCommit="New Video Viewer - h264 Format Issues\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nA       .src/UnitTests/VideoTest.class\nA       .src/View/VideoViewer.class\nA       .src/View/VideoViewer.form"
 
 [OpenFile]
 Active=1
-File[1]=".src/View/VideoViewer.form"
+File[1]=".src/UnitTests/PhotoTest2.class:3.55"
 Count=1
 
 [VersionControl]
