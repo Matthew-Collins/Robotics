@@ -2,11 +2,11 @@
 
 Public Camera As Process
 Public Sub Form_Open()
-  Camera = Exec ["raspistill", "-n", "-t", "0", "-tl", "100", "-l", "/home/pi/Pictures/Latest.jpg"]
+  Camera = Exec ["raspistill", "-n", "-t", "0", "-tl", "1000", "-l", "/home/pi/Pictures/Latest.jpg", "-o", "/home/pi/Pictures/Latest%d.jpg"]
 End Sub
 Public Sub Timer1_Timer()
- PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
- TextLabel1.Caption = Now
+  Try PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
+  Try TextLabel1.Caption = Stat("/home/pi/Pictures/Latest.jpg").LastModified
 End Sub
 Public Sub Form_Close()
   Camera.Kill

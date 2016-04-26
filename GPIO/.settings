@@ -8,11 +8,11 @@ Count=0
 Geometry=[0,0,210,210]
 
 [FCommit]
-LastCommit="New Fastet Photo Frame Rate Tests\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nA       .src/UnitTests/PhotoTest2.class\nM       .src/View/PhotoViewer.class\nM       .src/View/PhotoViewer.form"
+LastCommit="New Time Lapse Camera Viewer\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nM       .src/UnitTests/PhotoTest2.class\nA       .src/View/PhotoLapseViewer.class\nA       .src/View/PhotoLapseViewer.form"
 
 [OpenFile]
 Active=1
-File[1]=".src/View/PhotoLapseViewer.class:11.13"
+File[1]=".src/View/PhotoLapseViewer.class:4.57"
 Count=1
 
 [VersionControl]
