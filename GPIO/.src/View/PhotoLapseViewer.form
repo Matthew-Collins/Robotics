@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  { PictureBox1 PictureBox
+    MoveScaled(3,4,44,35)
+    Stretch = True
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(10,45,35,8)
+    Text = ("TextLabel1")
+  }
+  { Timer1 #Timer
+    #MoveScaled(49,56)
+    Enabled = True
+    Delay = 100
+  }
+}

@@ -1,0 +1,14 @@
+' Gambas class file
+
+Public Camera As Process
+Public Sub Form_Open()
+  Camera = Exec ["raspistill", "-n", "-t", "0", "-tl", "100", "-l", "/home/pi/Pictures/Latest.jpg"]
+End Sub
+Public Sub Timer1_Timer()
+ PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
+ TextLabel1.Caption = Now
+End Sub
+Public Sub Form_Close()
+  Camera.Kill
+End Sub
+

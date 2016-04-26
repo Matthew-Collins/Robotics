@@ -1,5 +1,5 @@
 ' Gambas class file
 
 Static Public Sub Main()
-  Exec ["raspistill", "-n", "-t", "10000", "-tl", "1000", "-o", "/home/pi/Pictures/Latest-%O4d.jpg"] Wait
+  Exec ["raspistill", "-n", "-t", "10000", "-tl", "1000", "-l", "/home/pi/Pictures/Latest.jpg"] Wait
 End Sub
