@@ -8,7 +8,7 @@ Count=0
 Geometry=[0,0,210,210]
 
 [FCommit]
-LastCommit="New Time Lapse Camera Viewer\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nM       .src/UnitTests/PhotoTest2.class\nA       .src/View/PhotoLapseViewer.class\nA       .src/View/PhotoLapseViewer.form"
+LastCommit="Frame Rate Adjustment\n---- This line and the following will be ignored ----\n\nM       .src/View/PhotoLapseViewer.class"
 
 [OpenFile]
 Active=1
