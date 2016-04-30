@@ -14,7 +14,7 @@ Public Sub Start(Value As Integer)
 End Sub
 Public Sub ChangeDutyCycle(Value As Integer)
   Me.Value = Value
-  Exec ["gpio", "-g", "pwm", Str(Pin), Str(Value)] Wait
+  Exec ["gpio", "pwm", Str(Pin), Str(Value)] Wait
 End Sub
 Public Sub ChangeFrequency(Frequency As Integer)
  Me.Timer.Delay = Frequency

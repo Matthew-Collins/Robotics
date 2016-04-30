@@ -8,12 +8,10 @@ Count=0
 Geometry=[0,0,210,210]
 
 [FCommit]
-LastCommit="Frame Rate Adjustment\n---- This line and the following will be ignored ----\n\nM       .src/View/PhotoLapseViewer.class"
+LastCommit="Remove G Switch for GPIO\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nM       .src/GPIO.class\nM       .src/Initio.class\nM       .src/PWM.class\nM       .src/View/PhotoLapseViewer.class\nM       .src/View/PhotoLapseViewer.form"
 
 [OpenFile]
-Active=1
-File[1]=".src/View/PhotoLapseViewer.class:4.57"
-Count=1
+Count=0
 
 [VersionControl]
 User="Matthew-Collins"

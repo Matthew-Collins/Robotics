@@ -106,12 +106,12 @@ Public Sub Init()
   'Print GPIO.RPI_REVISION
 
   'set up digital Line detectors As Inputs
-  GPIO.Setup(lineRight, GPIO.In)  'Right Line sensor
-  GPIO.Setup(lineLeft, GPIO.In)   'Left Line sensor
+  ''GPIO.Setup(lineRight, GPIO.In)  'Right Line sensor
+  ''GPIO.Setup(lineLeft, GPIO.In)   'Left Line sensor
 
   'Set up IR obstacle sensors As Inputs
-  GPIO.Setup(irFL, GPIO.In)  'Left obstacle sensor
-  GPIO.Setup(irFR, GPIO.In)  'Right obstacle sensor
+  ''GPIO.Setup(irFL, GPIO.In)  'Left obstacle sensor
+  ''GPIO.Setup(irFR, GPIO.In)  'Right obstacle sensor
 
   'use pwm On inputs so motors don 't go too fast
   GPIO.setup(L1, GPIO.Out)

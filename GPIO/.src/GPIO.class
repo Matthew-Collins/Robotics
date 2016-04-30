@@ -12,9 +12,9 @@ End Sub
 Public Sub SetUp(Pin As Integer, Direction As Integer)
   Select Case Direction
     Case {In}
-        Exec ["gpio", "-g", "mode", Str(Pin), "In"] Wait
+        Exec ["gpio", "mode", Str(Pin), "in"] Wait
     Case Out
-        Exec ["gpio", "-g", "mode", Str(Pin), "Out"] Wait
+        Exec ["gpio", "mode", Str(Pin), "out"] Wait
   End Select
 
 End Sub
@@ -23,7 +23,7 @@ Public Function PWM(Pin As Integer, Frequency As Integer) As PWM
   Dim p As New PWM 
   p.Pin = Pin
   p.Frequency = Frequency
-  Exec ["gpio", "-g", "mode", Str(Pin), "PWM"] Wait
+  Exec ["gpio", "mode", Str(Pin), "pwm"] Wait
   Return p
 End
 

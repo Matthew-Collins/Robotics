@@ -2,8 +2,11 @@
 
 { Form Form
   MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Vertical
+  Padding = 5
   { PictureBox1 PictureBox
     MoveScaled(3,4,44,35)
+    Expand = True
     Stretch = True
   }
   { TextLabel1 TextLabel
