@@ -5,9 +5,11 @@ Count=0
 Count=0
 
 [OpenFile]
-Active=1
 File[1]=".src/Gpio.module:13.2"
-Count=1
+File[2]=".src/FMain.form"
+Active=3
+File[3]=".src/FMain.class:15.4"
+Count=3
 
 [VersionControl]
 RememberPassword=0

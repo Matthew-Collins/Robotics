@@ -8,8 +8,11 @@ Public sPath As String = "robot"                                    'Location of
 Public siPositionU As Short                                         'Up and down position
 Public siPositionL As Short                                         'Left and right position
 Public fDelay As Float = 1                                          'Delay valu
+Public siDummy As Short
+Public pProcess As Process
 
 Public Sub Form_Open()                                              'Got to start somewhere!
+Dim sShellString As String
 
 Application.MainWindow = Me                                         'This form is the MainWindow so if another widow from this program is open when you close this form both forms will close
 Me.Center                                                           'Centre the form on the screen (Not reqiuired from Gambas 3.8.4)
@@ -17,8 +20,10 @@ Timer1.delay = 250                                                  'Set the tim
 Timer1.Start                                                        'Start the timer
 ButtonCentre_Click                                                  'Centre the camera
 ButtonCentre_Click                                                  'Centre the camera (seems to need twice sometimes to wake it up!)
-'Timer2.delay = 1000
-'Timer2.Start
+sShellString = "cd " & User.Home &/ sPath &/ " && " & " sudo python Sonar.py"
+'Print sShellString
+pProcess = Shell sShellString
+
 
 End
 
@@ -73,6 +78,7 @@ End
 Public Sub form_Close()                                             'What to do if the program is closed
 
 ButtonSTOP_Click                                                    'STOP EVERTHING!
+pProcess.Kill
 
 End
 
@@ -92,6 +98,7 @@ LabelVar.text = "Direction= " & sTempDirection
 LabelVar.text &= "\nSpeed = " & fSpeed
 LabelVar.text &= "\nLeft  " & fLSpeed
 LabelVar.text &= "\nRight  " & fRSpeed
+
 
 End
 
@@ -185,7 +192,7 @@ SliderLeft_MouseUp()                                                'Set the lef
 
 End
 
-Public Sub ButtonCentre2_Click()
+Public Sub ButtonRight_Click()
 
 SliderLeft.Value = -375                                             'Set the left/right slider to middle position
 SliderUP.Value = -400                                               'Set the up/down slider to middle position
@@ -194,11 +201,61 @@ SliderLeft_MouseUp()                                                'Set the lef
 
 End
 
-Public Sub Timer2_Timer()
- Exec ["raspistill", "-n", "-t", "1", "-o", "/home/pi/Pictures/Latest.jpg"] 'Wait
- PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
- 'TextLabel1.Caption = Now
+' Public Sub Timer2_Timer()
+'  Exec ["raspistill", "-n", "-t", "1", "-o", "/home/pi/Pictures/Latest.jpg"] 'Wait
+'  PictureBox1.Picture = Picture.Load("/home/pi/Pictures/Latest.jpg")
+'  'TextLabel1.Caption = Now
+' End
+
+Public Sub MenuNo_Click()
+Dim fDelay1 As Float = 0.75
+Dim siCount As Short
+
+ButtonCentre_Click 
+Wait fDelay1
+
+For siCount = 1 To 2
+  ButtonRight_Click
+  Wait fDelay1
+  ButtonLeft_Click
+  Wait fDelay1
+Next
+
+ButtonCentre_Click
+
+End
+
+Public Sub MenuYes_Click()
+Dim fDelay1 As Float = 0.75
+Dim sShellString As String
+Dim siCount As Short
+
+ButtonCentre_Click
+Wait fDelay1
+
+For siCount = 1 To 2
+  sShellString = "cd " & User.Home &/ sPath &/ " && " & " sudo python servo.py" & " -s " & Str(14) & " -p " & "266" & " -d " & Str(fDelay)
+  Shell sShellString
+  Wait fDelay1
+  sShellString = "cd " & User.Home &/ sPath &/ " && " & " sudo python servo.py" & " -s " & Str(14) & " -p " & "566" & " -d " & Str(fDelay)
+  Shell sShellString
+  Wait fDelay1
+Next
+
+ButtonCentre_Click
+
 End
 
 
+Public Sub Timer2_Timer()
+Dim sDistance As String
+Dim siDistance As Short
 
+sDistance = File.Load(User.Home &/ sPath &/ "Sonar.txt")
+
+Try siDistance = Val(sDistance)
+
+LabelSonar.Text = "Object distance= " & Str(siDistance) & "cms"
+  
+
+End
