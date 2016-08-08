@@ -1,25 +1,15 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,63,59)
+  MoveScaled(0,0,105,56)
   Background = Color.LightBackground
   Expand = True
   Icon = Picture["robot.png"]
   Arrangement = Arrange.Horizontal
-  { MenuExtras Menu
-    Text = ("&Extras")
-    { MenuYes Menu
-      Text = ("&Yes")
-    }
-    { MenuNo Menu
-      Text = ("&No")
-    }
-  }
   { Panel8 VBox
-    MoveScaled(0,1,63,56)
-    Expand = True
+    MoveScaled(0,1,61,56)
     { Panel4 HBox
-      MoveScaled(0,0,62,44)
+      MoveScaled(0,0,60,44)
       Expand = True
       { Panel6 Panel
         MoveScaled(0,11,1,11)
@@ -68,13 +58,8 @@
           Picture = Picture["icon:/32/halt"]
         }
       }
-      { Timer2 #Timer
-        #MoveScaled(9,0)
-        Enabled = True
-        Delay = 500
-      }
       { Panel2 VBox
-        MoveScaled(18,0,37,43)
+        MoveScaled(18,0,34,43)
         Background = Color.LightBackground
         Expand = True
         { DialSteer Dial
@@ -82,15 +67,6 @@
           Background = Color.LightBackground
           Expand = True
           MinValue = -100
-        }
-        { HBox3 HBox
-          MoveScaled(2,27,31,5)
-          { LabelSonar Label
-            MoveScaled(4,1,22,2)
-            Font = Font["Bold,+1"]
-            Expand = True
-            Alignment = Align.Center
-          }
         }
         { HBox1 HBox
           MoveScaled(2,32,31,11)
@@ -103,10 +79,10 @@
         }
       }
       { Timer1 #Timer
-        #MoveScaled(42,19)
+        #MoveScaled(46,25)
       }
       { Panel3 HBox
-        MoveScaled(55,0,6,43)
+        MoveScaled(53,0,6,43)
         { SliderSpeed Slider
           MoveScaled(0,0,5,42)
           Background = Color.LightBackground
@@ -148,12 +124,20 @@
         MoveScaled(34,1,4,2)
         Expand = True
       }
-      { ButtonRight Button
+      { ButtonCentre2 Button
         MoveScaled(38,0,12,3)
         ToolTip = ("Camera position centre right")
         Text = ("&Right")
         Picture = Picture["icon:/32/right"]
       }
     }
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(65,6,36,34)
+    Expand = True
+    Stretch = True
+  }
+  { Timer2 #Timer
+    #MoveScaled(79,44)
   }
 }

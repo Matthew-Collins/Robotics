@@ -6,13 +6,10 @@ Count=0
 
 [OpenFile]
 File[1]=".src/Gpio.module:13.2"
-File[2]=".src/FMain.form"
+File[2]=".src/Help.form"
 Active=3
-File[3]=".src/FMain.class:15.4"
+File[3]=".src/FMain.class:2.0"
 Count=3
-
-[VersionControl]
-RememberPassword=0
 
 [Watches]
 Count=0
