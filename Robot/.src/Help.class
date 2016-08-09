@@ -6,6 +6,7 @@ Me.Center                                                 'Centre the form
 
 End
 
+
 Public Sub ButtonDone_Click()                             'What to do when the Done button is pressed
 
 Me.Close                                                  'Close the form

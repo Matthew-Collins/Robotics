@@ -3,7 +3,7 @@
 Title=Robot
 Startup=FMain
 Icon=robot.png
-Version=0.0.6
+Version=0.1.2
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
