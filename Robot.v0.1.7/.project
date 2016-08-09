@@ -1,0 +1,15 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.4
+Title=Robot
+Startup=FMain
+Icon=robot.png
+Version=0.1.2
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.qt4.ext
+Description="This program is designed to run the 4Tronix robot"
+Authors="Charlie Ogier 2016"
+TabSize=2
+CreateShortcut=1
+Packager=1
