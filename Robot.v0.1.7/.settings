@@ -7,6 +7,9 @@ Count=0
 [OpenFile]
 Count=0
 
+[VersionControl]
+RememberPassword=0
+
 [Watches]
 Count=0
 
