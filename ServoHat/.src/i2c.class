@@ -1,0 +1,28 @@
+' Gambas class file
+
+'Dependancy: i2c-Tools
+'sudo apt-get install i2c-tools
+
+Public Revison As Integer
+Public Address As Integer 
+
+Public Sub _new(Revison As Integer, Address As Integer)
+  Me.Revison = Revison
+  Me.Address = Address
+End
+
+Public Sub Detect()
+  Shell "i2cdetect -y " & Me.Revison Wait
+End
+
+Public Sub Write8(Register As Integer, Value As Integer)
+  'TODO - Check
+  Shell "i2cset -y " & Me.Revison & " " & Hex$(Me.address) & " " & Hex$(register) & " " & Hex$(Value) Wait
+End
+
+Public Function Read8(Register As Integer) As Integer
+  Dim ReturnValue As String
+  'TODO - Check
+  Shell "i2cget -y " & Me.Revison & " " & Hex$(Me.address) & " " & Hex$(register) Wait To ReturnValue
+  Return CInt(returnvalue)
+End

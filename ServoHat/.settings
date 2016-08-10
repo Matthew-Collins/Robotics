@@ -5,10 +5,14 @@ Count=0
 Count=0
 
 [OpenFile]
-File[1]=".src/FMain.form"
-Active=2
-File[2]=".src/FMain.class:3.27"
-Count=2
+File[1]=".src/FMain.class:6.0"
+File[2]=".src/ServoHat.class:37.0"
+Active=3
+File[3]=".src/i2c.class:27.3"
+Count=3
+
+[VersionControl]
+RememberPassword=0
 
 [Watches]
 Count=0
