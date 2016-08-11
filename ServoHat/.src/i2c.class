@@ -27,5 +27,11 @@ End
 Public Function Read8(Register As Integer) As Integer
   Dim ReturnValue As String
   Shell "i2cget -y " & Me.Revison & " " & Me.address & " " & register Wait To ReturnValue
-  Return CInt(returnvalue)
+  Return HexStringToInteger(Returnvalue)
 End
+
+Public Function HexStringToInteger(Value As String) As Integer
+  Return CInt(Val(Replace(Replace(Value, "0x", "&H"), "\n", "")))
+End Function
+
+
