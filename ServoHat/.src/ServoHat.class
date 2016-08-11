@@ -34,9 +34,20 @@ Public Bus As I2c
 
 Public Sub _new()
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
-  'Me.Bus.Detect 
+  Me.Bus.Detect
+  'me.Bus.Dump
+  'Me.SetAll(0, 0)
   Me.Bus.Dump
   Print Hex(Me.Bus.Read8(MODE1))
+  Print Hex(Me.Bus.Read8(MODE2))
+  Print Hex(Me.Bus.Read16(MODE2))
+End
+
+Public Sub SetAll(OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write8(ALL_LED_ON_L, OnValue) 'On & 0 xFF)
+  Me.Bus.Write8(ALL_LED_ON_H, OnValue) 'On > > 8)
+  Me.Bus.Write8(ALL_LED_OFF_L, OffValue) 'off & 0 xFF)
+  Me.Bus.Write8(ALL_LED_OFF_H, OffValue) 'off > > 8)
 End
 
 Public Sub SetPosition(ServoNo As Integer, Degrees As Integer)

@@ -20,13 +20,18 @@ Public Sub Dump()
 End
 
 Public Sub Write8(Register As Integer, Value As Integer)
-  'TODO - Check
-  Shell "i2cset -y " & Me.Revison & " " & Me.address & " " & register & " " & Value Wait
+  Shell "i2cset -y " & Me.Revison & " " & Me.Address & " " & Register & " " & Value Wait
 End
 
 Public Function Read8(Register As Integer) As Integer
   Dim ReturnValue As String
-  Shell "i2cget -y " & Me.Revison & " " & Me.address & " " & register Wait To ReturnValue
+  Shell "i2cget -y " & Me.Revison & " " & Me.Address & " " & Register Wait To ReturnValue
+  Return HexStringToInteger(Returnvalue)
+End
+
+Public Function Read16(Register As Integer) As Integer
+  Dim ReturnValue As String
+  Shell "i2cget -y " & Me.Revison & " " & Me.Address & " " & Register & " w" Wait To ReturnValue
   Return HexStringToInteger(Returnvalue)
 End
 
