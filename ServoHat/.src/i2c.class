@@ -15,14 +15,17 @@ Public Sub Detect()
   Shell "i2cdetect -y " & Me.Revison Wait
 End
 
+Public Sub Dump()
+  Shell "i2cdump -y " & Me.Revison & " " & Me.Address Wait
+End
+
 Public Sub Write8(Register As Integer, Value As Integer)
   'TODO - Check
-  Shell "i2cset -y " & Me.Revison & " " & Hex$(Me.address) & " " & Hex$(register) & " " & Hex$(Value) Wait
+  Shell "i2cset -y " & Me.Revison & " " & Me.address & " " & register & " " & Value Wait
 End
 
 Public Function Read8(Register As Integer) As Integer
   Dim ReturnValue As String
-  'TODO - Check
-  Shell "i2cget -y " & Me.Revison & " " & Hex$(Me.address) & " " & Hex$(register) Wait To ReturnValue
+  Shell "i2cget -y " & Me.Revison & " " & Me.address & " " & register Wait To ReturnValue
   Return CInt(returnvalue)
 End

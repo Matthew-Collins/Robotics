@@ -34,8 +34,9 @@ Public Bus As I2c
 
 Public Sub _new()
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
-  Me.Bus.Detect
-
+  'Me.Bus.Detect 
+  Me.Bus.Dump
+  Print Me.Bus.Read8(MODE1)
 End
 
 Public Sub SetPosition(ServoNo As Integer, Degrees As Integer)
