@@ -31,6 +31,7 @@ Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
 
 Const StepOver As Integer = 4
+Const Base As Integer = 256
 
 Public Bus As I2c
 
@@ -46,17 +47,17 @@ Public Sub _new()
 End
 
 Public Sub SetAll(OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write8(ALL_LED_ON_L, OnValue Mod 2 ^ 8) 'On & 0 xFF)
-  Me.Bus.Write8(ALL_LED_ON_H, OnValue Div 2 ^ 8) 'On > > 8)
-  Me.Bus.Write8(ALL_LED_OFF_L, OffValue Mod 2 ^ 8) 'off & 0 xFF)
-  Me.Bus.Write8(ALL_LED_OFF_H, OffValue Div 2 ^ 8) 'off > > 8)
+  Me.Bus.Write8(ALL_LED_ON_L, OnValue Mod Base) 'On & 0 xFF)
+  Me.Bus.Write8(ALL_LED_ON_H, OnValue Div Base) 'On > > 8)
+  Me.Bus.Write8(ALL_LED_OFF_L, OffValue Mod Base) 'off & 0 xFF)
+  Me.Bus.Write8(ALL_LED_OFF_H, OffValue Div Base) 'off > > 8)
 End
 
 Public Sub SetChannel(Channel As Integer, OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write8(CInt(LED0_ON_L + CInt(StepOver * Channel)), CInt(OnValue Mod 2 ^ 8)) 'On & 0 xFF)
-  Me.Bus.Write8(CInt(LED0_ON_H + CInt(StepOver * Channel)), CInt(OnValue Div 2 ^ 8)) 'On > > 8)
-  Me.Bus.Write8(CInt(LED0_OFF_L + CInt(StepOver * Channel)), CInt(OffValue Mod 2 ^ 8)) 'off & 0 xFF)
-  Me.Bus.Write8(CInt(LED0_OFF_H + CInt(StepOver * Channel)), CInt(OffValue Div 2 ^ 8)) 'off > > 8)
+  Me.Bus.Write8(CInt(LED0_ON_L + CInt(StepOver * Channel)), CInt(OnValue Mod Base)) 'On & 0 xFF)
+  Me.Bus.Write8(CInt(LED0_ON_H + CInt(StepOver * Channel)), CInt(OnValue Div Base)) 'On > > 8)
+  Me.Bus.Write8(CInt(LED0_OFF_L + CInt(StepOver * Channel)), CInt(OffValue Mod Base)) 'off & 0 xFF)
+  Me.Bus.Write8(CInt(LED0_OFF_H + CInt(StepOver * Channel)), CInt(OffValue Div Base)) 'off > > 8)
 End
 
 ' def software_reset(i2c = None, * * kwargs):
