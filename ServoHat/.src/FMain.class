@@ -20,7 +20,8 @@ Public Sub Servo(No As Integer, Degrees As Integer)
    Case 1
      Range += Trim1
  End Select
- Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(14 + No) & " -p " & Str(Range) & " -d " & Str(1)
+ 'Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(14 + No) & " -p " & Str(Range) & " -d " & Str(1)
+ Me.Servos.SetChannel(14 + No, 0, Range)
 End
 
 Public Sub ButtonCenterLeftRight_Click()

@@ -30,6 +30,8 @@ Const ALLCALL As Integer = &H01
 Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
 
+Const StepOver As Integer = 4
+
 Public Bus As I2c
 
 Public Sub _new()
@@ -38,24 +40,24 @@ Public Sub _new()
   'me.Bus.Dump
   'Me.SetAll(0, 0)
   Me.Bus.Dump
-  Print Hex(Me.Bus.Read8(MODE1))
-  Print Hex(Me.Bus.Read8(MODE2))
-  Print Hex(Me.Bus.Read16(MODE2))
+  'Print Hex(Me.Bus.Read8(MODE1))
+  'Print Hex(Me.Bus.Read8(MODE2))
+  'Print Hex(Me.Bus.Read16(MODE2))
 End
 
 Public Sub SetAll(OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write8(ALL_LED_ON_L, OnValue) 'On & 0 xFF)
-  Me.Bus.Write8(ALL_LED_ON_H, OnValue) 'On > > 8)
-  Me.Bus.Write8(ALL_LED_OFF_L, OffValue) 'off & 0 xFF)
-  Me.Bus.Write8(ALL_LED_OFF_H, OffValue) 'off > > 8)
+  Me.Bus.Write8(ALL_LED_ON_L, OnValue Mod 2 ^ 8) 'On & 0 xFF)
+  Me.Bus.Write8(ALL_LED_ON_H, OnValue Div 2 ^ 8) 'On > > 8)
+  Me.Bus.Write8(ALL_LED_OFF_L, OffValue Mod 2 ^ 8) 'off & 0 xFF)
+  Me.Bus.Write8(ALL_LED_OFF_H, OffValue Div 2 ^ 8) 'off > > 8)
 End
 
-Public Sub SetPosition(ServoNo As Integer, Degrees As Integer)
-  
-  
-  
+Public Sub SetChannel(Channel As Integer, OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write8(CInt(LED0_ON_L + CInt(StepOver * Channel)), CInt(OnValue Mod 2 ^ 8)) 'On & 0 xFF)
+  Me.Bus.Write8(CInt(LED0_ON_H + CInt(StepOver * Channel)), CInt(OnValue Div 2 ^ 8)) 'On > > 8)
+  Me.Bus.Write8(CInt(LED0_OFF_L + CInt(StepOver * Channel)), CInt(OffValue Mod 2 ^ 8)) 'off & 0 xFF)
+  Me.Bus.Write8(CInt(LED0_OFF_H + CInt(StepOver * Channel)), CInt(OffValue Div 2 ^ 8)) 'off > > 8)
 End
-
 
 ' def software_reset(i2c = None, * * kwargs):
 '     "" "Sends a software reset (SWRST) command to all servo drivers on the bus." ""
