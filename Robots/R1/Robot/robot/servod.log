@@ -1,0 +1,19 @@
+
+Board model:                     2
+GPIO configuration:            P1 (40 pins)
+Using hardware:                PCM
+Using DMA channel:              14
+Idle timeout:                20000ms
+Number of servos:                2
+Servo cycle time:            20000us
+Pulse increment step size:      10us
+Minimum width value:            50 (500us)
+Maximum width value:           250 (2500us)
+Output levels:              Normal
+
+Using P1 pins:               18,22
+
+Servo mapping:
+     0 on P1-18          GPIO-24
+     1 on P1-22          GPIO-25
+
