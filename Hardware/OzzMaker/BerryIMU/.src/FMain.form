@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  { Timer1 #Timer
+    #MoveScaled(1,1)
+    Enabled = True
+  }
+  { Label1 Label
+    MoveScaled(6,12,34,10)
+    Text = ("Label1")
+  }
+}

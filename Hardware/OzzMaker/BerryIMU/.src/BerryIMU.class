@@ -1,0 +1,29 @@
+' Gambas class file
+
+'Dependancy: Must have OzzMaker.com BerryIMU v1.6
+
+'i2c Revisions
+Const REVISION_PI1 As Integer = &H00
+Const REVISION_PI2_AND_PI3 As Integer = &H01
+
+'Registers / etc:
+Const PCA9685_ADDRESS As Integer = &H40
+
+'Bits:
+Const RESTART As Integer = &H80
+
+Public Bus As I2c
+
+Public Sub _new()
+  Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
+  Me.Bus.Detect
+
+  'TODO: Finish Init
+
+End
+
+Public Function GetGyroX() As Integer
+  'TODO: Finish Read
+  Return 0
+End
+

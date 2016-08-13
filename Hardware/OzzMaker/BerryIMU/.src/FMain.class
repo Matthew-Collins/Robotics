@@ -1,0 +1,13 @@
+' Gambas class file
+
+Public IMU As New BerryIMU
+
+Public Sub _new()
+End
+
+Public Sub Form_Open()
+End
+
+Public Sub Timer1_Timer()
+ Label1.Text = "x=" & Me.IMU.GetGyroX()
+End
