@@ -1,6 +1,0 @@
-' Gambas class file
-
-
-Public Sub Form_Open()
- MovieBox1.Path = "/home/pi/Videos/Latest.h264"
-End Sub
