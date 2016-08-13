@@ -18,6 +18,7 @@ Const LED0_ON_L As Integer = &H06
 Const LED0_ON_H As Integer = &H07
 Const LED0_OFF_L As Integer = &H08
 Const LED0_OFF_H As Integer = &H09
+Const LEDNEXT As Integer = &H04
 Const ALL_LED_ON_L As Integer = &HFA
 Const ALL_LED_ON_H As Integer = &HFB
 Const ALL_LED_OFF_L As Integer = &HFC
@@ -30,34 +31,26 @@ Const ALLCALL As Integer = &H01
 Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
 
-Const StepOver As Integer = 4
-Const Base As Integer = 256
-
 Public Bus As I2c
 
 Public Sub _new()
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
   Me.Bus.Detect
-  'me.Bus.Dump
-  'Me.SetAll(0, 0)
-  Me.Bus.Dump
-  'Print Hex(Me.Bus.Read8(MODE1))
-  'Print Hex(Me.Bus.Read8(MODE2))
-  'Print Hex(Me.Bus.Read16(MODE2))
+
+  'TODO Finish Initialise and Set Freq to 60hz
+  'Me.SetAllPWM(0, 0)
+  'Me.Bus.Dump
+
 End
 
-Public Sub SetAll(OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write8(ALL_LED_ON_L, OnValue Mod Base) 'On & 0 xFF)
-  Me.Bus.Write8(ALL_LED_ON_H, OnValue Div Base) 'On > > 8)
-  Me.Bus.Write8(ALL_LED_OFF_L, OffValue Mod Base) 'off & 0 xFF)
-  Me.Bus.Write8(ALL_LED_OFF_H, OffValue Div Base) 'off > > 8)
+Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write16(ALL_LED_ON_L, OnValue)
+  Me.Bus.Write16(ALL_LED_OFF_L, OffValue)
 End
 
-Public Sub SetChannel(Channel As Integer, OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write8(CInt(LED0_ON_L + CInt(StepOver * Channel)), CInt(OnValue Mod Base)) 'On & 0 xFF)
-  Me.Bus.Write8(CInt(LED0_ON_H + CInt(StepOver * Channel)), CInt(OnValue Div Base)) 'On > > 8)
-  Me.Bus.Write8(CInt(LED0_OFF_L + CInt(StepOver * Channel)), CInt(OffValue Mod Base)) 'off & 0 xFF)
-  Me.Bus.Write8(CInt(LED0_OFF_H + CInt(StepOver * Channel)), CInt(OffValue Div Base)) 'off > > 8)
+Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write16(LED0_ON_L + (LEDNEXT * Channel), OnValue)
+  Me.Bus.Write16(LED0_OFF_L + (LEDNEXT * Channel), OffValue)
 End
 
 ' def software_reset(i2c = None, * * kwargs):
