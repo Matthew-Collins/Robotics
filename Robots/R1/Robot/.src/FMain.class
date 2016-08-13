@@ -7,7 +7,7 @@ Public sDirection As String = "f"                                           'Dir
 Public sPath As String = "robot"                                            'Location of the python file
 Public siPositionU As Short                                                 'Up and down position
 Public siPositionL As Short                                                 'Left and right position
-Public fDelay As Float = 0.25                                                'Delay value
+Public fDelay As Float = 1                                            'Delay value
 Public bZeroTrigger As Boolean                                              'Used to ensure the motors are switched to zero speed once
 
 Public Sub Form_Open()                                                      'Got to start somewhere!
@@ -82,9 +82,6 @@ End
 
 Public Sub Timer1_Timer()                                                   'The timer
 'Dim sTempDirection As String                                                 'Variable display for development only
-
-Exit Sub
-
 
 If fSpeed = 0 Then Return
 
