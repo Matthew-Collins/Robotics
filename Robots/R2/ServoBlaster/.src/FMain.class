@@ -5,7 +5,8 @@ Public bShiftTrigger As Boolean
 
 Public Sub Form_Open()
 
-sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
+' sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
+sb = Exec ["sudo", "servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
 
 Wait 0.25
 ButtonFrontSensorCenter_Click
@@ -176,7 +177,8 @@ Public Sub Timer1_Timer()
 Dim sLine As String
 Dim siLine As Short
 
-Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
+Exec ["python", "sonarTestCO.py"] To sLine
+'Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
 
 If Left(sLine, 8) <> "Distance" Then Return
 
