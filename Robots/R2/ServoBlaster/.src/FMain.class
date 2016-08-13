@@ -104,10 +104,10 @@ If siY > 90 Then siY = 90
 If siY < -90 Then siY = -90
 
 If bShiftTrigger Then
-  Servo(7, siY) 'Shell "echo 7=" & Str(50 + ((90 - siY) * 200 / 180)) & " > /dev/servoblaster"
+  Servo(7, - siY) 'Shell "echo 7=" & Str(50 + ((90 - siY) * 200 / 180)) & " > /dev/servoblaster"
   Servo(6, siX) 'Shell "echo 6=" & Str(50 + ((90 - siX) * 200 / 180)) & " > /dev/servoblaster"
   SliderLRFrontSensor.Value = siX
-  SliderUDFrontSensor.Value = siY
+  SliderUDFrontSensor.Value = - siY
 End If
 
 End
