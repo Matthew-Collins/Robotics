@@ -4,11 +4,15 @@ Count=0
 [DebugWindow]
 Count=0
 
+[FCommit]
+LastCommit="Delete Old Forms\n---- This line and the following will be ignored ----\n\n!       .gambas/FMAINOLD\n!       .gambas/HELPOLD"
+
 [OpenFile]
 Count=0
 
 [VersionControl]
-RememberPassword=0
+RememberPassword=1
+User="matthew-collins"
 
 [Watches]
 Count=0
