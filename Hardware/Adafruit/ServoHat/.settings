@@ -1,0 +1,21 @@
+[Breakpoints]
+Count=0
+
+[DebugWindow]
+Count=0
+
+[FCommit]
+LastCommit="New i2c and Servo Hat Controllers\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nA       .hidden\nA       .hidden/Non Empty.txt\nM       .settings\nM       .src/FMain.class\nA       .src/ServoHat.class\nA       .src/i2c.class"
+
+[OpenFile]
+Active=1
+File[1]=".src/ServoHat.class:53.0"
+Count=1
+
+[VersionControl]
+RememberPassword=1
+User="Matthew-Collins"
+
+[Watches]
+Count=0
+

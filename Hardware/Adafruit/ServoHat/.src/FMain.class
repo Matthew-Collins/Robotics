@@ -1,0 +1,45 @@
+' Gambas class file
+
+Public Trim0 As Integer = 20
+Public Trim1 As Integer = 100
+
+Public Servos As New ServoHat
+
+Public Sub _new()
+End
+Public Sub Form_Open()
+End
+Public Sub Servo(No As Integer, Degrees As Integer)
+ 'Degrees Between -90 and 90
+ 'Range Between 150 and 600
+ Dim Range As Integer
+ Range = ((Degrees + 90) / 180 * (600 - 150)) + 150
+ Select Case No
+   Case 0
+     Range += Trim0
+   Case 1
+     Range += Trim1
+ End Select
+ 'Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(14 + No) & " -p " & Str(Range) & " -d " & Str(1)
+ Me.Servos.SetChannel(14 + No, 0, Range)
+End
+
+Public Sub ButtonCenterLeftRight_Click()
+ Servo(1, 0)
+End
+Public Sub ButtonLeft_Click()
+ Servo(1, 90)
+End
+Public Sub ButtonRight_Click()
+ Servo(1, -90)
+End
+
+Public Sub ButtonCenterUpDown_Click()
+ Servo(0, 0)
+End
+Public Sub ButtonUp_Click()
+ Servo(0, -90)
+End
+Public Sub ButtonDown_Click()
+ Servo(0, 90)
+End
