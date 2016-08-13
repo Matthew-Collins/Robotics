@@ -1,0 +1,62 @@
+' Gambas module file
+
+'Examples
+'Gpio.Setup(21,0) = setup BCM Pin 21 for Output (Use 1 for Input)
+'Gpio.Setup(18,3) = setup BCM Pin 18 for PWM. NOTE that only Pin 18 will work with this setting
+'Gpio.Write(21,True) = Write to BCM Pin 21 'True' (on) or 'False' (Off)
+'bBoolean = Gpio.Read(21) - Read BCM Pin 21. This will return True or False to variable bBoolean
+
+Public Sub Setup(BCM_Pin As Integer, input_1_or_output_0_or_PWM_3 As Integer)   'To Setup the pin for use (Pin number, mode)
+
+If input_1_or_output_0_or_PWM_3 = 0 Then                                        'If set for 'Output'
+  Shell "gpio -g mode " & Str(BCM_Pin) & " out" 
+End If
+  
+If input_1_or_output_0_or_PWM_3 = 1 Then                                        'If set for input
+  Shell "gpio -g mode " & Str(BCM_Pin) & " in" 
+End If
+
+If input_1_or_output_0_or_PWM_3 = 3 Then                                        'If set for pwm mode
+  Shell "gpio -g mode " & Str(BCM_Pin) & " pwm"
+End If 
+
+End
+
+Public Sub Write(BCM_Pin As Integer, Value As Boolean)                          'Setup pin to 'Write' (Pin number, Write(True or False))
+
+If Value = False Then 
+  Shell "gpio -g write " & Str(BCM_Pin) & " " & "0"                             'If no write is requested
+Else
+  Shell "gpio -g write " & Str(BCM_Pin) & " " & "1"                             'If write requested
+End If
+
+End
+
+Public Sub Read(BCM_Pin As Integer) As Boolean                                  'Setup pin to read (Pin number)
+Dim sResult As String
+  
+Shell "gpio -g read " & Str(BCM_Pin) To sResult                                 'Get Read result
+
+If Trim(sResult) = "1" Then                                                     'If read result is returned
+  Return False                                                                  'Return False
+Else                                                                            'Else...
+  Return True                                                                   'Return True
+End If
+
+End
+
+Public Sub pwm(BCM_Pin As Integer, Value_0_to_1023 As Integer)                  'To setup pwm mode, this only works on pin 18 (Pin number, value 0 to 1023)
+
+Shell "gpio -g pwm " & BCM_Pin & " " & Str(Value_0_to_1023)                     'Set the values
+
+End
+
+Public Sub ClearAll()                                                           'Reset all the pins that will accept the 'Input' and 'Write 0' commands
+Dim siCount As Short                                                            'Loop counter
+
+For siCount = 0 To 39                                                           'There are 40 pins
+  Shell "gpio -1 mode " & siCount & " " & "in"                                  'Set 'mode' to 'Input'
+  Shell "gpio -1 write " & siCount & " " & "1"                                  'Set pin to not 'Write'
+Next
+
+End
