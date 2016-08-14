@@ -9,5 +9,6 @@ Public Sub Form_Open()
 End
 
 Public Sub Timer1_Timer()
- Label1.Text = "x=" & Me.IMU.GetGyroX()
+ Label1.Text = "x=" & Me.IMU.GyroX() & " y=" & Me.IMU.GyroY() & " z=" & Me.IMU.GyroZ()
+ Label2.Text = "x=" & Me.IMU.AccelerometerX() & " y=" & Me.IMU.AccelerometerY() & " z=" & Me.IMU.AccelerometerZ()
 End

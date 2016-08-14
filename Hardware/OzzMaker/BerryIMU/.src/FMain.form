@@ -8,6 +8,8 @@
   }
   { Label1 Label
     MoveScaled(6,12,34,10)
-    Text = ("Label1")
+  }
+  { Label2 Label
+    MoveScaled(6,23,34,10)
   }
 }
