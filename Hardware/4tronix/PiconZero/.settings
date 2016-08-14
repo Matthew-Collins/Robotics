@@ -8,7 +8,7 @@ Count=0
 File[1]=".src/PiconZero.class:16.0"
 File[2]=".src/FMain.form"
 Active=3
-File[3]=".src/FMain.class:12.0"
+File[3]=".src/FMain.class:0.12"
 Count=3
 
 [Watches]
