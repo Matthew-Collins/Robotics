@@ -1,0 +1,35 @@
+' Gambas class file
+
+Const Location As String = "/home/pi/Pictures/BobCam/Latest.jpg"
+
+Public Sub Form_Open()
+  Me.SetPicture
+End
+
+Public Sub Timer1_Timer()
+  Me.SetPicture
+End
+
+Public Sub SetPicture()
+  Shell "raspistill -t 0 -w " & CStr(Me.width) & " -h " & CStr(Me.height) & " -n -o " & Location Wait
+  PictureBox1.Picture = Picture.Load(Location)
+End
+
+Public Sub Form_Resize()
+  PictureBox1.width = Me.Width
+  PictureBox1.height = Me.Height
+  ButtonClose.Left = Me.Width - ButtonClose.Width
+  ButtonClose.Raise
+End
+
+Public Sub PictureBox1_DblClick()
+  Message(Mouse.x & "x" & Mouse.y)
+End
+
+Public Sub ButtonClose_Click()
+  Me.Close
+End
+
+Public Sub PictureBox1_MouseDown()
+End
+
