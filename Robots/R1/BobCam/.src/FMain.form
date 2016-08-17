@@ -1,19 +1,17 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,38,31)
+  MoveScaled(0,0,73,57)
   FullScreen = True
   { PictureBox1 PictureBox
-    MoveScaled(0,0,26,21)
-    Stretch = True
+    MoveScaled(0,0,46,32)
     Alignment = Align.Center
   }
   { ButtonClose ToggleButton
-    MoveScaled(33,0,3,3)
+    MoveScaled(49,0,3,3)
     Text = ("X")
   }
   { Timer1 #Timer
-    #MoveScaled(1,23)
-    Enabled = True
+    #MoveScaled(2,38)
   }
 }

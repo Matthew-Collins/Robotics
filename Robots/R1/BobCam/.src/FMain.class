@@ -1,9 +1,20 @@
 ' Gambas class file
 
-Const Location As String = "/home/pi/Pictures/BobCam/Latest.jpg"
+Const Location As String = "/var/tmp/preview.jpg"
+'Const Location As String = "/home/pi/Pictures/BobCam/Latest.jpg"
+
+Public Servos As New ServoHat
+
+Public Trim0 As Integer = 20
+Public Trim1 As Integer = 100
 
 Public Sub Form_Open()
+  PiCam.CreateRAMDrive()
   Me.SetPicture
+  'TODO Remove When Initisalise Work Finsihed
+  Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
+  Timer1.Delay = 5000
+  Timer1.Start
 End
 
 Public Sub Timer1_Timer()
@@ -11,25 +22,27 @@ Public Sub Timer1_Timer()
 End
 
 Public Sub SetPicture()
-  Shell "raspistill -t 0 -w " & CStr(Me.width) & " -h " & CStr(Me.height) & " -n -o " & Location Wait
-  PictureBox1.Picture = Picture.Load(Location)
+  Dim Command As String = "raspistill -t 1 -w " & CStr(Me.Width) & " -h " & CStr(Me.Height) & " -n -o " & Location
+  'Dim Command As String = "raspistill -t 1 -w " & CStr(350) & " -h " & CStr(350) & " -n -o " & Location
+  Print Command
+  Shell Command Wait
+  If Exist(Location) Then
+    PictureBox1.Picture = Picture.Load(Location)
+  End If
 End
 
 Public Sub Form_Resize()
-  PictureBox1.width = Me.Width
-  PictureBox1.height = Me.Height
+  PictureBox1.Width = Me.Width
+  PictureBox1.Height = Me.Height
   ButtonClose.Left = Me.Width - ButtonClose.Width
   ButtonClose.Raise
 End
 
 Public Sub PictureBox1_DblClick()
-  Message(Mouse.x & "x" & Mouse.y)
+  Me.Servos.SetPWM(14, 0, (Mouse.Y / PictureBox1.Height * (600 - 150)) + 150 + Trim0)
+  Me.Servos.SetPWM(15, 0, ((PictureBox1.Width - Mouse.X) / PictureBox1.Width * (600 - 150)) + 150 + Trim1)
 End
 
 Public Sub ButtonClose_Click()
   Me.Close
 End
-
-Public Sub PictureBox1_MouseDown()
-End
-

@@ -1,10 +1,12 @@
 # Gambas Project File 3.0
+# Compiled with Gambas 3.8.4
 Title=BobCam
 Startup=FMain
-Version=0.0.1
+Version=0.0.4
 Component=gb.image
 Component=gb.gui
 Component=gb.form
 TabSize=2
 Language=en_US
+CreateShortcut=1
 Packager=1
