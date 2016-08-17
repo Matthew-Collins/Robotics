@@ -1,6 +1,3 @@
-[Bookmarks]
-FMain=[]
-
 [Breakpoints]
 Count=0
 
@@ -9,6 +6,9 @@ Count=0
 
 [DebugWindow/system]
 Geometry=[-1,-1,270,270]
+
+[Executable]
+Path="ServoBlaster.gambas"
 
 [OpenFile]
 Count=0
