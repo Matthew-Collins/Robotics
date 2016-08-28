@@ -48,7 +48,24 @@ Public Sub _new()
 End
 
 Public Sub SetServo(Channel as Integer, Value as Integer, Max as Integer, Min as Integer)
+  Channel = GetChannel(Channel)
+  Me.SetPWM(Channel, 0, GetReversal(Channel, (Value - Min) / (Max - Min)) * (450 - 150)) + Me.Trim(Channel))
+End
 
+Public GetChannel(Channel as Integer)
+  If Me.PlugOrder0To15 Then
+    Return Channel
+  Else
+    Return 15 - Channel
+  End If
+End
+
+Public GetReversal(Percent as Integer)
+  If Me.Normal(Channel) Then
+    Return Percent
+  Else
+    Return 100 - Percent
+  End If
 End
 
 Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
