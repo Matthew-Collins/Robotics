@@ -33,6 +33,10 @@ Const OUTDRV As Integer = &H04
 
 Public Bus As I2c
 
+Public PlugOrder0To15 as Boolean = True
+Public Trim(15) as Integer
+Public Normal(15) as Boolean
+
 Public Sub _new()
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
   Me.Bus.Detect
@@ -40,6 +44,10 @@ Public Sub _new()
   'TODO Finish Initialise and Set Freq to 60hz
   'Me.SetAllPWM(0, 0)
   'Me.Bus.Dump
+
+End
+
+Public Sub SetServo(Channel as Integer, Value as Integer, Max as Integer, Min as Integer)
 
 End
 
