@@ -38,8 +38,14 @@ Public Trim(15) as Integer
 Public Normal(15) as Boolean
 
 Public Sub _new()
+
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
-  Me.Bus.Detect
+  'Me.Bus.Detect
+
+  For Channel as Integer = 0 to 15
+    Me.Trim(Channel) = 0
+    Me.Normal(Channel) = True
+  Next
 
   'TODO Finish Initialise and Set Freq to 60hz
   'Me.SetAllPWM(0, 0)
