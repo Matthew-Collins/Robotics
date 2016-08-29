@@ -18,7 +18,7 @@ Const LED0_ON_L As Integer = &H06
 Const LED0_ON_H As Integer = &H07
 Const LED0_OFF_L As Integer = &H08
 Const LED0_OFF_H As Integer = &H09
-Const LEDNEXT As Integer = &H04
+Const LED_NEXT As Integer = &H04
 Const ALL_LED_ON_L As Integer = &HFA
 Const ALL_LED_ON_H As Integer = &HFB
 Const ALL_LED_OFF_L As Integer = &HFC
@@ -36,6 +36,7 @@ Public Bus As I2c
 Public PlugOrder0To15 as Boolean = True
 Public Trim(15) as Integer
 Public Normal(15) as Boolean
+Public EndPoint(15, 1) as Integer
 
 Public Sub _new()
 
@@ -43,7 +44,6 @@ Public Sub _new()
   'Me.Bus.Detect
 
   For Channel as Integer = 0 to 15
-    Me.Trim(Channel) = 0
     Me.Normal(Channel) = True
   Next
 
@@ -55,10 +55,10 @@ End
 
 Public Sub SetServo(Channel as Integer, Value as Integer, Max as Integer, Min as Integer)
   Channel = GetChannel(Channel)
-  Me.SetPWM(Channel, 0, GetReversal(Channel, (Value - Min) / (Max - Min)) * (450 - 150)) + Me.Trim(Channel))
+  Me.SetPWM(Channel, 0, GetEndpointAdjustment(Channel, GetReversal(Channel, (Value - Min) / (Max - Min)) * (450 - 150)) + Me.Trim(Channel)))
 End
 
-Public GetChannel(Channel as Integer)
+Public Function GetChannel(Channel as Integer) as Integer
   If Me.PlugOrder0To15 Then
     Return Channel
   Else
@@ -66,11 +66,21 @@ Public GetChannel(Channel as Integer)
   End If
 End
 
-Public GetReversal(Percent as Integer)
+Public Function GetReversal(Percent as Float) as Float
   If Me.Normal(Channel) Then
     Return Percent
   Else
     Return 100 - Percent
+  End If
+End
+
+Public Function GetEndPointAdjustment(Channel as Integer, Value as Integer) as Integer
+  If Value < Me.EndPoint(Channel, 0) Then
+    Return Me.EndPoint(Channel, 0)
+  ElseIf Me.EndPoint(Channel, 1) > 0 And Value > Me.EndPoint(Channel, 1)
+    Return Me.EndPoint(Channel, 1)
+  Else
+    Return Value
   End If
 End
 
@@ -80,8 +90,8 @@ Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
 End
 
 Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
-  Me.Bus.Write16(LED0_ON_L + (LEDNEXT * Channel), OnValue)
-  Me.Bus.Write16(LED0_OFF_L + (LEDNEXT * Channel), OffValue)
+  Me.Bus.Write16(LED0_ON_L + (LED_NEXT * Channel), OnValue)
+  Me.Bus.Write16(LED0_OFF_L + (LED_NEXT * Channel), OffValue)
 End
 
 ' def software_reset(i2c = None, * * kwargs):
