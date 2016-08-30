@@ -1,46 +1,32 @@
 ' Gambas class file
 
-Public Trim0 As Integer = 20
-Public Trim1 As Integer = 100
-
 Public Servos As New ServoHat
 
 Public Sub _new()
   'TODO Remove When Initisalise Work Finsihed
   Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
-End
-Public Sub Form_Open()
-End
-Public Sub Servo(No As Integer, Degrees As Integer)
- 'Degrees Between -90 and 90
- 'Position Between 150 and 600
- Dim Position As Integer
- Position = ((Degrees + 90) / 180 * (600 - 150)) + 150
- Select Case No
-   Case 0
-     Position += Trim0
-   Case 1
-     Position += Trim1
- End Select
- Me.Servos.SetPWM(14 + No, 0, Position)
+
+  Me.Servos.PlugOrder0To15 = False  
+  Me.Servos.Trims[0] = 100
+  Me.Servos.Trims[1] = 20
 End
 
 Public Sub ButtonCenterLeftRight_Click()
- Servo(1, 0)
+  Me.Servos.SetServo(0, 0)
 End
 Public Sub ButtonLeft_Click()
- Servo(1, 90)
+  Me.Servos.SetServo(0, 90)
 End
 Public Sub ButtonRight_Click()
- Servo(1, -90)
+  Me.Servos.SetServo(0, -90)
 End
 
 Public Sub ButtonCenterUpDown_Click()
- Servo(0, 0)
+  Me.Servos.SetServo(1, 0)
 End
 Public Sub ButtonUp_Click()
- Servo(0, -90)
+  Me.Servos.SetServo(1, -90)
 End
 Public Sub ButtonDown_Click()
- Servo(0, 90)
+  Me.Servos.SetServo(1, 90)
 End

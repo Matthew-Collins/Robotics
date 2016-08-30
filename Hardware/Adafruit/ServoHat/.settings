@@ -4,16 +4,17 @@ Count=0
 [DebugWindow]
 Count=0
 
+[DebugWindow/Normal]
+Geometry=[-1,-1,283,533]
+
+[DebugWindow/Trims]
+Geometry=[-1,-1,311,600]
+
 [FCommit]
 LastCommit="Successfully Controls Servos (still Init work required)\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .settings\nM       .src/FMain.class\nM       .src/ServoHat.class\nM       .src/i2c.class"
 
 [OpenFile]
-Active=1
-File[1]=".src/FMain.class:25.3"
-File[2]=".src/FMain.form"
-File[3]=".src/ServoHat.class:38.0"
-File[4]=".src/i2c.class:13.3"
-Count=4
+Count=0
 
 [VersionControl]
 RememberPassword=1

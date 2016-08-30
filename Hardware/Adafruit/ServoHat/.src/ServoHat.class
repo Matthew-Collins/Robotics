@@ -31,20 +31,25 @@ Const ALLCALL As Integer = &H01
 Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
 
+'Other:
+Const StartPoint As Integer = 150
+Const EndPoint As Integer = 600
+
 Public Bus As I2c
 
-Public PlugOrder0To15 as Boolean = True
-Public Trim(15) as Integer
-Public Normal(15) as Boolean
-Public EndPoint(15, 1) as Integer
+Public PlugOrder0To15 As Boolean = True
+Public Trims[16] As Integer
+Public Normal[16] As Boolean
+Public EndPoints[16, 2] As Integer
 
 Public Sub _new()
+  Dim Channel As Integer
 
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
   'Me.Bus.Detect
 
-  For Channel as Integer = 0 to 15
-    Me.Normal(Channel) = True
+  For Channel = 0 To 15
+    Me.Normal[Channel] = True
   Next
 
   'TODO Finish Initialise and Set Freq to 60hz
@@ -53,12 +58,14 @@ Public Sub _new()
 
 End
 
-Public Sub SetServo(Channel as Integer, Value as Integer, Max as Integer, Min as Integer)
-  Channel = GetChannel(Channel)
-  Me.SetPWM(Channel, 0, GetEndpointAdjustment(Channel, GetReversal(Channel, (Value - Min) / (Max - Min)) * (450 - 150)) + Me.Trim(Channel)))
+Public Sub SetServo(Channel As Integer, Value As Integer, Optional Max As Integer = 90, Optional Min As Integer = -90)
+  Value = (GetReversal(Channel, (Value - Min) / (Max - Min)) * (EndPoint - StartPoint)) + StartPoint
+  Value += Me.Trims[Channel]
+  Value = GetEndpointAdjustment(Channel, Value)
+  Me.SetPWM(GetChannel(Channel), 0, Value)
 End
 
-Public Function GetChannel(Channel as Integer) as Integer
+Public Function GetChannel(Channel As Integer) As Integer
   If Me.PlugOrder0To15 Then
     Return Channel
   Else
@@ -66,19 +73,19 @@ Public Function GetChannel(Channel as Integer) as Integer
   End If
 End
 
-Public Function GetReversal(Percent as Float) as Float
-  If Me.Normal(Channel) Then
+Public Function GetReversal(Channel As Integer, Percent As Float) As Float
+  If Me.Normal[Channel] Then
     Return Percent
   Else
     Return 100 - Percent
   End If
 End
 
-Public Function GetEndPointAdjustment(Channel as Integer, Value as Integer) as Integer
-  If Value < Me.EndPoint(Channel, 0) Then
-    Return Me.EndPoint(Channel, 0)
-  ElseIf Me.EndPoint(Channel, 1) > 0 And Value > Me.EndPoint(Channel, 1)
-    Return Me.EndPoint(Channel, 1)
+Public Function GetEndPointAdjustment(Channel As Integer, Value As Integer) As Integer
+  If Value < Me.EndPoints[Channel, 0] Then
+    Return Me.EndPoints[Channel, 0]
+  Else If Me.EndPoints[Channel, 1] > 0 And If Value > Me.EndPoints[Channel, 1]
+    Return Me.EndPoints[Channel, 1]
   Else
     Return Value
   End If

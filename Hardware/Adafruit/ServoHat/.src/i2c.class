@@ -8,9 +8,9 @@ Public Address As Integer
 
 Const Base16 As Integer = 256
 
-Public Sub _new(Revison As Integer, Address As Integer)
-  Me.Revison = Revison
-  Me.Address = Address
+Public Sub _new(PiRevison As Integer, PiAddress As Integer)
+  Me.Revison = PiRevison
+  Me.Address = PiAddress
 End
 
 Public Sub Detect()
