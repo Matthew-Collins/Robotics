@@ -39,18 +39,13 @@ Public Bus As I2c
 
 Public PlugOrder0To15 As Boolean = True
 Public Trims[16] As Integer
-Public Normal[16] As Boolean
+Public Reversals[16] As Boolean
 Public EndPoints[16, 2] As Integer
 
 Public Sub _new()
-  Dim Channel As Integer
 
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
   'Me.Bus.Detect
-
-  For Channel = 0 To 15
-    Me.Normal[Channel] = True
-  Next
 
   'TODO Finish Initialise and Set Freq to 60hz
   'Me.SetAllPWM(0, 0)
@@ -74,10 +69,10 @@ Public Function GetChannel(Channel As Integer) As Integer
 End
 
 Public Function GetReversal(Channel As Integer, Percent As Float) As Float
-  If Me.Normal[Channel] Then
-    Return Percent
+  If Me.Reversals[Channel] Then
+    Return 1 - Percent
   Else
-    Return 100 - Percent
+    Return Percent
   End If
 End
 
