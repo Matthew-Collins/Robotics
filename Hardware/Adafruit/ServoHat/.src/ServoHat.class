@@ -26,10 +26,11 @@ Const ALL_LED_OFF_H As Integer = &HFD
 
 'Bits:
 Const RESTART As Integer = &H80
-Const Sleep As Integer = &H10
+Const SLEEPING As Integer = &H10
 Const ALLCALL As Integer = &H01
 Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
+Const ALLOW As Integer = &H7F
 
 'Other:
 Const StartPoint As Integer = 150
@@ -45,11 +46,23 @@ Public EndPoints[16, 2] As Integer
 Public Sub _new()
 
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
-  'Me.Bus.Detect
 
-  'TODO Finish Initialise and Set Freq to 60hz
-  'Me.SetAllPWM(0, 0)
-  'Me.Bus.Dump
+'         self.set_all_pwm(0, 0)
+  Me.SetAllPWM(0, 0)
+  '         self._device.write8(MODE2, OUTDRV)
+  Me.Bus.Write8(MODE1, OUTDRV)
+  '         self._device.write8(MODE1, ALLCALL)
+  Me.Bus.Write8(MODE1, ALLCALL)
+'         time.sleep(0.005)# Wait For oscillator
+  'Sleep(0.005)
+'         mode1 = self._device.readU8(MODE1)
+'         mode1 = mode1 & ~SLEEP  # wake up (reset sleep)
+'         self._device.write8(MODE1, mode1)
+  Me.Bus.Write8(MODE1, Me.Bus.Read8(MODE1) And Not SLEEPING)
+'         time.sleep(0.005)# Wait For oscillator
+  'Sleep(0.005)
+
+  Me.SetFrequency(60)
 
 End
 
@@ -95,6 +108,39 @@ Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
   Me.Bus.Write16(LED0_ON_L + (LED_NEXT * Channel), OnValue)
   Me.Bus.Write16(LED0_OFF_L + (LED_NEXT * Channel), OffValue)
 End
+
+Public Sub SetFrequency(hz As Integer)
+
+'        "" "Set the PWM frequency to the provided value in hertz." ""
+'         prescaleval = 25000000.0 #25 MHz
+  Dim Value As Float = 25000000.0
+  Dim OldMode As Integer
+'         prescaleval /= 4096.0 #12 - bit
+  Value /= 4096.0
+'         prescaleval /= float(freq_hz)
+  Value /= CFloat(hz)
+'         prescaleval -= 1.0
+'         logger.debug( 'Setting PWM frequency to {0} Hz'.format(freq_hz))
+'         logger.debug( 'Estimated pre-scale: {0}'.format(prescaleval))
+'         prescale = Int(math.floor(prescaleval + 0.5))
+  Value -= 0.5
+'         logger.debug( 'Final pre-scale: {0}'.format(prescale))
+'         oldmode = self._device.readU8(MODE1);
+  OldMode = Me.Bus.Read8(MODE1)
+'         newmode = (oldmode & 0 x7F) | 0x10    # sleep
+'         self._device.write8(MODE1, newmode)#go To Sleep
+  Me.Bus.Write8(MODE1, OldMode And ALLOW And SLEEPING)
+'         self._device.write8(PRESCALE, prescale)
+  Me.Bus.Write8(PRESCALE, CInt(value))
+'         self._device.write8(MODE1, oldmode)
+  Me.Bus.Write8(MODE1, OldMode)
+'         time.sleep(0.005)
+  'Sleep(0.005)
+'         self._device.write8(MODE1, oldmode | 0x80)
+  Me.Bus.Write8(MODE1, OldMode And RESTART)
+
+End
+
 
 ' def software_reset(i2c = None, * * kwargs):
 '     "" "Sends a software reset (SWRST) command to all servo drivers on the bus." ""

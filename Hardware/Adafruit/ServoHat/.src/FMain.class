@@ -4,7 +4,7 @@ Public Servos As New ServoHat
 
 Public Sub _new()
   'TODO Remove When Initisalise Work Finsihed
-  Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
+  'Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
 
   Me.Servos.PlugOrder0To15 = False  
   Me.Servos.Trims[0] = 100
