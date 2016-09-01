@@ -3,15 +3,11 @@
 Public Servos As New ServoHat
 
 Public Sub _new()
-  'TODO Remove When Initisalise Work Finsihed
-  'Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
-
   Me.Servos.PlugOrder0To15 = False  
   Me.Servos.Trims[0] = 100
   Me.Servos.Trims[1] = 20
   Me.Servos.Reversals[0] = True
   Me.Servos.EndPoints[1, 1] = 550
-
 End
 
 Public Sub ButtonCenterLeftRight_Click()
@@ -33,4 +29,3 @@ End
 Public Sub ButtonDown_Click()
   Me.Servos.SetServo(1, 90)
 End
-

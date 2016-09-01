@@ -47,20 +47,12 @@ Public Sub _new()
 
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
 
-'         self.set_all_pwm(0, 0)
   Me.SetAllPWM(0, 0)
-  '         self._device.write8(MODE2, OUTDRV)
   Me.Bus.Write8(MODE1, OUTDRV)
-  '         self._device.write8(MODE1, ALLCALL)
   Me.Bus.Write8(MODE1, ALLCALL)
-'         time.sleep(0.005)# Wait For oscillator
-  'Sleep(0.005)
-'         mode1 = self._device.readU8(MODE1)
-'         mode1 = mode1 & ~SLEEP  # wake up (reset sleep)
-'         self._device.write8(MODE1, mode1)
+  Sleep 0.005
   Me.Bus.Write8(MODE1, Me.Bus.Read8(MODE1) And Not SLEEPING)
-'         time.sleep(0.005)# Wait For oscillator
-  'Sleep(0.005)
+  Sleep 0.005
 
   Me.SetFrequency(60)
 
@@ -110,35 +102,17 @@ Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
 End
 
 Public Sub SetFrequency(hz As Integer)
-
-'        "" "Set the PWM frequency to the provided value in hertz." ""
-'         prescaleval = 25000000.0 #25 MHz
   Dim Value As Float = 25000000.0
   Dim OldMode As Integer
-'         prescaleval /= 4096.0 #12 - bit
   Value /= 4096.0
-'         prescaleval /= float(freq_hz)
   Value /= CFloat(hz)
-'         prescaleval -= 1.0
-'         logger.debug( 'Setting PWM frequency to {0} Hz'.format(freq_hz))
-'         logger.debug( 'Estimated pre-scale: {0}'.format(prescaleval))
-'         prescale = Int(math.floor(prescaleval + 0.5))
   Value -= 0.5
-'         logger.debug( 'Final pre-scale: {0}'.format(prescale))
-'         oldmode = self._device.readU8(MODE1);
   OldMode = Me.Bus.Read8(MODE1)
-'         newmode = (oldmode & 0 x7F) | 0x10    # sleep
-'         self._device.write8(MODE1, newmode)#go To Sleep
-  Me.Bus.Write8(MODE1, OldMode And ALLOW And SLEEPING)
-'         self._device.write8(PRESCALE, prescale)
+  Me.Bus.Write8(MODE1, OldMode And ALLOW Or SLEEPING)
   Me.Bus.Write8(PRESCALE, CInt(value))
-'         self._device.write8(MODE1, oldmode)
   Me.Bus.Write8(MODE1, OldMode)
-'         time.sleep(0.005)
-  'Sleep(0.005)
-'         self._device.write8(MODE1, oldmode | 0x80)
-  Me.Bus.Write8(MODE1, OldMode And RESTART)
-
+  Sleep 0.005
+  Me.Bus.Write8(MODE1, OldMode Or RESTART)
 End
 
 

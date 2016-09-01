@@ -1,6 +1,3 @@
-[Bookmarks]
-ServoHat=[]
-
 [Breakpoints]
 Count=0
 
@@ -8,15 +5,14 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New Init Sequence\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .settings\nM       .src/FMain.class\nM       .src/ServoHat.class"
+LastCommit="Init Routine Finished and Tested\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .settings\nM       .src/FMain.class\nM       .src/ServoHat.class"
 
 [OpenFile]
-Count=1
-Active=1
-File[1]=".src/ServoHat.class:20.51"
+Count=0
 
 [VersionControl]
-RememberPassword=0
+RememberPassword=1
+User="matthew-collins"
 
 [Watches]
 Count=0
