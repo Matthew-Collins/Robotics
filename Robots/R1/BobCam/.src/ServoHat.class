@@ -18,7 +18,7 @@ Const LED0_ON_L As Integer = &H06
 Const LED0_ON_H As Integer = &H07
 Const LED0_OFF_L As Integer = &H08
 Const LED0_OFF_H As Integer = &H09
-Const LEDNEXT As Integer = &H04
+Const LED_NEXT As Integer = &H04
 Const ALL_LED_ON_L As Integer = &HFA
 Const ALL_LED_ON_H As Integer = &HFB
 Const ALL_LED_OFF_L As Integer = &HFC
@@ -26,21 +26,69 @@ Const ALL_LED_OFF_H As Integer = &HFD
 
 'Bits:
 Const RESTART As Integer = &H80
-Const Sleep As Integer = &H10
+Const SLEEPING As Integer = &H10
 Const ALLCALL As Integer = &H01
 Const INVRT As Integer = &H10
 Const OUTDRV As Integer = &H04
+Const ALLOW As Integer = &H7F
+
+'Other:
+Const StartPoint As Integer = 150
+Const EndPoint As Integer = 600
 
 Public Bus As I2c
 
+Public PlugOrder0To15 As Boolean = True
+Public Trims[16] As Integer
+Public Reversals[16] As Boolean
+Public EndPoints[16, 2] As Integer
+
 Public Sub _new()
+
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
-  'Me.Bus.Detect
 
-  'TODO Finish Initialise and Set Freq to 60hz
-  'Me.SetAllPWM(0, 0)
-  'Me.Bus.Dump
+  Me.SetAllPWM(0, 0)
+  Me.Bus.Write8(MODE1, OUTDRV)
+  Me.Bus.Write8(MODE1, ALLCALL)
+  Sleep 0.005
+  Me.Bus.Write8(MODE1, Me.Bus.Read8(MODE1) And Not SLEEPING)
+  Sleep 0.005
 
+  Me.SetFrequency(60)
+
+End
+
+Public Sub SetServo(Channel As Integer, Value As Integer, Optional Max As Integer = 90, Optional Min As Integer = -90)
+  Value = (GetReversal(Channel, (Value - Min) / (Max - Min)) * (EndPoint - StartPoint)) + StartPoint
+  Value += Me.Trims[Channel]
+  Value = GetEndpointAdjustment(Channel, Value)
+  Me.SetPWM(GetChannel(Channel), 0, Value)
+End
+
+Public Function GetChannel(Channel As Integer) As Integer
+  If Me.PlugOrder0To15 Then
+    Return Channel
+  Else
+    Return 15 - Channel
+  End If
+End
+
+Public Function GetReversal(Channel As Integer, Percent As Float) As Float
+  If Me.Reversals[Channel] Then
+    Return 1 - Percent
+  Else
+    Return Percent
+  End If
+End
+
+Public Function GetEndPointAdjustment(Channel As Integer, Value As Integer) As Integer
+  If Value < Me.EndPoints[Channel, 0] Then
+    Return Me.EndPoints[Channel, 0]
+  Else If Me.EndPoints[Channel, 1] > 0 And If Value > Me.EndPoints[Channel, 1]
+    Return Me.EndPoints[Channel, 1]
+  Else
+    Return Value
+  End If
 End
 
 Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
@@ -49,10 +97,24 @@ Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
 End
 
 Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
-  Print Channel & " = " & OffValue
-  Me.Bus.Write16(LED0_ON_L + (LEDNEXT * Channel), OnValue)
-  Me.Bus.Write16(LED0_OFF_L + (LEDNEXT * Channel), OffValue)
+  Me.Bus.Write16(LED0_ON_L + (LED_NEXT * Channel), OnValue)
+  Me.Bus.Write16(LED0_OFF_L + (LED_NEXT * Channel), OffValue)
 End
+
+Public Sub SetFrequency(hz As Integer)
+  Dim Value As Float = 25000000.0
+  Dim OldMode As Integer
+  Value /= 4096.0
+  Value /= CFloat(hz)
+  Value -= 0.5
+  OldMode = Me.Bus.Read8(MODE1)
+  Me.Bus.Write8(MODE1, OldMode And ALLOW Or SLEEPING)
+  Me.Bus.Write8(PRESCALE, CInt(value))
+  Me.Bus.Write8(MODE1, OldMode)
+  Sleep 0.005
+  Me.Bus.Write8(MODE1, OldMode Or RESTART)
+End
+
 
 ' def software_reset(i2c = None, * * kwargs):
 '     "" "Sends a software reset (SWRST) command to all servo drivers on the bus." ""

@@ -1,18 +1,16 @@
 ' Gambas class file
 
 Const Location As String = "/var/tmp/preview.jpg"
-'Const Location As String = "/home/pi/Pictures/BobCam/Latest.jpg"
 
 Public Servos As New ServoHat
 
-Public Trim0 As Integer = 20
-Public Trim1 As Integer = 100
-
 Public Sub Form_Open()
   PiCam.CreateRAMDrive()
-  Me.SetPicture
-  'TODO Remove When Initisalise Work Finsihed
-  Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
+  Me.Servos.PlugOrder0To15 = False  
+  Me.Servos.Trims[0] = 100
+  Me.Servos.Trims[1] = 20
+  Me.Servos.Reversals[0] = True
+  Me.Servos.EndPoints[1, 1] = 550
   Timer1.Delay = 5000
   Timer1.Start
 End
@@ -23,8 +21,6 @@ End
 
 Public Sub SetPicture()
   Dim Command As String = "raspistill -t 1 -w " & CStr(Me.Width) & " -h " & CStr(Me.Height) & " -n -o " & Location
-  'Dim Command As String = "raspistill -t 1 -w " & CStr(350) & " -h " & CStr(350) & " -n -o " & Location
-  Print Command
   Shell Command Wait
   If Exist(Location) Then
     PictureBox1.Picture = Picture.Load(Location)
@@ -39,8 +35,8 @@ Public Sub Form_Resize()
 End
 
 Public Sub PictureBox1_DblClick()
-  Me.Servos.SetPWM(14, 0, (Mouse.Y / PictureBox1.Height * (600 - 150)) + 150 + Trim0)
-  Me.Servos.SetPWM(15, 0, ((PictureBox1.Width - Mouse.X) / PictureBox1.Width * (600 - 150)) + 150 + Trim1)
+  Me.Servos.SetServo(0, Mouse.X, PictureBox1.Width, 0)
+  Me.Servos.SetServo(1, Mouse.Y, PictureBox1.Height, 0)
 End
 
 Public Sub ButtonClose_Click()
