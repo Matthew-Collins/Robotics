@@ -1,0 +1,67 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,59,44)
+  Icon = Picture["images.png"]
+  Arrangement = Arrange.Vertical
+  { Panel3 Panel
+    MoveScaled(0,0,35,15)
+    Expand = True
+    Arrangement = Arrange.Fill
+    { PictureBox1 PictureBox
+      MoveScaled(0,0,23,14)
+      Expand = True
+      Alignment = Align.Center
+    }
+    { LabelFullScreen Label
+      MoveScaled(16,2,16,8)
+      Font = Font["Bold,+5"]
+      Foreground = Color.White
+      Expand = True
+      Alignment = Align.Center
+      Transparent = True
+    }
+  }
+  { Timer1 #Timer
+    #MoveScaled(51,2)
+  }
+  { Panel2 Panel
+    MoveScaled(1,16,64,0)
+    Background = Color.Black
+  }
+  { HBoxControl HBox
+    MoveScaled(0,17,58,4)
+    { LabelTips Label
+      MoveScaled(2,1,45,3)
+      ToolTip = ("Use 'C' to centre the camera\nUse the arrow keys to move the camera\nUse 'Insert' to take a photo")
+      Expand = True
+      Alignment = Align.Center
+    }
+    { ButtonFullScreen Button
+      MoveScaled(44,0,13,4)
+      ToolTip = ("Make the image fill the screen")
+      Text = Shortcut(("Full screen"), "F")
+    }
+  }
+  { Panel1 Panel
+    MoveScaled(0,23,64,0)
+    Background = Color.Black
+  }
+  { HBoxPhotoDetails HBox
+    MoveScaled(0,25,58,4)
+    Visible = False
+    { LabelPhotoTaken Label
+      MoveScaled(0,0,45,3)
+      Expand = True
+      Alignment = Align.Center
+    }
+    { ButtonHide Button
+      MoveScaled(42,0,13,4)
+      ToolTip = ("Hide this button and photo detail message")
+      Text = Shortcut(("Hide"), "H")
+    }
+  }
+  { Timer2 #Timer
+    #MoveScaled(44,2)
+  }
+}

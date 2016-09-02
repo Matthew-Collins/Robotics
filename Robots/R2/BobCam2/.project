@@ -1,0 +1,14 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.8.4
+Title=BobCam2
+Startup=FMain
+Icon=images.png
+Version=0.0.10
+Component=gb.image
+Component=gb.gui
+Component=gb.form
+Authors="Matthew Collins & Charlie Ogier (C) 2016"
+TabSize=2
+Language=en_US
+CreateShortcut=1
+Packager=1
