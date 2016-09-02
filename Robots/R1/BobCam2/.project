@@ -1,12 +1,14 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.8.4
-Title=ServoBlaster
+Title=BobCam2
 Startup=FMain
-Version=0.0.6
+Icon=images.png
+Version=0.0.10
 Component=gb.image
-Component=gb.qt4
+Component=gb.gui
 Component=gb.form
-Component=gb.qt4.ext
+Authors="Matthew Collins & Charlie Ogier (C) 2016"
 TabSize=2
+Language=en_US
 CreateShortcut=1
 Packager=1

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Public sb As Process
+Public siCentreUpDown As Short = 0
+Public siCentreLeftRight As Short = 0
+
+Public Sub Start()
+
+sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
+ServoCentreAll
+Me.Center
+Wait
+
+End
+
+Public Sub ServoLeftRight()
+
+Servo(7, FMain.siLeftRightDegrees) 
+
+End
+
+Public Sub ServoUpDown()
+
+Servo(2, FMain.siUpDownDegrees) 
+
+End
+
+Public Sub ServoCentreAll()
+
+Servo(7, siCentreUpDown)
+Wait 0.25
+Servo(2, siCentreLeftRight)
+
+End
+
+Public Sub Servo(siEcho As Short, siDegrees As Short)
+
+Shell "echo " & Str(siEcho) & "=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+
+End
+

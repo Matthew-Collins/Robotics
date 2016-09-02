@@ -1,0 +1,188 @@
+' Gambas class file
+
+' BobCam2
+'
+' Copyright (C) Matthew Collins & Charlie Ogier (C) 2016
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor, 
+' Boston, MA  02110-1301  USA
+
+Public sb As Process                                                'Process for 'servod'
+Public siCount As Short                                             'Counter
+Public siUpDownSetting As Short = 26                                'Adjust this if centre setting is not correct
+Public siLeftRightSetting As Short = 0                              'Adjust this if centre setting is not correct
+Public siUpMax As Short = 79                                        'Adjust this if maximum setting is not correct
+Public siDownMax As Short = -45                                     'Adjust this if maximum setting is not correct
+Public siLeftMax As Short = -80                                     'Adjust this if maximum setting is not correct
+Public siRightMax As Short = 78                                     'Adjust this if maximum setting is not correct
+Public siUpDownDegrees As Short = siUpDownSetting                   'Initialise position variable
+Public siLeftRightDegrees As Short = siLeftRightSetting             'Initialise position variable
+Public sPhotoStore As String = User.Home &/ "Pictures" &/ "BoBCam"  'Initialise folder for storing photos taken
+
+Public Sub Form_Open()                                              'Set up the program
+
+If Not Exist(sPhotoStore) Then Mkdir sPhotoStore                    'If the folder to store the photos does not exist then..
+LabelTips.Text = "Hover the mouse here for help"                    'Add some text to the label
+sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'Set up the process - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
+Wait 1                                                              'Wait
+Servo(2, siUpDownDegrees)                                           'Center the camera up and down
+Wait 1                                                              'Wait
+Servo(7, siLeftRightDegrees)                                        'Center the camera left and right
+Me.Center                                                           'Centre the form on the screen
+CreateRAMDrive()                                                    'Create a RAM drive to store the last photo taken
+SetPicture                                                          'Take a photo and display it
+Timer1.Delay = 700                                                  'Set the timer, takes a picture every .7 of a second
+Timer1.Start                                                        'Start timer
+
+End
+
+Public Sub Timer1_Timer()                                           'Timer
+
+SetPicture                                                          'Take a photo and display it
+
+End
+
+Public Sub SetPicture()                                             'Take a photo and display it
+Dim sLocation As String = "/var/tmp/preview.jpg"                    'A place to store the photo
+Dim sCommand As String = "raspistill -t 1 -w " & Str(Me.Width) & 
+  " -h " & Str(Me.Height) & " -n -o " & sLocation                   'Command to actually take the photo
+
+Shell sCommand                                                      'Shell the command to take the photo
+
+If Exist(sLocation) Then                                            'If sLocation existes then..
+  PictureBox1.Picture = Picture.Load(sLocation)                     'Put the photo in the PictureBox
+End If
+
+End
+
+Public Sub Form_KeyPress()                                          'To catch any key pressed
+
+If Key.Code = Key.Up Then                                           'If the key pressed is 'Up' then 
+  Inc siUpDownDegrees                                               'Increase the variable
+  If siUpDownDegrees > siUpMax Then siUpDownDegrees = siUpMax       'Ensure it's in the correct range
+  Servo(2, siUpDownDegrees)                                         'Activate the servo
+  Return                                                            'Get out of here
+End If
+
+If Key.Code = Key.Down Then                                         'If the key pressed is 'Up' then..
+    Dec siUpDownDegrees                                             'Decrease the variable
+    If siUpDownDegrees < siDownMax Then siUpDownDegrees = siDownMax 'Ensure it's in the correct range
+    Servo(2, siUpDownDegrees)                                       'Activate the servo
+    Return                                                          'Get out of here
+End If
+
+If Key.Code = Key.Right Then                                        'If the key pressed is 'Up' then..
+  Inc siLeftRightDegrees                                            'Increase the variable
+  If siLeftRightDegrees > siRightMax Then siLeftRightDegrees = siRightMax 'Ensure it's in the correct range
+  Servo(7, siLeftRightDegrees)                                      'Activate the servo
+  Return                                                            'Get out of here
+End If
+
+If Key.Code = Key.Left Then                                         'If the key pressed is 'Left' then..
+  Dec siLeftRightDegrees                                            'Decrease the variable
+  If siLeftRightDegrees < siLeftMax Then siLeftRightDegrees = siLeftMax 'Ensure it's in the correct range
+  Servo(7, siLeftRightDegrees)                                      'Activate the servo
+  Return                                                            'Get out of here
+End If
+
+If Key.Code = Key["C"] Then                                         'If the key pressed is 'Left' then..
+  siUpDownDegrees = siUpDownSetting                                 'Reset original positional setting
+  siLeftRightDegrees = siLeftRightSetting                           'Reset original positional setting
+  Servo(7, siLeftRightDegrees)                                      'Activate the servo
+  Wait 1                                                            'Wait
+  Servo(2, siUpDownDegrees)                                         'Activate the servo
+  Return                                                            'Get out of here
+End If
+
+If Key.Code = Key.Ins Then                                          'If the key pressed is 'Insert' then..
+  HBoxPhotoDetails.Visible = True                                   'Show the Photodetails HBox
+  If Me.FullScreen = True Then Me.Mouse = Mouse.Default             'Display the mouse
+  Copy "/var/tmp/preview.jpg" To sPhotoStore &/ Format(Date(Now), "dd-mm-yyyy") & " " & Left(Str(Time(Now)), 8) 'Copy the displayed file to the photo store with formatted date and time as a file name
+  LabelPhotoTaken.text = "Last photo " &/ sPhotoStore &/ Format(Date(Now), "dd-mm-yyyy") & " " & Left(Str(Time(Now)), 8) 'Display the file name
+  Return                                                            'Get out of here
+Endif
+
+If Key.Code = Key.Escape Then                                       'If the 'Escape' key is pressed then..
+  HBoxControl.Visible = True                                        'Make the bottom control panel visible
+  Me.FullScreen = False                                             'Get out of full screen mode
+  Me.Mouse = Mouse.Default                                          'Display the mouse
+  SetPicture                                                        'Take a photo and display it
+  Return                                                            'Get out of here
+Endif
+
+End
+
+Public Sub ButtonFullScreen_Click()                                 'What to do if the 'Full screen' button is clicked
+
+LabelFullScreen.Text = "Press 'Esc' to exit full screen mode"       'Put some text in the label
+siCount = 5                                                         'Delay in seconds
+Timer2.Start                                                        'Start Timer2
+Me.SetFocus                                                         'Set focus on the form so keys pressed are caught
+
+End
+
+Public Sub Timer2_Timer()                                           'Used to close the bottom control panel gradually
+
+Dec siCount                                                         'Decrease the value of siCount
+
+If siCount = 3 Then                                                 'If the height of the the bottom control box is zero then
+  HBoxControl.Visible = False                                       'Hide the the bottom control box
+  Me.FullScreen = True                                              'Make the form 'Fullscreen'
+  SetPicture                                                        'Take a photo and display it
+Endif
+
+If siCount = 0 Then                                                 'Final count down to full screen
+  Me.Mouse = Mouse.blank                                            'Hide the mouse pointer
+  LabelFullScreen.Text = ""                                         'Empty the label of any text
+  Timer2.Stop                                                       'Stop the timer
+Endif
+
+End
+
+Public Sub CreateRAMDrive()                                         'To create a RAM drive to hold the SSH Preview picture
+Dim sFstab As String                                                'To store the details in the fstab file
+
+If Not Exist("/var/tmp") Then Mkdir "/var/tmp"                      'Does this folder exist, if not create it
+
+sFstab = File.Load("/etc/fstab")                                    'Load the contents of fstab into sFstab
+
+If Not InStr(sFstab, "tmpfs /var/tmp tmpfs nodev,nosuid,size=3M 0 0") Then 'If the sting we need to create the 3Meg RAM drive is not there then..
+  sFstab &= "\ntmpfs /var/tmp tmpfs nodev,nosuid,size=3M 0 0\n"     'Add the string to the end of the file
+  File.Save(User.Home &/ "fstab", sFstab)                           'Save the file to the Home folder
+  Shell "sudo mv ~/fstab /etc/fstab"                                'Move the file to the 'etc' folder
+  Shell "sudo mount -a"                                             'Mount all drives including our new one
+Endif
+
+End
+
+Public Sub Servo(siEcho As Short, siDegrees As Short)               'Servo control
+
+Shell "echo " & Str(siEcho) & "=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster" 'Servo command to move the camera
+'Print "LR " & siLeftRightDegrees                                   'For debugging only
+'Print "UD " & siUpDownDegrees                                      'For debugging only
+
+End
+
+Public Sub ButtonHide_Click()                                       'What to do when the 'Hide' button is clicked
+
+HBoxPhotoDetails.Visible = False                                    'Make the HBox visible
+
+If Me.FullScreen = True Then                                        'If the screen is in 'Full screen' mode then..
+  HBoxPhotoDetails.Visible = False                                  'Hide the Photo details HBox
+  Me.Mouse = Mouse.blank                                            'Hide the mouse
+Endif
+
+End
+

@@ -8,15 +8,13 @@ Count=0
 Geometry=[-1,-1,270,270]
 
 [Executable]
-Path="ServoBlaster.gambas"
+Path="Joypad.gambas"
 
 [FCommit]
-LastCommit="New ServoHat with Advanced Features\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .gambas/I2C\nM       .gambas/SERVOHAT\nM       .settings\nM       .src/FMain.class\n~       .src/ServoHat.class\n~       .src/i2c.class\nM       .startup"
+LastCommit="New ServoHat with Advanced Features\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .gambas/I2C\nM       .gambas/SERVOHAT\nM       .settings\nA       .src/ServoHat.class\nA       .src/i2c.class\nM       .startup"
 
 [OpenFile]
-Count=1
-Active=1
-File[1]=".src/FMain.class:0.70"
+Count=0
 
 [VersionControl]
 RememberPassword=1
