@@ -2,18 +2,22 @@
 
 'Public sb As Process
 Public Servos As New ServoHat
-Public Trim0 As Integer = 20 + 50
-Public Trim1 As Integer = 100
 
 Public bShiftTrigger As Boolean
+
+Public Sub _new()
+  Me.Servos.PlugOrder0To15 = False  
+  Me.Servos.Trims[0] = 100
+  Me.Servos.Trims[1] = 20
+  Me.Servos.Reversals[0] = True
+  Me.Servos.Reversals[1] = True
+  Me.Servos.EndPoints[1, 1] = 550
+End
 
 Public Sub Form_Open()
 
 'sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
 'sb = Exec ["sudo", "/home/pi/Documents/Robotics/Robots/R1/ServoBlaster/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
-
-'TODO Remove When Initisalise Work Finsihed
-Shell "cd " & User.Home &/ "robot" &/ " && " & " sudo python servo.py" & " -s " & Str(0) & " -p " & Str(CInt(600 - 150 / 2)) & " -d " & Str(1) Wait
 
 Wait 0.25
 ButtonFrontSensorCenter_Click
@@ -63,7 +67,7 @@ SliderUDFrontSensor.Value = siDegrees
 End
 
 Public Sub ButtonFrontSensorCenter2_Click()
-Dim siDegrees As Short = 20
+Dim siDegrees As Short = 0
 
 Servo(7, siDegrees) 
 SliderUDFrontSensor.Value = siDegrees
@@ -215,28 +219,19 @@ End
 
 Public Sub Servo(siEcho As Short, siDegrees As Short)
 
- Dim Position As Integer
-
- Select Case siEcho
-   Case 2
-     SiEcho = 1
-   Case 6
-     SiEcho = 1
-   Case 7
-     siEcho = 0
- End Select
-
- Position = ((- siDegrees + 90) / 180 * (600 - 150)) + 150
- Select Case siEcho
-   Case 0
-     Position += Trim0
-   Case 1
-     Position += Trim1
- End Select
- Me.Servos.SetPWM(14 + siEcho, 0, Position)
+  Me.Servos.SetServo(GetServo(siEcho), siDegrees)
 
   'Shell "echo " & Str(siEcho) & "=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 
+End
+
+Public Function GetServo(siEcho As Integer) As Integer
+  Select Case siEcho
+    Case 7
+      Return 1
+    Case Else
+      Return 0
+  End Select
 End
 
 Public Sub Form_Close()
