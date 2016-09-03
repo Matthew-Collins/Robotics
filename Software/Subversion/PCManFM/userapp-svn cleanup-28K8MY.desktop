@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SVN CleanUp
+Exec=svn cleanup %f
+Categories=Other;
+NoDisplay=true
+MimeType=inode/directory
+Terminal=true
+X-KeepTerminal=true

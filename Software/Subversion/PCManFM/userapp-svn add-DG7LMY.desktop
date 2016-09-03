@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SVN Add
+Exec=svn add %f
+Categories=Other;
+NoDisplay=true
+MimeType=text/plain
+Terminal=true
+X-KeepTerminal=true

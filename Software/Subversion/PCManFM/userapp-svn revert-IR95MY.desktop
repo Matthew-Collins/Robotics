@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SVN Revert
+Exec=svn revert %f -R
+Categories=Other;
+NoDisplay=true
+MimeType=inode/directory
+Terminal=true
+X-KeepTerminal=true

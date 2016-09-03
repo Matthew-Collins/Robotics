@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=SVN Update
+Exec=svn update
+Categories=Other;
+NoDisplay=false
+MimeType=inode/directory
+Terminal=true
+StartupNotify=false
+X-KeepTerminal=true
