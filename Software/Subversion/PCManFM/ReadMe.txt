@@ -5,7 +5,7 @@ To Create Right Click Options for Plain Text File and Folders
 1) Copy *.desktop files into: 
 /home/pi/.local/share/applications
 
-2) Apend into:
+2) Append into:
 /home/pi/.config/mimeapps.list
 
 [Added Associations]
