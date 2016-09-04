@@ -2,4 +2,150 @@
 
 Public Picon As New PiconZero
 
+Public Sub Form_Open()
+  With Me.Picon
+    .Reversals[0] = True
+    .Reversals[1] = True
+    .Reversals[2] = True
+    .Trims[0] = -6
+    .Trims[1] = -20
+    .Trims[2] = 10
+    .EndPoints[1, 1] = 120
+    .EndPoints[2, 0] = 65
+    .EndPoints[2, 1] = 136
+  End With
+  ButtonCentreAll_Click
+  Me.Center
+  Timer1.delay = 1000
+  Timer1.Start
+End
 
+Public Sub Form_Close()
+  Me.Picon.CleanUp
+End
+
+
+Public Sub ButtonFrontSensorLeft_Click()
+  SliderLRFrontSensor.Value = -90
+End
+
+Public Sub ButtonFrontSensorCenter_Click()
+  SliderLRFrontSensor.Value = 0
+End
+
+Public Sub ButtonFrontSensorRight_Click()
+  SliderLRFrontSensor.Value = 90
+End
+
+
+Public Sub ButtonFrontSensorUp_Click()
+  SliderUDFrontSensor.Value = 90
+End
+
+Public Sub ButtonFrontSensorCenter2_Click()
+  SliderUDFrontSensor.Value = 0
+End
+
+Public Sub ButtonFrontSensorDown_Click()
+  SliderUDFrontSensor.Value = -90
+End
+
+Public Sub ButtonCentreAll_Click()
+  SliderLRFrontSensor.Value = 0
+  SliderLRFrontSensor_Change
+  SliderUDFrontSensor.Value = 0
+  SliderUDFrontSensor_Change
+  SliderSteering.Value = 0
+  SliderSteering_Change
+End
+
+
+Public Sub SliderLRFrontSensor_Change()
+  Me.Picon.SetServo(0, SliderLRFrontSensor.Value)
+End
+
+Public Sub SliderUDFrontSensor_Change()
+  Me.Picon.SetServo(1, SliderUDFrontSensor.Value)
+End
+
+Public Sub SliderSteering_Change()
+  Me.Picon.SetServo(2, SliderSteering.Value)
+End
+
+
+Public Sub YesNo_Click()
+  Dim siDegrees As Short
+  Dim siCount, siYesNo As Short
+  Dim fDelay As Float
+
+  If Last.text = "&No" Then 
+    siYesNo = 0
+    fDelay = 0.4
+  Else
+    siYesNo = 1
+    fDelay = 0.1
+  End If
+
+  ButtonCentreAll_Click
+
+  For siCount = 0 To 5
+    siDegrees = -60
+    Me.Picon.SetServo(siYesNo, siDegrees)
+    Wait fDelay
+    siDegrees = 60
+    Me.Picon.SetServo(siYesNo, siDegrees)
+    Wait fDelay
+  Next
+
+  ButtonCentreAll_Click
+
+End
+
+Public Sub Form_KeyPress()
+  If Key.Shift Then 
+    PanelControls.Visible = False
+    PanelJoyStick.Visible = True
+  End If
+End
+
+Public Sub Form_KeyRelease()
+  PanelControls.Visible = True
+  PanelJoyStick.Visible = False
+  ButtonCentreAll_Click
+End
+
+Public Sub PanelJoyStick_MouseMove()
+  SliderLRFrontSensor.Value = (Mouse.X / PanelJoyStick.Width * 180) - 90
+  SliderUDFrontSensor.Value = ((PanelJoyStick.Height - Mouse.Y) / PanelJoyStick.Height * 180) - 90
+End
+
+Public Sub Timer1_Timer()
+  Dim sLine As String
+  Dim siLine As Short
+
+  'Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
+
+  If Left(sLine, 8) <> "Distance" Then Return
+
+  sLine = Left(sline, Len(sline) - 1)
+  LabelSonar.text = sLine & " cms"
+
+  sLine = Replace(sLine, "Distance: ", "")
+  siLine = Val(sLine)
+
+  If siLine < 10 And siLine > 4 Then
+    VBoxSonar.Background = Color.Yellow
+    LabelSonar.Foreground = Color.Black
+  End If
+
+  If siLine < 4 Then
+    VBoxSonar.Background = Color.Red
+    LabelSonar.Foreground = Color.Yellow
+  End If
+
+  If siLine >= 10 Then
+    VBoxSonar.Background = Color.Green
+    LabelSonar.Foreground = Color.Black
+  End If
+
+End

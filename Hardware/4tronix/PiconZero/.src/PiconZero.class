@@ -17,8 +17,8 @@ Const UPDATENOW As Integer = 19
 Const RESET As Integer = 20
 
 'Other:
-Const StartPoint As Integer = 150
-Const EndPoint As Integer = 600
+Const StartPoint As Integer = 0
+Const EndPoint As Integer = 180
 
 Public Bus As I2c
 
@@ -29,15 +29,16 @@ Public EndPoints[16, 2] As Integer
 
 
 Public Sub _new()
+  Dim Channel As Integer
+
   Me.Bus = New I2c(REVISION_PI2_AND_PI3, ADDRESS)
 
   Me.CleanUp()
 
-  Me.Bus.Write8(OUTCFG0 + 0, 2)
-  Me.Bus.Write8(OUTPUT0 + 0, 90)
-
-  Me.Bus.Write8(OUTCFG0 + 1, 2)
-  Me.Bus.Write8(OUTPUT0 + 1, 90)
+  'Set All Channels to Servos
+  For Channel = 0 To 5
+    Me.Bus.Write8(OUTCFG0 + Channel, 2)
+  Next
 
 End
 
@@ -50,7 +51,7 @@ Public Sub SetServo(Channel As Integer, Value As Integer, Optional Max As Intege
   Value = (GetReversal(Channel, (Value - Min) / (Max - Min)) * (EndPoint - StartPoint)) + StartPoint
   Value += Me.Trims[Channel]
   Value = GetEndpointAdjustment(Channel, Value)
-  Me.SetPWM(GetChannel(Channel), 0, Value)
+  SetOutput(GetChannel(Channel), Value)
 End
 
 Public Function GetChannel(Channel As Integer) As Integer
@@ -79,19 +80,15 @@ Public Function GetEndPointAdjustment(Channel As Integer, Value As Integer) As I
   End If
 End
 
-Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
-  'Me.Bus.Write16(ALL_LED_ON_L, OnValue)
-  'Me.Bus.Write16(ALL_LED_OFF_L, OffValue)
-End
-
-Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
-  'Me.Bus.Write16(LED0_ON_L + (LED_NEXT * Channel), OnValue)
-  'Me.Bus.Write16(LED0_OFF_L + (LED_NEXT * Channel), OffValue)
+Private Sub SetOutput(Channel As Integer, Value As Integer)
+  Me.Bus.Write8(OUTPUT0 + Channel, Value)
 End
 
 
 ' #Python Library For 4 tronix Picon Zero
 ' #Note that all I2C accesses are wrapped In Try clauses With repeats
+
+
 ' 
 ' import smbus, Time
 '  
