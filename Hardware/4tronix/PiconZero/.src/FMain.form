@@ -4,7 +4,7 @@
   MoveScaled(0,0,57,65)
   Arrangement = Arrange.Vertical
   { Panel13 Panel
-    MoveScaled(-8.5556,1.4444,55,35)
+    MoveScaled(-7.5556,1.4444,55,35)
     Background = &HBFBFBF&
     Border = Border.Plain
     { Panel9 HBox

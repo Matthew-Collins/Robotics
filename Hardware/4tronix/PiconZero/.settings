@@ -5,9 +5,7 @@ Count=0
 Count=0
 
 [OpenFile]
-File[1]=".src/PiconZero.class:16.0"
-Active=1
-Count=1
+Count=0
 
 [Watches]
 Count=0
