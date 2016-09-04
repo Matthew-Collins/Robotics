@@ -8,11 +8,7 @@ Count=0
 Geometry=[-1,-1,270,270]
 
 [OpenFile]
-Active=1
-File[1]=".src/FMain.class:138.3"
-File[2]=".src/FMain.form"
-File[3]=".src/Gpio.module:22.0"
-Count=3
+Count=0
 
 [Watches]
 Count=0

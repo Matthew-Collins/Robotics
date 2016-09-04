@@ -5,8 +5,7 @@ Public bShiftTrigger As Boolean
 
 Public Sub Form_Open()
 
-' sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
-sb = Exec ["sudo", "servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins 
+sb = Exec ["sudo", "/home/pi/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins
 
 Wait 0.25
 ButtonFrontSensorCenter_Click
@@ -26,7 +25,7 @@ End
 Public Sub ButtonFrontSensorCenter_Click()
 Dim siDegrees As Short = 0
 
-Servo(6, siDegrees) 
+Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderLRFrontSensor.Value = siDegrees
 
 End
@@ -34,7 +33,7 @@ End
 Public Sub ButtonFrontSensorLeft_Click()
 Dim siDegrees As Short = -90
 
-Servo(6, siDegrees) 
+Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderLRFrontSensor.Value = siDegrees
 
 End
@@ -42,7 +41,7 @@ End
 Public Sub ButtonFrontSensorRight_Click()
 Dim siDegrees As Short = 90
 
-Servo(6, siDegrees) 
+Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderLRFrontSensor.Value = siDegrees
 
 End
@@ -50,7 +49,7 @@ End
 Public Sub ButtonFrontSensorUp_Click()
 Dim siDegrees As Short = 90
 
-Servo(7, siDegrees) 
+Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderUDFrontSensor.Value = siDegrees
 
 End
@@ -58,7 +57,7 @@ End
 Public Sub ButtonFrontSensorCenter2_Click()
 Dim siDegrees As Short = 20
 
-Servo(7, siDegrees) 
+Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderUDFrontSensor.Value = siDegrees
 
 End
@@ -66,7 +65,7 @@ End
 Public Sub ButtonFrontSensorDown_Click()
 Dim siDegrees As Short = -90
 
-Servo(7, siDegrees) 
+Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 SliderUDFrontSensor.Value = siDegrees
 
 End
@@ -81,14 +80,14 @@ End
 Public Sub SliderLRFrontSensor_Change()
 Dim siDegrees As Short = SliderLRFrontSensor.Value
 
-Servo(6, siDegrees) 
+Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 
 End
 
 Public Sub SliderUDFrontSensor_Change()
 Dim siDegrees As Short = SliderUDFrontSensor.Value
 
-Servo(7, siDegrees) 
+Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
 
 End
 
@@ -105,10 +104,10 @@ If siY > 90 Then siY = 90
 If siY < -90 Then siY = -90
 
 If bShiftTrigger Then
-  Servo(7, - siY) 
-  Servo(6, siX) 
+  Servo(7, siY) 'Shell "echo 7=" & Str(50 + ((90 - siY) * 200 / 180)) & " > /dev/servoblaster"
+  Servo(6, siX) 'Shell "echo 6=" & Str(50 + ((90 - siX) * 200 / 180)) & " > /dev/servoblaster"
   SliderLRFrontSensor.Value = siX
-  SliderUDFrontSensor.Value = - siY
+  SliderUDFrontSensor.Value = siY
 End If
 
 End
@@ -177,8 +176,7 @@ Public Sub Timer1_Timer()
 Dim sLine As String
 Dim siLine As Short
 
-Exec ["python", "sonarTestCO.py"] To sLine
-'Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
+Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
 
 If Left(sLine, 8) <> "Distance" Then Return
 
