@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Public Picon As New PiconZero
+Public Sonic As New Ultrasonic
 
 Public Sub Form_Open()
   With Me.Picon
@@ -57,6 +58,8 @@ Public Sub ButtonCentreAll_Click()
   SliderUDFrontSensor_Change
   SliderSteering.Value = 0
   SliderSteering_Change
+  SliderThrottleAndBrake.Value = 0
+  SliderThrottleAndBrake_Change
 End
 
 
@@ -70,6 +73,10 @@ End
 
 Public Sub SliderSteering_Change()
   Me.Picon.SetServo(2, SliderSteering.Value)
+End
+
+Public Sub SliderThrottleAndBrake_Change()
+  Me.Picon.SetServo(3, SliderThrottleAndBrake.Value)
 End
 
 
@@ -120,32 +127,22 @@ Public Sub PanelJoyStick_MouseMove()
 End
 
 Public Sub Timer1_Timer()
-  Dim sLine As String
-  Dim siLine As Short
+  Dim Distance As Short = Me.Sonic.GetDistance()
 
-  'Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
+  LabelSonar.text = "Distance: " & Str(Distance) & " cms"
 
-  If Left(sLine, 8) <> "Distance" Then Return
-
-  sLine = Left(sline, Len(sline) - 1)
-  LabelSonar.text = sLine & " cms"
-
-  sLine = Replace(sLine, "Distance: ", "")
-  siLine = Val(sLine)
-
-  If siLine < 10 And siLine > 4 Then
+  If Distance < 10 And Distance > 4 Then
     VBoxSonar.Background = Color.Yellow
     LabelSonar.Foreground = Color.Black
   End If
 
-  If siLine < 4 Then
+  If Distance < 4 Then
     VBoxSonar.Background = Color.Red
     LabelSonar.Foreground = Color.Yellow
   End If
 
-  If siLine >= 10 Then
+  If Distance >= 10 Then
     VBoxSonar.Background = Color.Green
     LabelSonar.Foreground = Color.Black
   End If
-
 End

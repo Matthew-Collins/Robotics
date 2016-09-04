@@ -1,6 +1,6 @@
 ' Gambas class file
 
-'Dependancy: Must have Adafruit Servo/PWM RaspberryPi Hat
+'Dependancy: Must have 4Tronix PiconZero Hat
 
 'i2c Revisions
 Const REVISION_PI1 As Integer = &H00

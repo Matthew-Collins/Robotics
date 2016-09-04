@@ -1,0 +1,144 @@
+' Gambas class file
+
+'Dependancy: Must have HC-SR04 Ultrasonic Senor
+
+Const Pin As Integer = 38
+
+Public io As New GPIO
+
+Public Sub _new()
+  io.SetWarnings(False)
+  io.SetMode(True)
+End
+
+Public Function GetDistance() As Integer
+  Dim Start, Count As Date 
+
+  Return 3
+
+'     GPIO.setup(sonar, GPIO.OUT)
+  io.SetUp(Me.Pin, True)
+
+'     #Send 10 us pulse To trigger
+'     GPIO.output(sonar, True)
+  io.Output(Me.pin, True)
+
+'     time.sleep(0.00001)
+  Sleep 0.00001
+
+'     GPIO.output(sonar, False)
+  io.Output(Me.pin, False)
+
+'     start = time.time()
+  Start = Now()
+
+'     count = time.time()
+  Count = Now()
+
+'     GPIO.setup(sonar, GPIO.IN)
+  io.SetUp(Me.pin, False)
+
+'     While GPIO.input(sonar) == 0 And time.time() - count < 0.1:
+'         start = time.time()
+'     count = time.time()
+'     Stop = count
+'     While GPIO.input(sonar) == 1 And time.time() - count < 0.1:
+'         Stop = time.time()
+'     #Calculate pulse length
+'     elapsed = Stop - start
+'     #Distance pulse travelled In that Time Is Time
+'     #multiplied by the speed Of sound(cm / s)
+'     distance = elapsed * 34000
+'     #That was the distance there And back so halve the value
+'     distance = distance / 2
+'     Return distance
+
+End
+
+Public Sub CleanUp()
+  io.CleanUp
+End
+
+
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' #
+' #Python Module To handle an HC - SR04 Ultrasonic Module On a single Pin
+' #Aimed at Use On Picon Zero
+' #
+' #Created by Gareth Davies, Mar 2016
+' #Copyright 4 tronix
+' #
+' #This code Is In the Public domain And may be freely copied And used
+' #No warranty Is Provided Or implied
+' #
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' 
+' import RPi.GPIO As GPIO, sys, threading, Time, os, subprocess
+' 
+' 
+' #Define Sonar Pin(Uses same pin For both Ping And Echo)
+' sonar = 38
+' 
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' #General Functions
+' #
+' def init():
+'     GPIO.setwarnings(False)
+'     GPIO.setmode(GPIO.BOARD)
+' 
+' def cleanup():
+'     GPIO.cleanup()
+' 
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' 
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' #UltraSonic Functions
+' #
+' #getDistance().Returns the distance In cm To the nearest reflecting object.0 == no object
+' def getDistance():
+'     GPIO.setup(sonar, GPIO.OUT)
+'     #Send 10 us pulse To trigger
+'     GPIO.output(sonar, True)
+'     time.sleep(0.00001)
+'     GPIO.output(sonar, False)
+'     start = time.time()
+'     count = time.time()
+'     GPIO.setup(sonar, GPIO.IN)
+'     While GPIO.input(sonar) == 0 And time.time() - count < 0.1:
+'         start = time.time()
+'     count = time.time()
+'     Stop = count
+'     While GPIO.input(sonar) == 1 And time.time() - count < 0.1:
+'         Stop = time.time()
+'     #Calculate pulse length
+'     elapsed = Stop - start
+'     #Distance pulse travelled In that Time Is Time
+'     #multiplied by the speed Of sound(cm / s)
+'     distance = elapsed * 34000
+'     #That was the distance there And back so halve the value
+'     distance = distance / 2
+'     Return distance
+' 
+' #End Of UltraSonic Functions    
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+
+
+
+' #! /usr/bin/env python
+' #
+' #Basic test Of HC - SR04 ultrasonic sensor On Picon Zero
+' 
+' import hcsr04, Time
+' 
+' hcsr04.init()
+' 
+' try:
+'     While True:
+'         distance = Int(hcsr04.getDistance())
+'         Print "Distance:", distance
+'         time.sleep(1)
+' except KeyboardInterrupt:
+'     Print
+' finally:
+'     hcsr04.cleanup()
+

@@ -1,10 +1,10 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,57,65)
+  MoveScaled(0,0,57,64)
   Arrangement = Arrange.Vertical
   { Panel13 Panel
-    MoveScaled(-7.5556,1.4444,55,35)
+    MoveScaled(-8.5714,1.4286,55,35)
     Background = &HBFBFBF&
     Border = Border.Plain
     { Panel9 HBox
@@ -22,7 +22,7 @@
           Padding = 2
           { ButtonFrontSensorLeft Button
             MoveScaled(0,0,9,3)
-            Text = ("&Left")
+            Text = Shortcut(("Left"), "L")
           }
           { Panel3 Panel
             MoveScaled(9,0,2,2)
@@ -30,7 +30,7 @@
           }
           { ButtonFrontSensorCenter Button
             MoveScaled(11,0,9,3)
-            Text = ("&Center")
+            Text = Shortcut(("Center"), "C")
           }
           { Panel2 Panel
             MoveScaled(21,0,1,2)
@@ -38,7 +38,7 @@
           }
           { ButtonFrontSensorRight Button
             MoveScaled(23,0,9,3)
-            Text = ("&Right")
+            Text = Shortcut(("Right"), "R")
           }
         }
         { Panel4 HBox
@@ -46,7 +46,7 @@
           Padding = 2
           { ButtonFrontSensorUp Button
             MoveScaled(1,0,9,3)
-            Text = ("&Up")
+            Text = Shortcut(("Up"), "U")
           }
           { Panel6 Panel
             MoveScaled(10,0,3,2)
@@ -54,7 +54,7 @@
           }
           { ButtonFrontSensorCenter2 Button
             MoveScaled(13,0,9,3)
-            Text = ("C&enter")
+            Text = Shortcut(("Center"), "e")
           }
           { Panel5 Panel
             MoveScaled(22,1,2,2)
@@ -62,7 +62,7 @@
           }
           { ButtonFrontSensorDown Button
             MoveScaled(25,0,9,3)
-            Text = ("&Down")
+            Text = Shortcut(("Down"), "D")
           }
         }
         { Panel16 Panel
@@ -74,7 +74,7 @@
           { ButtonYes Button YesNo
             Name = "ButtonYes"
             MoveScaled(1,0,9,3)
-            Text = ("&Yes")
+            Text = Shortcut(("Yes"), "Y")
           }
           { Panel8 Panel
             MoveScaled(10,0,3,2)
@@ -82,7 +82,7 @@
           }
           { ButtonCentreAll Button
             MoveScaled(13,0,9,3)
-            Text = ("Centre &All")
+            Text = Shortcut(("Centre All"), "A")
           }
           { Panel15 Panel
             MoveScaled(22,1,2,2)
@@ -91,7 +91,7 @@
           { ButtonNo Button YesNo
             Name = "ButtonNo"
             MoveScaled(25,0,9,3)
-            Text = ("&No")
+            Text = Shortcut(("No"), "N")
           }
         }
         { LabelJoyStick Label
@@ -133,9 +133,9 @@
       }
     }
     { HBox3 HBox
-      MoveScaled(1,0,52,2.5556)
+      MoveScaled(1,0,52,2.5714)
       { LabelFrontSensor Label
-        MoveScaled(5.8889,0.7778,34.7778,2.5556)
+        MoveScaled(5.8571,0.7143,34.7143,2.5714)
         Font = Font["Bold"]
         Expand = True
         Text = ("Front Sensor")
@@ -147,7 +147,7 @@
     MoveScaled(1,37,54,9)
     Background = &HDFDFDF&
     { LabelSteering Label
-      MoveScaled(11,0,34.7778,2.5556)
+      MoveScaled(11,0,34.7143,2.5714)
       Font = Font["Bold"]
       Expand = True
       Text = ("Steering")
@@ -164,10 +164,31 @@
       }
     }
   }
+  { Panel17 VBox
+    MoveScaled(1,47,54,9)
+    Background = &HDFDFDF&
+    { LabelSteering3 Label
+      MoveScaled(11,0,34.7143,2.5714)
+      Font = Font["Bold"]
+      Expand = True
+      Text = ("Throttle and Brake")
+      Alignment = Align.Center
+    }
+    { HBox4 HBox
+      MoveScaled(2,3,50,5)
+      Padding = 10
+      { SliderThrottleAndBrake Slider
+        MoveScaled(2,0,42,5)
+        Expand = True
+        MinValue = -45
+        MaxValue = 45
+      }
+    }
+  }
   { VBoxSonar VBox
-    MoveScaled(7,46,40,8)
+    MoveScaled(7,56,40,8)
     { LabelSteering2 Label
-      MoveScaled(0,0,34.7778,2.5556)
+      MoveScaled(0,0,34.7143,2.5714)
       Font = Font["Bold"]
       Expand = True
       Text = ("Sonar")

@@ -1,0 +1,21 @@
+' Gambas class file
+
+'     GPIO.setwarnings(False)
+Public Sub SetWarnings(Warnings As Boolean)
+End
+
+'     GPIO.setmode(GPIO.BOARD)
+Public Sub SetMode(BoardMode As Boolean)
+End
+
+'     GPIO.setup(sonar, GPIO.OUT)
+Public Sub SetUp(Pin As Integer, Out As Boolean)
+End
+
+'     GPIO.output(sonar, True)
+Public Sub Output(Pin As Integer, Value As Boolean)
+End
+
+'     GPIO.cleanup()
+Public Sub CleanUp()
+End
