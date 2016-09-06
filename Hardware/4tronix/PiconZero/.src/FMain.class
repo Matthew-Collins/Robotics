@@ -17,7 +17,7 @@ Public Sub Form_Open()
   End With
   ButtonCentreAll_Click
   Me.Center
-  Timer1.delay = 1000
+  Timer1.Delay = 3000
   Timer1.Start
 End
 

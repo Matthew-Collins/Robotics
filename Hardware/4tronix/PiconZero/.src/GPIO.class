@@ -1,21 +1,34 @@
 ' Gambas class file
 
-'     GPIO.setwarnings(False)
-Public Sub SetWarnings(Warnings As Boolean)
+Public Const In As Integer = 0
+Public Const Out As Integer = 1
+Public Const PWM As Integer = 2
+
+Public BCM As Boolean = True
+
+Public Sub _new(Optional BCM_Pin_Numbering_Otherwise_Wiring_Pi As Boolean = True)
+  Me.BCM = BCM_Pin_Numbering_Otherwise_Wiring_Pi
 End
 
-'     GPIO.setmode(GPIO.BOARD)
-Public Sub SetMode(BoardMode As Boolean)
+Public Sub SetUp(Pin As Integer, Value As Integer)
+  Dim Command As String = "gpio " & If(BCM, "-g ", "") & " mode " & CStr(Pin) & " " ""
+  Select Case Value
+    Case Out
+      Command &= "output"
+    Case PWM
+      Command &= "pwm"
+    Case Else
+      Command &= "input"
+  End Select
+  Shell Command Wait
 End
 
-'     GPIO.setup(sonar, GPIO.OUT)
-Public Sub SetUp(Pin As Integer, Out As Boolean)
-End
-
-'     GPIO.output(sonar, True)
 Public Sub Output(Pin As Integer, Value As Boolean)
+  Shell "gpio " & If(BCM, "-g ", "") & " write " & CStr(Pin) & " " & If(Value, "1", "0") Wait
 End
 
-'     GPIO.cleanup()
-Public Sub CleanUp()
+Public Function Input(Pin As Integer) As Boolean
+  Dim ReturnValue As String
+  Shell "gpio " & If(BCM, "-g ", "") & " read " & CStr(Pin) Wait To ReturnValue
+  Return CBool(Val(ReturnValue))
 End
