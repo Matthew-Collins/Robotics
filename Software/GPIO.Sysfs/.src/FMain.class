@@ -1,0 +1,8 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+  Dim io As New GPIO_Sysfs
+  io.TurnPinOn(19)
+
+End

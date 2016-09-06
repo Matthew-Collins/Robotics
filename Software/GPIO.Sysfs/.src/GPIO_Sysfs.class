@@ -1,0 +1,55 @@
+' Gambas class file
+
+'Dependancy: Must have GPIO Sysfs Interface for Userspace
+'Web:        https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
+
+
+Public Sub _new()
+End
+
+Public Sub TurnPinOn(Pin As Integer)
+
+  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/export"
+  Sleep 1
+  Shell "echo out > /sys/class/gpio/gpio" & CStr(pin) & "/direction"
+  Shell "echo 1 > /sys/class/gpio/gpio" & CStr(Pin) & "/value"
+  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/unexport"
+
+End
+
+' Web: http://elinux.org/RPi_GPIO_Code_Samples
+
+' sysfs, part Of the raspbian operating system
+
+' For operating system versions prior To the raspbian Jessie release, the Export And unexport Of pins 
+' must be done As Root.Since the raspbian Jessie release the Pi user Is A member Of the group "gpio" And so control 
+' Of the GPIO no longer requires a change To the root user.With Jessie, If using a script As In the code below, you 'll 
+' need To put a 'sleep 1' command in between your 'export' and 'direction' commands to allow time for the operating system
+' To set up the GPIO number specific direction file. 
+
+' #GPIO numbers should be From this list
+' #0, 1, 4, 7, 8, 9, 10, 11, 14, 15, 17, 18, 21, 22, 23, 24, 25
+
+' #Note that the GPIO numbers that you program here refer To the pins
+' #Of the BCM2835 And * Not * the numbers On the pin header. 
+' #So, If you want To activate GPIO7 On the header you should be 
+' #using GPIO4 In this script.Likewise If you want To activate GPIO0
+' #On the header you should be using GPIO17 here.
+
+' #Set up GPIO 4 And set To Output
+' echo "4" > / sys / class / gpio / Export
+' echo "out" > / sys / class / gpio / gpio4 / direction
+
+' #Set up GPIO 7 And set To Input
+' echo "7" > / sys / class / gpio / Export
+' echo "in" > / sys / class / gpio / gpio7 / direction
+
+' #Write Output
+' echo "1" > / sys / class / gpio / gpio4 / value
+
+' #Read From Input
+' cat / sys / class / gpio / gpio7 / value 
+
+' #Clean up
+' echo "4" > / sys / class / gpio / unexport
+' echo "7" > / sys / class / gpio / unexport
