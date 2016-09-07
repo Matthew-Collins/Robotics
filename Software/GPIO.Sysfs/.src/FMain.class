@@ -1,8 +1,17 @@
 ' Gambas class file
 
 Public Sub Form_Open()
+  Dim x As Integer
 
-  Dim io As New GPIO_Sysfs
-  io.TurnPinOn(19)
+  Dim Pin As New GPIO_Sysfs_Pin(20)
+  Pin.SetDirection(True)
+  Pin.SetValue(True)
+  Sleep 2
+  'Pin.SetValue(False)
+  Pin.SetDirection(False)
+  For x = 1 To 100
+    Print Timer & " - " & If(Pin.GetValue(), "True", "False")
+  Next
+  Pin.Close
 
 End

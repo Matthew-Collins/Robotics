@@ -9,11 +9,14 @@ End
 
 Public Sub TurnPinOn(Pin As Integer)
 
-  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/export"
+  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/export" Wait
+
   Sleep 1
-  Shell "echo out > /sys/class/gpio/gpio" & CStr(pin) & "/direction"
-  Shell "echo 1 > /sys/class/gpio/gpio" & CStr(Pin) & "/value"
-  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/unexport"
+  Shell "echo \"out\" > /sys/class/gpio/gpio" & CStr(pin) & "/direction" Wait
+  Shell "echo \"1\" > /sys/class/gpio/gpio" & CStr(Pin) & "/value" Wait
+
+  Sleep 5
+  Shell "echo " & CStr(Pin) & " > /sys/class/gpio/unexport" Wait
 
 End
 
