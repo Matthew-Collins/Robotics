@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Public Pin As Integer
+Public Value As File
 
 Public Sub _new(BCM_Pin_To_Export As Integer)
   Me.Pin = BCM_Pin_To_Export
@@ -22,6 +23,21 @@ Public Function GetValue() As Boolean
   Return CBool(Val(Replace(ReturnValue, "\n", "")))
 End
 
+Public Sub Listen()
+  Me.Value = Open "/sys/class/gpio/gpio" & CStr(Me.Pin) & "/value" For Read Watch
+End
+
+Public Sub File_Read()
+  Dim iByte As Byte
+  Print CStr(Timer)
+  While Not Eof(Me.Value)
+    Read #Value, iByte
+    Print "Got one byte: "; iByte
+  Wend
+End
+
 Public Sub Close()
   Shell "echo " & CStr(Me.Pin) & " > /sys/class/gpio/unexport" Wait
 End
+
+

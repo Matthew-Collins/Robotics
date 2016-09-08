@@ -1,17 +1,47 @@
 ' Gambas class file
 
+Fast
+
+Public Pin As New GPIO_Sysfs_Pin(20)
+
+Public Times[101] As Float
+Public Values[101] As Boolean
+
 Public Sub Form_Open()
+  Me.GetUltrasonicDistance_Attempt_2
+End
+
+Public Sub GetUltrasonicDistance_Attempt_2()
   Dim x As Integer
 
-  Dim Pin As New GPIO_Sysfs_Pin(20)
-  Pin.SetDirection(True)
-  Pin.SetValue(True)
-  Sleep 2
-  'Pin.SetValue(False)
-  Pin.SetDirection(False)
-  For x = 1 To 100
-    Print Timer & " - " & If(Pin.GetValue(), "True", "False")
-  Next
-  Pin.Close
+  Me.Pin.Listen
+  Me.Pin.SetDirection(True)
+  Me.Pin.SetValue(True)
+  Wait 1
+  Me.Pin.SetDirection(False)
 
 End
+
+Public Sub GetUltrasonicDistance_Attempt_1()
+  Dim x As Integer
+
+  Me.Pin.SetDirection(True)
+  Me.Pin.SetValue(True)
+  Sleep 1
+
+  Times[0] = Timer
+  Values[0] = Me.Pin.GetValue()
+  Me.Pin.SetDirection(False)
+
+  For x = 1 To 100
+    Times[x] = Timer
+    Values[x] = Me.Pin.GetValue()
+  Next
+
+  Me.Pin.Close
+
+  For x = 0 To 100
+    Print CStr(x) & " - " & Times[x] & " - " & If(Values[x], "True", "False") 
+  Next
+End
+

@@ -1,14 +1,18 @@
-[Bookmarks]
-ServoHat=[]
-
 [Breakpoints]
 Count=0
 
 [DebugWindow]
 Count=0
 
+[FCommit]
+LastCommit="---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .src/FMain.class"
+
 [OpenFile]
 Count=0
+
+[VersionControl]
+User="matthew-collins"
+RememberPassword=1
 
 [Watches]
 Count=0
