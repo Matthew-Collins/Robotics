@@ -5,10 +5,13 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .src/FMain.class"
+LastCommit="New Listen to Value File\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .settings\nM       .src/FMain.class\nM       .src/GPIO_Sysfs_Pin.class"
 
 [OpenFile]
-Count=0
+Count=2
+Active=1
+File[1]=".src/GPIO_Sysfs_Pin.class:6.35"
+File[2]=".src/FMain.class:0.21"
 
 [VersionControl]
 User="matthew-collins"

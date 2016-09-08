@@ -1,4 +1,5 @@
 # Gambas Project File 3.0
+# Compiled with Gambas 3.8.4
 Title=GPIO.Sysfs
 Startup=FMain
 Version=0.0.1

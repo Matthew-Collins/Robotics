@@ -1,0 +1,47 @@
+' Gambas class file
+
+Public Pin As Integer
+Public ValueFile As File
+
+Public Sub _new(BCM_Pin_To_Export As Integer)
+  Me.Pin = BCM_Pin_To_Export
+  Shell "echo " & CStr(Me.Pin) & " > /sys/class/gpio/export" Wait
+  Sleep 1
+End
+
+Public Sub SetDirection(Out As Boolean)
+  Shell "echo " & If(Out, "out", "in") & " > /sys/class/gpio/gpio" & CStr(Me.pin) & "/direction" Wait
+End
+
+Public Sub SetValue(Value As Boolean)
+  Shell "echo " & If(Value, "1", "0") & " > /sys/class/gpio/gpio" & CStr(Me.Pin) & "/value" Wait
+End
+
+Public Function GetValue() As Boolean
+  Dim ReturnValue As String = File.Load("/sys/class/gpio/gpio" & CStr(Me.Pin) & "/value")
+  Return CBool(Val(Replace(ReturnValue, "\n", "")))
+End
+
+Private Sub SetEdge(Edge As String)
+  Shell "echo " & LCase(Edge) & " > /sys/class/gpio/gpio" & CStr(Me.Pin) & "/edge" Wait
+End
+
+Public Sub Listen()
+  SetEdge("both")
+  Me.ValueFile = Open "/sys/class/gpio/gpio" & CStr(Me.Pin) & "/value" For Input Watch
+End
+
+Public Sub StopListening()
+  Me.ValueFile.Close
+End
+
+Public Sub File_Read()
+  Dim Value As Byte
+  Print CStr(Timer)
+  Try Read #ValueFile, Value
+  Print "Got one byte: " & CStr(Value) & "=\"" & Chr(Value) & "\""
+End
+
+Public Sub Close()
+  Shell "echo " & CStr(Me.Pin) & " > /sys/class/gpio/unexport" Wait
+End
