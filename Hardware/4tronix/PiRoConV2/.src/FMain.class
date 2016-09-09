@@ -1,9 +1,13 @@
 ' Gambas class file
 
-Public Sub _new()
+Public Sonic As New Ultrasonic
 
+Public Sub _new()
 End
 
 Public Sub Form_Open()
+End
 
+Public Sub Timer1_Timer()
+  Distance.Text = "Distance: " & Sonic.GetDistance()
 End
