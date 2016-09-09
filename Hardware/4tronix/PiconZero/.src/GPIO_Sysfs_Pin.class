@@ -1,0 +1,30 @@
+' Gambas class file
+
+'Dependancy: Must have GPIO Sysfs Interface for Userspace
+'Web:        https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
+
+Public Pin As Integer
+
+Public Sub _new(BCM_Pin_To_Export As Integer)
+  Me.Pin = BCM_Pin_To_Export
+  Try File.Save("/sys/class/gpio/export", CStr(Me.Pin))
+  Sleep 1
+End
+
+Public Sub SetDirection(Out As Boolean)
+  Try File.Save("/sys/class/gpio/gpio" & CStr(Me.pin) & "/direction", If(Out, "out", "in"))
+End
+
+Public Sub SetValue(Value As Boolean)
+  Try File.Save("/sys/class/gpio/gpio" & CStr(Me.pin) & "/value", If(Value, "1", "0"))
+End
+
+Public Function GetValue() As Boolean
+  Dim ReturnValue As String
+  Try ReturnValue = File.Load("/sys/class/gpio/gpio" & CStr(Me.Pin) & "/value")
+  Return CBool(Val(Replace(ReturnValue, "\n", "")))
+End
+
+Public Sub Close()
+  Try File.Save("/sys/class/gpio/unexport", CStr(Me.Pin))
+End

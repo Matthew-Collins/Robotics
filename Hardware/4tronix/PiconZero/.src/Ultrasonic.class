@@ -2,7 +2,7 @@
 
 'Dependancy: Must have HC-SR04 Ultrasonic Senor
 
-Public Const Pin As Integer = 20 ' 20 'Board: 38, BCM: 20, WiringPi: 28
+Public Pin As New GPIO_Sysfs_Pin(20) 'Board: 38, BCM: 20, WiringPi: 28
 
 Const State_Before_Triggered As Integer = 0
 Const State_After_Triggered As Integer = 1
@@ -10,9 +10,7 @@ Const State_Signal_Back As Integer = 2
 Const State_Signal_Back_And_Stopped As Integer = 3
 Const State_TimeOut_Starting As Integer = 10
 Const State_TimeOut_Stopping As Integer = 20
-Const Max_Attempts As Integer = 250
-
-Public io As New GPIO
+Const Max_Attempts As Integer = 1000
 
 Public Function GetDistance() As Integer
   Dim Distance As Integer = -1
@@ -21,18 +19,17 @@ Public Function GetDistance() As Integer
   Dim Attempts As Integer
 
   State = State_Before_Triggered
-  io.SetUp(Me.Pin, GPIO.Out)
-  io.Output(Me.Pin, True)
-  Sleep 1 ' 0.00001
-  io.Output(Me.Pin, False)
-  io.SetUp(Me.Pin, GPIO.In)
+  Me.Pin.SetDirection(True)
+  Me.Pin.SetValue(True)
+  Sleep 0.00001
+  Me.Pin.SetDirection(False)
   State = State_After_Triggered
 
   Do
     Select State
 
       Case State_After_Triggered
-        If io.Input(Me.Pin)
+        If Me.Pin.GetValue()
           State = State_Signal_Back
           Started = Timer()
           Attempts = 0
@@ -45,9 +42,10 @@ Public Function GetDistance() As Integer
         End If
 
       Case State_Signal_Back
-        If io.Input(Me.pin) = False Then
+        If Me.Pin.GetValue() = False Then
           State = State_Signal_Back_And_Stopped
           Stopped = Timer()
+          Break
         Else
           Attempts += 1
           If Attempts > Max_Attempts Then
@@ -57,7 +55,6 @@ Public Function GetDistance() As Integer
         Endif
 
     End Select
-    Print Attempts
   Loop
 
   Select State
@@ -70,48 +67,6 @@ Public Function GetDistance() As Integer
     Case Else
       Distance = -1
   End Select
-
-  Return Distance
-End
-
-Public Function GetDistanceOLD() As Integer
-  Dim Started, Stopped, Count, Elapsed As Float
-  Dim Distance As Integer
-
-  'Send 10us pulse to Fire Trigger
-  io.SetUp(Me.Pin, GPIO.Out)
-  io.Output(Me.Pin, True)
-  Sleep 0.00001
-  io.Output(Me.Pin, False)
-
-  'Wait for Signal Back to Start
-  io.SetUp(Me.Pin, GPIO.In)
-  Count = Timer()
-  Started = Count
-  Do While io.Input(Me.Pin) = False And Timer() - Count < 0.1
-    Started = Timer()
-    Print "InWait: " & CStr(Timer())
-  Loop
-
-  'Wait for Signal Back to Stop
-  Count = Timer()
-  Stopped = Count
-  Do While io.Input(Me.Pin) And Timer() - Count < 0.1
-    Stopped = Timer()
-    Print "InStop"
-  Loop
-
-  'Calculate pulse length
-  Elapsed = Stopped - Started
-  Print "Stopped: " & CStr(Stopped)
-  Print "Started: " & CStr(Started)
-  Print "Elapsed: " & CStr(Elapsed)
-
-  'Distance pulse travelled In that Time Is Time
-  'multiplied by the speed Of sound(cm / s)
-  'That was the distance there And back so halve the value
-  Distance = CInt(Elapsed * 34000 / 2)
-  Print "Distance: " & CStr(Distance)
 
   Return Distance
 End
