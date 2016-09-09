@@ -10,6 +10,9 @@ Geometry=[-1,-1,270,270]
 [OpenFile]
 Count=0
 
+[VersionControl]
+RememberPassword=0
+
 [Watches]
 Count=0
 

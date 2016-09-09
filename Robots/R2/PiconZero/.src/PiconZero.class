@@ -1,0 +1,408 @@
+' Gambas class file
+
+'Dependancy: Must have 4Tronix PiconZero Hat
+
+'i2c Revisions
+Const REVISION_PI1 As Integer = &H00
+Const REVISION_PI2_AND_PI3 As Integer = &H01
+
+'Registers / etc:
+Const ADDRESS As Integer = &H22
+Const MOTORA As Integer = 0
+Const OUTCFG0 As Integer = 2
+Const OUTPUT0 As Integer = 8
+Const INCFG0 As Integer = 14
+Const SETBRIGHT As Integer = 18
+Const UPDATENOW As Integer = 19
+Const RESET As Integer = 20
+
+'Other:
+Const StartPoint As Integer = 0
+Const EndPoint As Integer = 180
+
+Public Bus As I2c
+
+Public PlugOrder0To5 As Boolean = True
+Public Trims[16] As Integer
+Public Reversals[16] As Boolean
+Public EndPoints[16, 2] As Integer
+
+
+Public Sub _new()
+  Dim Channel As Integer
+
+  Me.Bus = New I2c(REVISION_PI2_AND_PI3, ADDRESS)
+
+  Me.CleanUp()
+
+  'Set All Channels to Servos
+  For Channel = 0 To 5
+    Me.Bus.Write8(OUTCFG0 + Channel, 2)
+  Next
+
+End
+
+Public Sub CleanUp()
+  Me.Bus.Write8(RESET, 0)
+  Sleep 0.001
+End
+
+Public Sub SetServo(Channel As Integer, Value As Integer, Optional Max As Integer = 90, Optional Min As Integer = -90)
+  Value = (GetReversal(Channel, (Value - Min) / (Max - Min)) * (EndPoint - StartPoint)) + StartPoint
+  Value += Me.Trims[Channel]
+  Value = GetEndpointAdjustment(Channel, Value)
+  SetOutput(GetChannel(Channel), Value)
+End
+
+Public Function GetChannel(Channel As Integer) As Integer
+  If Me.PlugOrder0To5 Then
+    Return Channel
+  Else
+    Return 5 - Channel
+  End If
+End
+
+Public Function GetReversal(Channel As Integer, Percent As Float) As Float
+  If Me.Reversals[Channel] Then
+    Return 1 - Percent
+  Else
+    Return Percent
+  End If
+End
+
+Public Function GetEndPointAdjustment(Channel As Integer, Value As Integer) As Integer
+  If Value < Me.EndPoints[Channel, 0] Then
+    Return Me.EndPoints[Channel, 0]
+  Else If Me.EndPoints[Channel, 1] > 0 And If Value > Me.EndPoints[Channel, 1]
+    Return Me.EndPoints[Channel, 1]
+  Else
+    Return Value
+  End If
+End
+
+Private Sub SetOutput(Channel As Integer, Value As Integer)
+  Me.Bus.Write8(OUTPUT0 + Channel, Value)
+End
+
+
+' #Python Library For 4 tronix Picon Zero
+' #Note that all I2C accesses are wrapped In Try clauses With repeats
+
+
+' 
+' import smbus, Time
+'  
+' bus = smbus.SMBus(1)# For revision 1 Raspberry Pi, change To bus = smbus.SMBus(0)
+' 
+' pzaddr = 0 x22 #I2C address Of Picon Zero
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Definitions Of Commands To Picon Zero
+' MOTORA = 0
+' OUTCFG0 = 2
+' OUTPUT0 = 8
+' INCFG0 = 14
+' SETBRIGHT = 18
+' UPDATENOW = 19
+' RESET = 20
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #General variables
+' Debug = False
+' RETRIES = 10 #max number Of retries For I2C calls
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Get Version And Revision info
+' def getRevision():
+'     For i In range(RETRIES):
+'         try:
+'             rval = bus.read_word_data(pzaddr, 0)
+'             Return [rval / 256, rval % 256]
+'         except:
+'             If (DEBUG):
+'                 Print "Error in getRevision(), retrying"
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #motor must be In range 0..1
+' #value must be In range - 128 - +127
+' #values Of -127, -128, +127 are treated As Always On ,, no PWM
+' def setMotor(motor, value):
+'     If (motor >= 0 And motor <= 1 And value >= -128 And value < 128):
+'         For i In range(RETRIES):
+'             try:
+'                 bus.write_byte_data(pzaddr, motor, value)
+'                 Break
+'             except:
+'                 If (DEBUG):
+'                     Print "Error in setMotor(), retrying"
+' 
+' def forward(speed):
+'     setMotor(0, speed)
+'     setMotor(1, speed)
+' 
+' def reverse(speed):
+'     setMotor(0, - speed)
+'     setMotor(1, - speed)
+' 
+' def spinLeft(speed):
+'     setMotor(0, - speed)
+'     setMotor(1, speed)
+' 
+' def spinRight(speed):
+'     setMotor(0, speed)
+'     setMotor(1, - speed)
+' 
+' def stop():
+'     setMotor(0, 0)
+'     setMotor(1, 0)
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Read data For selected Input channel(analog Or digital)
+' #Channel Is In range 0 To 3
+' def readInput(channel):
+'     If (channel >= 0 And channel <= 3):
+'         For i In range(RETRIES):
+'             try:
+'                 Return bus.read_word_data(pzaddr, channel + 1)
+'             except:
+'                 If (DEBUG):
+'                     Print "Error in readChannel(), retrying"
+'                 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+'     
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Set configuration Of selected Output
+' #0: On / Off, 1: PWM, 2: Servo, 3: WS2812B
+' def setOutputConfig( Output , value):
+'     If ( Output >= 0 And Output <= 5 And value >= 0 And value <= 3):
+'         For i In range(RETRIES):
+'             try:
+'                 bus.write_byte_data(pzaddr, OUTCFG0 + Output , value)
+'                 Break
+'             except:
+'                 If (DEBUG):
+'                     Print "Error in setOutputConfig(), retrying"
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Set configuration Of selected Input channel
+' #0: Digital, 1: Analog
+' def setInputConfig(channel, value, pullup = False):
+'     If (channel >= 0 And channel <= 3 And value >= 0 And value <= 3):
+'         If (value == 0 And pullup == True):
+'             value = 128
+'         For i In range(RETRIES):
+'             try:
+'                 bus.write_byte_data(pzaddr, INCFG0 + channel, value)
+'                 Break
+'             except:
+'                 If (DEBUG):
+'                     Print "Error in setInputConfig(), retrying"
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Set Output data For selected Output channel
+' #Mode Name Type Values
+' #0 On / Off Byte 0 Is OFF, 1 Is ON
+' #1 PWM Byte 0 To 100 percentage Of On Time
+' #2 Servo Byte - 100 To + 100 Position In degrees
+' #3 WS2812B 4 Bytes 0: Pixel ID, 1: Red, 2: Green, 3: Blue
+' def setOutput(channel, value):
+'     If (channel >= 0 And channel <= 5):
+'         For i In range(RETRIES):
+'             try:
+'                 bus.write_byte_data(pzaddr, OUTPUT0 + channel, value)
+'                 Break
+'             except:
+'                 If (DEBUG):
+'                     Print "Error in setOutput(), retrying"
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Set the colour Of an individual pixel(always Output 5)
+' def setPixel(Pixel, Red, Green, Blue, Update = True):
+'     pixelData = [Pixel, Red, Green, Blue]
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_i2c_block_data(pzaddr, Update, pixelData)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in setPixel(), retrying"
+' 
+' def setAllPixels(Red, Green, Blue, Update = True):
+'     pixelData = [100, Red, Green, Blue]
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_i2c_block_data(pzaddr, Update, pixelData)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in setAllPixels(), retrying"
+' 
+' def updatePixels():
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_byte_data(pzaddr, UPDATENOW, 0)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in updatePixels(), retrying"
+'                         
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Set the overall brightness Of pixel array
+' def setBrightness(brightness):
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_byte_data(pzaddr, SETBRIGHT, brightness)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in setBrightness(), retrying"
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Initialise the Board(same As Cleanup)
+' def init( Debug = False):
+'     Debug = Debug
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_byte_data(pzaddr, RESET, 0)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in init(), retrying"
+'     time.sleep(0.01)#1 ms delay To allow Time To complete
+'     If (DEBUG):
+'         Print "Debug is", Debug
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' 
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+' #Cleanup the Board(same As Init)
+' def cleanup():
+'     For i In range(RETRIES):
+'         try:
+'             bus.write_byte_data(pzaddr, RESET, 0)
+'             Break
+'         except:
+'             If (DEBUG):
+'                 Print "Error in cleanup(), retrying"
+'     time.sleep(0.001)#1 ms delay To allow Time To complete
+' # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+' 
+' #Picon Zero Servo Test
+' #Use arrow keys To Move 2 servos On outputs 0 And 1 For Pan And Tilt
+' #Use G And H To Open And Close the Gripper arm
+' #Press Ctrl - C To Stop
+' #
+' 
+' import piconzero As Pz, Time
+' 
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' #Reading single character by forcing stdin To raw mode
+' import sys
+' import tty
+' import termios
+' 
+' def readchar():
+'     fd = sys.stdin.fileno()
+'     old_settings = termios.tcgetattr(fd)
+'     try:
+'         tty.setraw(sys.stdin.fileno())
+'         ch = sys.stdin.read(1)
+'     finally:
+'         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+'     If ch == '0x03':
+'         Raise KeyboardInterrupt
+'     Return ch
+' 
+' def readkey(getchar_fn = None):
+'     getchar = getchar_fn Or readchar
+'     c1 = getchar()
+'     If ord(c1)! = 0 x1b:
+'         Return c1
+'     c2 = getchar()
+'     If ord(c2)! = 0 x5b:
+'         Return c1
+'     c3 = getchar()
+'     Return Chr(0 x10 + ord(c3) - 65)#16 = Up, 17 = Down, 18 = Right, 19 = Left arrows
+' 
+' #End Of single character reading
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' 
+' speed = 60
+' 
+' Print "Tests the servos by using the arrow keys to control"
+' Print "Press <space> key to centre"
+' Print "Press Ctrl-C to end"
+' Print
+' 
+' #Define which pins are the servos
+' pan = 0
+' tilt = 1
+' grip = 2
+' 
+' pz.init()
+' 
+' #Set Output mode To Servo
+' pz.setOutputConfig(pan, 2)
+' pz.setOutputConfig(tilt, 2)
+' pz.setOutputConfig(grip, 2)
+' 
+' #Centre all servos
+' panVal = 90
+' tiltVal = 90
+' gripVal = 90
+' pz.setOutput(pan, panVal)
+' pz.setOutput(tilt, tiltVal)
+' pz.setOutput(grip, gripVal)
+' 
+' #main Loop
+' try:
+'     While True:
+'         keyp = readkey()
+'         If keyp == 'w' or ord(keyp) == 16:
+'             panVal = max(0, panVal - 5)
+'             Print 'Up', panVal
+'         elif keyp == 'z' or ord(keyp) == 17:
+'             panVal = min(180, panVal + 5)
+'             Print 'Down', panVal
+'         elif keyp == 's' or ord(keyp) == 18:
+'             tiltVal = max(0, tiltVal - 5)
+'             Print 'Right', tiltVal
+'         elif keyp == 'a' or ord(keyp) == 19:
+'             tiltVal = min(180, tiltVal + 5)
+'             Print 'Left', tiltVal
+'         elif keyp == 'g':
+'             gripVal = max(0, gripVal - 5)
+'             Print 'Open', gripVal
+'         elif keyp == 'h':
+'             gripVal = min(180, gripVal + 5)
+'             Print 'Close', gripVal
+'         elif keyp == ' ':
+'             panVal = tiltVal = gripVal = 90
+'             Print 'Centre'
+'         elif ord(keyp) == 3:
+'             Break
+'         pz.setOutput(pan, panVal)
+'         pz.setOutput(tilt, tiltVal)
+'         pz.setOutput(grip, gripVal)
+' 
+' except KeyboardInterrupt:
+'     Print
+' 
+' finally:
+'     pz.cleanup()
+'     
+

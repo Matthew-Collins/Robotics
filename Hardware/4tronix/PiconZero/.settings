@@ -5,7 +5,7 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="Add Throttle and Brake Controls and New Ultrasonic & GPIO Class (Work-in-progress)\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .gambas/PICONZERO\nM       .src/FMain.class\nM       .src/FMain.form\nA       .src/GPIO.class\nM       .src/PiconZero.class\nA       .src/Ultrasonic.class"
+LastCommit="Successfully Read from Ultrasonic Range Finder with Sysfs\n---- This line and the following will be ignored ----\n\nM       .settings\nD       .src/GPIO.class\nA       .src/GPIO_Sysfs_Pin.class\nM       .src/Ultrasonic.class"
 
 [OpenFile]
 Count=0

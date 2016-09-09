@@ -2,7 +2,7 @@
 # Compiled with Gambas 3.5.4
 Title=ServoBlaster
 Startup=FMain
-Version=0.0.3
+Version=0.0.4
 Component=gb.image
 Component=gb.qt4
 Component=gb.form

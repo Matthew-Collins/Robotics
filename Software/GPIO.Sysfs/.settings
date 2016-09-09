@@ -1,17 +1,24 @@
+[Bookmarks]
+FMain=[]
+GPIO_Sysfs_Pin=[]
+GPIO_Sysfs=[]
+
 [Breakpoints]
 Count=0
 
 [DebugWindow]
 Count=0
 
+[DebugWindow/File]
+Geometry=[-1,-1,224,280]
+
 [FCommit]
-LastCommit="New Listen to Value File\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .settings\nM       .src/FMain.class\nM       .src/GPIO_Sysfs_Pin.class"
+LastCommit="Successfully Got Fast Output from Ultrasonic Using GPIO Sysfs\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .project\nM       .settings\nM       .src/FMain.class\nM       .src/GPIO_Sysfs_Pin.class\nA       .src/GPIO_Sysfs_Pin_ScrapPad.class"
 
 [OpenFile]
-Count=2
+Count=1
 Active=1
-File[1]=".src/GPIO_Sysfs_Pin.class:6.35"
-File[2]=".src/FMain.class:0.21"
+File[1]=".src/FMain.class:0.1"
 
 [VersionControl]
 User="matthew-collins"
