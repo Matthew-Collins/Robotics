@@ -25,7 +25,7 @@ Public Sub Timer1_Timer()
 End
 
 Public Sub SetPicture()
-  Dim Command As String = "raspistill -t 1 -w " & CStr(Me.Width) & " -h " & CStr(Me.Height) & " -n -o " & Location
+  Dim Command As String = "raspistill -vf -t 1 -w " & CStr(Me.Width) & " -h " & CStr(Me.Height) & " -n -o " & Location
   Shell Command Wait
   If Exist(Location) Then
     PictureBox1.Picture = Picture.Load(Location)

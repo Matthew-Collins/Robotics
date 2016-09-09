@@ -2,7 +2,7 @@
 # Compiled with Gambas 3.8.4
 Title=BobCam
 Startup=FMain
-Version=0.0.7
+Version=0.0.8
 Component=gb.image
 Component=gb.gui
 Component=gb.form
