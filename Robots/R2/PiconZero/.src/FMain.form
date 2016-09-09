@@ -4,7 +4,7 @@
   MoveScaled(0,0,57,64)
   Arrangement = Arrange.Vertical
   { Panel13 Panel
-    MoveScaled(-8.5714,1.4286,55,35)
+    MoveScaled(-9.5714,1.4286,55,35)
     Background = &HBFBFBF&
     Border = Border.Plain
     { Panel9 HBox
@@ -193,6 +193,10 @@
       Expand = True
       Text = ("Sonar")
       Alignment = Align.Center
+    }
+    { Donot Button
+      MoveScaled(32,2,8,4)
+      Text = ("Donot")
     }
     { LabelSonar Label
       MoveScaled(5,4,28,4)

@@ -4,11 +4,16 @@ Count=0
 [DebugWindow]
 Count=0
 
+[Executable]
+Path="PiconZero.gambas"
+
 [FCommit]
 LastCommit="Add Throttle and Brake Controls and New Ultrasonic & GPIO Class (Work-in-progress)\n---- This line and the following will be ignored ----\n\nM       .gambas/FMAIN\nM       .gambas/PICONZERO\nM       .src/FMain.class\nM       .src/FMain.form\nA       .src/GPIO.class\nM       .src/PiconZero.class\nA       .src/Ultrasonic.class"
 
 [OpenFile]
-Count=0
+Count=1
+Active=1
+File[1]=".src/FMain.class:12.9"
 
 [VersionControl]
 User="matthew-collins"

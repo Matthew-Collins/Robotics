@@ -1,9 +1,11 @@
 ' Gambas class file
 
-Public Picon As New PiconZero
-Public Sonic As New Ultrasonic
+Public Picon As PiconZero
+Public Sonic As Ultrasonic
 
 Public Sub Form_Open()
+  Me.Picon = New PiconZero
+  Me.Sonic = New Ultrasonic
   With Me.Picon
     .Reversals[0] = True
     .Reversals[1] = True
@@ -145,4 +147,12 @@ Public Sub Timer1_Timer()
     VBoxSonar.Background = Color.Green
     LabelSonar.Foreground = Color.Black
   End If
+End
+
+Public Sub Donot_Click()
+  SliderThrottleAndBrake.value = 90
+  SliderSteering.value = 90
+  Wait 5
+  SliderThrottleAndBrake.value = 0
+  SliderSteering.value = 0
 End
