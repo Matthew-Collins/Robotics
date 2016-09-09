@@ -1,0 +1,19 @@
+' Gambas module file
+
+'Thanks to: Charlie Ogier at: https://github.com/charlie-ogier/PiCam
+
+Public Sub CreateRAMDrive()                                         'To create a RAM drive to hold the SSH Preview picture
+Dim sFstab As String                                                'To store the details in the fstab file
+
+If Not Exist("/var/tmp") Then Mkdir "/var/tmp"                      'Does this folder exist, if not create it
+
+sFstab = File.Load("/etc/fstab")                                    'Load the contents of fstab into sFstab
+
+If Not InStr(sFstab, "tmpfs /var/tmp tmpfs nodev,nosuid,size=3M 0 0") Then 'If the sting we need to create the 3Meg RAM drive is not there then..
+  sFstab &= "\ntmpfs /var/tmp tmpfs nodev,nosuid,size=3M 0 0\n"     'Add the string to the end of the file
+  File.Save(User.Home &/ "fstab", sFstab)                           'Save the file to the Home folder
+  Shell "sudo mv ~/fstab /etc/fstab"                                'Move the file to the 'etc' folder
+  Shell "sudo mount -a"                                             'Mount all drives including our new one
+Endif
+
+End

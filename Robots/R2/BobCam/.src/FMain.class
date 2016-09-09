@@ -1,0 +1,49 @@
+' Gambas class file
+
+Const Location As String = "/var/tmp/preview.jpg"
+
+'Public Servos As New ServoHat
+Public Servos As New PiconZero
+
+Public Sub Form_Open()
+  PiCam.CreateRAMDrive()
+  With Me.Servos
+    .Reversals[0] = True
+    .Trims[0] = -6
+    .Trims[1] = -20
+    .Trims[2] = 10
+    .EndPoints[1, 1] = 120
+    .EndPoints[2, 0] = 65
+    .EndPoints[2, 1] = 136
+  End With
+  Timer1.Delay = 5000
+  Timer1.Start
+End
+
+Public Sub Timer1_Timer()
+  Me.SetPicture
+End
+
+Public Sub SetPicture()
+  Dim Command As String = "raspistill -t 1 -w " & CStr(Me.Width) & " -h " & CStr(Me.Height) & " -n -o " & Location
+  Shell Command Wait
+  If Exist(Location) Then
+    PictureBox1.Picture = Picture.Load(Location)
+  End If
+End
+
+Public Sub Form_Resize()
+  PictureBox1.Width = Me.Width
+  PictureBox1.Height = Me.Height
+  ButtonClose.Left = Me.Width - ButtonClose.Width
+  ButtonClose.Raise
+End
+
+Public Sub PictureBox1_DblClick()
+  Me.Servos.SetServo(0, Mouse.X, PictureBox1.Width, 0)
+  Me.Servos.SetServo(1, Mouse.Y, PictureBox1.Height, 0)
+End
+
+Public Sub ButtonClose_Click()
+  Me.Close
+End
