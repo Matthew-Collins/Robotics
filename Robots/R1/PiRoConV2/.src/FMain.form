@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  { Distance Label
+    MoveScaled(15,33,25,9)
+  }
+  { Timer1 #Timer
+    #MoveScaled(40,40)
+    Enabled = True
+    Delay = 3000
+  }
+}
