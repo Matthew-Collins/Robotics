@@ -71,6 +71,10 @@ Public Function GetDistance() As Integer
   Return Distance
 End
 
+Public Sub Close()
+  Me.Pin.Close
+End
+
 
 ' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 ' #

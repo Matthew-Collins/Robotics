@@ -7,7 +7,7 @@ Public Pin As Integer
 
 Public Sub _new(BCM_Pin_To_Export As Integer)
   Me.Pin = BCM_Pin_To_Export
-  Try File.Save("/sys/class/gpio/export", CStr(Me.Pin))
+  Try File.Save("/sys/class/gpio/export", CStr(Me.pin))
   Sleep 1
 End
 

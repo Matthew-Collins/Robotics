@@ -8,6 +8,13 @@
   { Timer1 #Timer
     #MoveScaled(40,40)
     Enabled = True
-    Delay = 3000
+  }
+  { IRLeft CheckBox
+    MoveScaled(2,30,24,4)
+    Text = ("IR Left")
+  }
+  { IRRight CheckBox
+    MoveScaled(33,30,24,4)
+    Text = ("IR Right")
   }
 }

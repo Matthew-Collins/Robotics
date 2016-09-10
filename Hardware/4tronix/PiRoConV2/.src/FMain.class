@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Public Sonic As New Ultrasonic
+Public Obstacles As New InfraRedObstacleSensors
 
 Public Sub _new()
 End
@@ -8,6 +9,14 @@ End
 Public Sub Form_Open()
 End
 
+Public Sub Form_Close()
+  Me.Sonic.Close
+  Me.Obstacles.Close
+End
+
 Public Sub Timer1_Timer()
   Distance.Text = "Distance: " & Sonic.GetDistance()
+  IRLeft.Value = Obstacles.IsLeftOn()
+  IRRight.Value = Obstacles.IsRightOn()
 End
+
