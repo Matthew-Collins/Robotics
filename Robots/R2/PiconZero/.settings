@@ -8,7 +8,7 @@ Count=0
 Path="PiconZero.gambas"
 
 [FCommit]
-LastCommit="New Donut Button\n---- This line and the following will be ignored ----\n\nM       .project\nM       .settings\nM       .src/FMain.class\nM       .src/FMain.form\nM       .startup"
+LastCommit="Fix Expanding Forms\n---- This line and the following will be ignored ----\n\nM       .src/FMain.form"
 
 [OpenFile]
 Count=0

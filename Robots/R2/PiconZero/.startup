@@ -2,9 +2,9 @@ FMain
 PiconZero
 0
 0
-0.0.5
+0.0.8
 
 gb.image
-gb.gui
+gb.qt4
 gb.form
 

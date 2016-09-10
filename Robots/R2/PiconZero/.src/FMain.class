@@ -1,11 +1,9 @@
 ' Gambas class file
 
-Public Picon As PiconZero
-Public Sonic As Ultrasonic
+Public Picon As New PiconZero
+Public Sonic As New Ultrasonic
 
 Public Sub Form_Open()
-  Me.Picon = New PiconZero
-  Me.Sonic = New Ultrasonic
   With Me.Picon
     .Reversals[0] = True
     .Reversals[1] = True
