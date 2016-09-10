@@ -2,11 +2,10 @@
 # Compiled with Gambas 3.8.4
 Title=ServoBlaster
 Startup=FMain
-Version=0.0.6
+Version=0.0.7
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.qt4.ext
 TabSize=2
-CreateShortcut=1
 Packager=1
