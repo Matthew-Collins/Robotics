@@ -2,8 +2,8 @@
 
 'Dependancy: Must have Infrared Obstacle Sensors
 
-Public Pin1 As New GPIO_Sysfs_Pin(17) 'Board: 11
-Public Pin2 As New GPIO_Utility_Pin(4)  'Board: 7
+Public Pin1 As New GPIO_Sysfs_Pin(17)  'Board: 11
+Public Pin2 As New GPIO_Utility_Pin(4) 'Board: 7
 
 Public Sub _new()
   Me.Pin1.SetDirection(False)

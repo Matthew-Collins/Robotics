@@ -15,8 +15,20 @@ Public Sub Form_Close()
 End
 
 Public Sub Timer1_Timer()
-  Distance.Text = "Distance: " & Sonic.GetDistance()
+  Dim iDistance As Integer = Sonic.GetDistance()
+  Distance.Text = "Distance: " & iDistance
+  Me.SetPanelColors(DistancePanel, iDistance <= 5)
   IRLeft.Value = Obstacles.IsLeftOn()
   IRRight.Value = Obstacles.IsRightOn()
+  Me.SetPanelColors(IRLeftPanel, IRLeft.Value)
+  Me.SetPanelColors(IRRightPanel, IRRight.Value)
+End
+
+Public Sub SetPanelColors(UI As Panel, Value As Boolean)
+  If Value Then
+    UI.Background = Color.Red
+  Else
+    UI.Background = Color.Green
+  Endif
 End
 
