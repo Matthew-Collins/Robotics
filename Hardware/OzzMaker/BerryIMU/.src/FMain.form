@@ -14,27 +14,33 @@
   }
   { GyroX Slider
     MoveScaled(13,14,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { AccelerometerX Slider
     MoveScaled(56,14,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { GyroY Slider
     MoveScaled(13,22,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { GyroZ Slider
     MoveScaled(13,30,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { AccelerometerY Slider
     MoveScaled(56,22,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { AccelerometerZ Slider
     MoveScaled(56,30,24,4)
-    MaxValue = 70000
+    MinValue = -3000
+    MaxValue = 3000
   }
   { Label3 Label
     MoveScaled(13,10,24,4)
