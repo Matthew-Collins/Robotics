@@ -5,12 +5,10 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New Ultrasonic Reading in Gambas via GPIO Sysfs\n---- This line and the following will be ignored ----\n\nM       .src/FMain.class\nM       .src/FMain.form\nA       .src/GPIO_Sysfs_Pin.class\nA       .src/Ultrasonic.class"
+LastCommit="New RoboHat UI - Tested Using UltraSonic and IR Sensors\n---- This line and the following will be ignored ----\n\nM       .directory\nM       .icon.png\nM       .project\nM       .settings\nM       .src/FMain.class\nM       .src/FMain.form\nA       .src/GPIO_Sysfs_Pin.class\nA       .src/GPIO_Utility_Pin.class\nA       .src/InfraRedObstacleSensors.class\nA       .src/Ultrasonic.class"
 
 [OpenFile]
-Count=1
-Active=1
-File[1]=".src/Ultrasonic.class:0.5"
+Count=0
 
 [VersionControl]
 User="matthew-collins"
