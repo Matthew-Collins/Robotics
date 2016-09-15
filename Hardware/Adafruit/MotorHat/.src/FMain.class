@@ -1,0 +1,24 @@
+' Gambas class file
+
+Public MotorHat As New MotorHat
+
+Public Sub TurnLeft1_Click()
+  Me.MotorHat.Steppers[0].Step(100, MotorHat.FORWARD, MotorHat_Stepper.SINGLE)
+End
+
+Public Sub TurnRight1_Click()
+  Me.MotorHat.Steppers[0].Step(100, MotorHat.BACKWARD, MotorHat_Stepper.SINGLE)
+End
+
+Public Sub TurnLeft2_Click()
+  Me.MotorHat.Steppers[1].Step(100, MotorHat.FORWARD, MotorHat_Stepper.SINGLE)
+End
+
+Public Sub TurnRight2_Click()
+  Me.MotorHat.Steppers[1].Step(100, MotorHat.BACKWARD, MotorHat_Stepper.SINGLE)
+End
+
+Public Sub Form_Close()
+  Me.MotorHat.Close
+  Me.MotorHat = Null
+End

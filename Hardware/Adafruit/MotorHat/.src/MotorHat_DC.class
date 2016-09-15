@@ -1,0 +1,104 @@
+' Gambas class file
+
+Public Hat As MotorHat
+
+Public pwm As Integer = 0
+Public in2 As Integer = 0
+Public in1 As Integer = 0
+
+Public Const Motor0_pwm As Integer = 8
+Public Const Motor0_in2 As Integer = 9
+Public Const Motor0_in1 As Integer = 10
+
+Public Const Motor1_pwm As Integer = 13
+Public Const Motor1_in2 As Integer = 12
+Public Const Motor1_in1 As Integer = 11
+
+Public Const Motor2_pwm As Integer = 2
+Public Const Motor2_in2 As Integer = 3
+Public Const Motor2_in1 As Integer = 4
+
+Public Const Motor3_pwm As Integer = 7
+Public Const Motor3_in2 As Integer = 6
+Public Const Motor3_in1 As Integer = 5
+
+Public Sub _new(MyHat As MotorHat, MotorNumber As Integer)
+  Me.Hat = MyHat
+  Select Case MotorNumber
+    Case 0
+      Me.pwm = Me.Motor0_pwm
+      Me.in2 = Me.Motor0_in2
+      Me.in1 = Me.Motor0_in1
+    Case 1
+      Me.pwm = Me.Motor1_pwm
+      Me.in2 = Me.Motor1_in2
+      Me.in1 = Me.Motor1_in1
+    Case 2
+      Me.pwm = Me.Motor2_pwm
+      Me.in2 = Me.Motor2_in2
+      Me.in1 = Me.Motor2_in1
+    Case 3
+      Me.pwm = Me.Motor0_pwm
+      Me.in2 = Me.Motor0_in2
+      Me.in1 = Me.Motor0_in1
+  End Select
+End
+
+Public Sub Release()
+  Me.Hat.SetPin(Me.in1, 0)
+  Me.Hat.SetPin(Me.in2, 0)
+End
+
+
+' 		
+' Class Adafruit_DCMotor:
+' 	def __init__(self, controller, num):
+' 		self.MC = controller
+' 		self.motornum = num
+'                 pwm = in1 = in2 = 0
+' 
+'                 If (num == 0):
+'                          pwm = 8
+'                          in2 = 9
+'                          in1 = 10
+'                 elif(num == 1):
+'                          pwm = 13
+'                          in2 = 12
+'                          in1 = 11
+'                 elif(num == 2):
+'                          pwm = 2
+'                          in2 = 3
+'                          in1 = 4
+'                 elif(num == 3):
+'                          pwm = 7
+'                          in2 = 6
+'                          in1 = 5
+' 		else:
+' 			Raise NameError( 'MotorHAT Motor must be between 1 and 4 inclusive')
+'                 self.PWMpin = pwm
+'                 self.IN1pin = in1
+'                 self.IN2pin = in2
+' 
+' 	def run(self, command):
+' 		If Not self.MC:
+' 			Return
+' 		If (command == Adafruit_MotorHAT.FORWARD):
+' 			self.MC.setPin(self.IN2pin, 0)
+' 			self.MC.setPin(self.IN1pin, 1)
+' 		If (command == Adafruit_MotorHAT.BACKWARD):
+' 			self.MC.setPin(self.IN1pin, 0)
+' 			self.MC.setPin(self.IN2pin, 1)
+' 		If (command == Adafruit_MotorHAT.RELEASE):
+' 			self.MC.setPin(self.IN1pin, 0)
+' 			self.MC.setPin(self.IN2pin, 0)
+
+
+' 	def setSpeed(self, speed):
+' 		If (speed < 0):
+' 			speed = 0
+' 		If (speed > 255):
+' 			speed = 255
+' 		self.MC._pwm.setPWM(self.PWMpin, 0, speed * 16)
+
+
+

@@ -1,0 +1,21 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,56,43)
+  { TurnLeft1 Button
+    MoveScaled(7,4,16,4)
+    Text = ("Turn Left")
+  }
+  { TurnRight1 Button
+    MoveScaled(7,10,16,4)
+    Text = ("Turn Rigth")
+  }
+  { TurnLeft2 Button
+    MoveScaled(29,4,16,4)
+    Text = ("Turn Left")
+  }
+  { TurnRight2 Button
+    MoveScaled(29,10,16,4)
+    Text = ("Turn Rigth")
+  }
+}

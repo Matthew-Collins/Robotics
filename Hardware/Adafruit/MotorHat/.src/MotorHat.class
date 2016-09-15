@@ -1,0 +1,312 @@
+' Gambas class file
+
+'Dependancy: Must have Adafruit DC + Stepper Motor HAT
+
+'i2c Revisions
+Const REVISION_PI1 As Integer = &H00
+Const REVISION_PI2_AND_PI3 As Integer = &H01
+
+'Registers / etc:
+Const PCA9685_ADDRESS As Integer = &H60
+Const MODE1 As Integer = &H00
+Const MODE2 As Integer = &H01
+Const SUBADR1 As Integer = &H02
+Const SUBADR2 As Integer = &H03
+Const SUBADR3 As Integer = &H04
+Const PRESCALE As Integer = &HFE
+Const LED0_ON_L As Integer = &H06
+Const LED0_ON_H As Integer = &H07
+Const LED0_OFF_L As Integer = &H08
+Const LED0_OFF_H As Integer = &H09
+Const LED_NEXT As Integer = &H04
+Const ALL_LED_ON_L As Integer = &HFA
+Const ALL_LED_ON_H As Integer = &HFB
+Const ALL_LED_OFF_L As Integer = &HFC
+Const ALL_LED_OFF_H As Integer = &HFD
+
+'Bits:
+Const RESTART As Integer = &H80
+Const SLEEPING As Integer = &H10
+Const ALLCALL As Integer = &H01
+Const INVRT As Integer = &H10
+Const OUTDRV As Integer = &H04
+Const ALLOW As Integer = &H7F
+
+'Directions:
+Public Const FORWARD As Integer = 1
+Public Const BACKWARD As Integer = 2
+Public Const BRAKE As Integer = 3
+Public Const RELEASE As Integer = 4
+
+Public Motors[4] As MotorHat_DC
+Public Steppers[2] As MotorHat_Stepper
+
+Public Bus As I2c
+
+Public Sub _new()
+
+  Dim Motor As Integer
+  Dim Stepper As Integer
+
+  For Motor = 0 To 3
+    Me.Motors[Motor] = New MotorHat_DC(Me, Motor)
+  Next
+
+  For Stepper = 0 To 1
+    Me.Steppers[Stepper] = New MotorHat_Stepper(Me, Stepper)
+  Next
+
+  Me.Bus = New I2c(REVISION_PI2_AND_PI3, PCA9685_ADDRESS)
+
+  Me.SetAllPWM(0, 0)
+  Me.Bus.Write8(MODE1, OUTDRV)
+  Me.Bus.Write8(MODE1, ALLCALL)
+  Sleep 0.005
+  Me.Bus.Write8(MODE1, Me.Bus.Read8(MODE1) And Not SLEEPING)
+  Sleep 0.005
+
+  Me.SetFrequency(1600)
+
+End
+
+Public Sub Close()
+  Dim Motor As Integer
+  Dim Stepper As Integer
+
+  Me.ReleaseMotors
+
+  For Motor = 0 To 3
+    Me.Motors[Motor].Hat = Null
+    Me.Motors[Motor] = Null
+  Next
+
+  For Stepper = 0 To 1
+    Me.Steppers[Stepper].Hat = Null
+    Me.Steppers[Stepper] = Null
+  Next
+
+  Me.Bus = Null
+End
+
+Public Sub ReleaseMotors()
+  Dim Motor As Integer
+  For Motor = 0 To 3
+    Me.Motors[Motor].Release
+  Next
+End
+
+Public Sub SetPin(Pin As Integer, Value As Boolean)
+  If Value Then
+    Me.SetPWM(Pin, 4096, 0)
+  Else
+    Me.SetPWM(Pin, 0, 4096)
+  Endif
+End
+
+Public Sub SetAllPWM(OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write16(ALL_LED_ON_L, OnValue)
+  Me.Bus.Write16(ALL_LED_OFF_L, OffValue)
+End
+
+Public Sub SetPWM(Channel As Integer, OnValue As Integer, OffValue As Integer)
+  Me.Bus.Write16(LED0_ON_L + (LED_NEXT * Channel), OnValue)
+  Me.Bus.Write16(LED0_OFF_L + (LED_NEXT * Channel), OffValue)
+End
+
+Public Sub SetFrequency(hz As Integer)
+  Dim Value As Float = 25000000.0
+  Dim OldMode As Integer
+  Value /= 4096.0
+  Value /= CFloat(hz)
+  Value -= 0.5
+  OldMode = Me.Bus.Read8(MODE1)
+  Me.Bus.Write8(MODE1, OldMode And ALLOW Or SLEEPING)
+  Me.Bus.Write8(PRESCALE, CInt(value))
+  Me.Bus.Write8(MODE1, OldMode)
+  Sleep 0.005
+  Me.Bus.Write8(MODE1, OldMode Or RESTART)
+End
+
+
+' Class Adafruit_MotorHAT:
+' 	FORWARD = 1
+' 	BACKWARD = 2
+' 	BRAKE = 3
+' 	RELEASE = 4
+' 
+' 	SINGLE = 1
+' 	DOUBLE = 2
+' 	INTERLEAVE = 3
+' 	MICROSTEP = 4
+' 
+' 	def __init__(self, addr = 0 x60, freq = 1600):
+' 		self._i2caddr = addr # Default addr On HAT
+' 		self._frequency = freq # Default @1600 Hz PWM freq
+' 		self.motors = [Adafruit_DCMotor(self, m) For m In range(4)]
+' 		self.steppers = [Adafruit_StepperMotor(self, 1), Adafruit_StepperMotor(self, 2)]
+' 		self._pwm = PWM(addr, Debug = False)
+' 		self._pwm.setPWMFreq(self._frequency)
+' 
+' 	def setPin(self, pin, value):
+' 		If (pin < 0) Or (pin > 15):
+' 			Raise NameError( 'PWM pin must be between 0 and 15 inclusive')
+' 		If (value! = 0) And (value! = 1):
+' 			Raise NameError( 'Pin value must be 0 or 1!')
+' 		If (value == 0):
+' 			self._pwm.setPWM(pin, 0, 4096)
+' 		If (value == 1):
+' 			self._pwm.setPWM(pin, 4096, 0)
+' 
+' 	def getStepper(self, steps, num):
+'                 If (num < 1) Or (num > 2):
+'                         Raise NameError( 'MotorHAT Stepper must be between 1 and 2 inclusive')
+' 		Return self.steppers[num - 1]
+' 
+' 	def getMotor(self, num):
+' 		If (num < 1) Or (num > 4):
+' 			Raise NameError( 'MotorHAT Motor must be between 1 and 4 inclusive')
+' 		Return self.motors[num - 1]
+' 
+' 
+' 
+' 
+' 
+
+
+
+' #!/usr/bin/python
+' #import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Stepper 
+' From Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+' 
+' import Time
+' import atexit
+' 
+' #Create a Default object, no changes To I2C address Or frequency
+' mh = Adafruit_MotorHAT()
+' 
+' #recommended For auto - disabling motors On shutdown!
+' def turnOffMotors():
+'         mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+'         mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+'         mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+'         mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+' 
+' atexit.register(turnOffMotors)
+' 
+' myStepper = mh.getStepper(200, 1)#200 steps / rev, motor port #1
+' myStepper.setSpeed(30)#30 RPM
+' 
+' While (True):
+'         print("Single coil steps")
+'         myStepper.step(100, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.SINGLE)
+'         myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
+' 
+'         print("Double coil steps")
+'         myStepper.step(100, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+'         myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+' 
+'         print("Interleaved coil steps")
+'         myStepper.step(100, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.INTERLEAVE)
+'         myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.INTERLEAVE)
+' 
+'         print("Microsteps")
+'         myStepper.step(100, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.MICROSTEP)
+'         myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
+
+
+
+
+
+' #!/usr/bin/python
+' 
+' import Time
+' import math
+' From Adafruit_I2C import Adafruit_I2C
+' 
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' #Adafruit PCA9685 16 - Channel PWM Servo Driver
+' # == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+' 
+' Class PWM:
+'   #Registers / etc.
+'   __MODE1 = 0 x00
+'   __MODE2 = 0 x01
+'   __SUBADR1 = 0 x02
+'   __SUBADR2 = 0 x03
+'   __SUBADR3 = 0 x04
+'   __PRESCALE = 0 xFE
+'   __LED0_ON_L = 0 x06
+'   __LED0_ON_H = 0 x07
+'   __LED0_OFF_L = 0 x08
+'   __LED0_OFF_H = 0 x09
+'   __ALL_LED_ON_L = 0 xFA
+'   __ALL_LED_ON_H = 0 xFB
+'   __ALL_LED_OFF_L = 0 xFC
+'   __ALL_LED_OFF_H = 0 xFD
+' 
+'   #Bits
+'   __RESTART = 0 x80
+'   __SLEEP = 0 x10
+'   __ALLCALL = 0 x01
+'   __INVRT = 0 x10
+'   __OUTDRV = 0 x04
+' 
+'   general_call_i2c = Adafruit_I2C(0 x00)
+' 
+'   @classmethod
+'   def softwareReset(cls):
+'     "Sends a software reset (SWRST) command to all the servo drivers on the bus"
+'     cls.general_call_i2c.writeRaw8(0 x06)#SWRST
+' 
+'   def __init__(self, address = 0 x40, Debug = False):
+'     self.i2c = Adafruit_I2C(address)
+'     self.i2c.debug = Debug
+'     self.address = address
+'     self.debug = Debug
+'     If (self.debug):
+'       Print "Reseting PCA9685 MODE1 (without SLEEP) and MODE2"
+'     self.setAllPWM(0, 0)
+'     self.i2c.write8(self.__MODE2, self.__OUTDRV)
+'     self.i2c.write8(self.__MODE1, self.__ALLCALL)
+'     time.sleep(0.005)# Wait For oscillator
+'     
+'     mode1 = self.i2c.readU8(self.__MODE1)
+'     mode1 = mode1 & ~self.__SLEEP                 # wake up (reset sleep)
+'     self.i2c.write8(self.__MODE1, mode1)
+'     time.sleep(0.005)# Wait For oscillator
+' 
+'   def setPWMFreq(self, freq):
+'     "Sets the PWM frequency"
+'     prescaleval = 25000000.0 #25 MHz
+'     prescaleval /= 4096.0 #12 - bit
+'     prescaleval /= float(freq)
+'     prescaleval -= 1.0
+'     If (self.debug):
+'       Print "Setting PWM frequency to %d Hz" % freq
+'       Print "Estimated pre-scale: %d" % prescaleval
+'     prescale = math.floor(prescaleval + 0.5)
+'     If (self.debug):
+'       Print "Final pre-scale: %d" % prescale
+' 
+'     oldmode = self.i2c.readU8(self.__MODE1);
+'     newmode = (oldmode & 0 x7F) | 0x10             # sleep
+'     self.i2c.write8(self.__MODE1, newmode)#go To Sleep
+'     self.i2c.write8(self.__PRESCALE, Int(math.floor(prescale)))
+'     self.i2c.write8(self.__MODE1, oldmode)
+'     time.sleep(0.005)
+'     self.i2c.write8(self.__MODE1, oldmode | 0x80)
+' 
+'   def setPWM(self, channel, On , off):
+'     "Sets a single PWM channel"
+'     self.i2c.write8(self.__LED0_ON_L + 4 * channel, On & 0 xFF)
+'     self.i2c.write8(self.__LED0_ON_H + 4 * channel, On > > 8)
+'     self.i2c.write8(self.__LED0_OFF_L + 4 * channel, off & 0 xFF)
+'     self.i2c.write8(self.__LED0_OFF_H + 4 * channel, off > > 8)
+' 
+'   def setAllPWM(self, On , off):
+'     "Sets a all PWM channels"
+'     self.i2c.write8(self.__ALL_LED_ON_L, On & 0 xFF)
+'     self.i2c.write8(self.__ALL_LED_ON_H, On > > 8)
+'     self.i2c.write8(self.__ALL_LED_OFF_L, off & 0 xFF)
+'     self.i2c.write8(self.__ALL_LED_OFF_H, off > > 8)
+
