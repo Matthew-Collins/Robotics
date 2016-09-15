@@ -1,0 +1,24 @@
+' Gambas class file
+
+Public Pin As Integer
+
+Public Sub _new(BCM_Pin As Integer)
+  Me.Pin = BCM_Pin
+End
+
+Public Sub SetDirection(Out As Boolean)
+  Shell "gpio -g mode " & CStr(Me.Pin) & " " & If(Out, "out", "in")
+End
+
+Public Sub SetValue(Value As Boolean)
+  Shell "gpio -g write " & CStr(Me.Pin) & " " & If(Value, "1", "0") Wait
+End
+
+Public Function GetValue() As Boolean
+  Dim ReturnValue As String
+  Shell "gpio -g read " & CStr(Me.Pin) Wait To ReturnValue
+  Return CBool(Val(ReturnValue))
+End
+
+Public Sub Close()
+End

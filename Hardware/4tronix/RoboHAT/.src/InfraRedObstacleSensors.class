@@ -1,0 +1,24 @@
+' Gambas class file
+
+'Dependancy: Must have Infrared Obstacle Sensors
+
+Public Pin1 As New GPIO_Sysfs_Pin(17)  'Board: 11
+Public Pin2 As New GPIO_Sysfs_Pin(4) 'Board: 7
+
+Public Sub _new()
+  Me.Pin1.SetDirection(False)
+  Me.Pin2.SetDirection(False)
+End
+
+Public Function IsLeftOn() As Boolean
+  Return Not Me.Pin1.GetValue()
+End
+
+Public Function IsRightOn() As Boolean
+  Return Not Me.Pin2.GetValue()
+End
+
+Public Sub Close()
+  Me.Pin1.Close
+  Me.Pin2.Close
+End
