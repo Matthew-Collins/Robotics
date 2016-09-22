@@ -1,0 +1,185 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,57,65)
+  Arrangement = Arrange.Vertical
+  { Panel13 Panel
+    MoveScaled(-7.5556,1.4444,55,35)
+    Background = &HBFBFBF&
+    Border = Border.Plain
+    { Panel9 HBox
+      MoveScaled(1,9,53,25)
+      { Panel10 Panel
+        MoveScaled(1,1,3,19)
+      }
+      { PanelControls VBox
+        MoveScaled(5,0,41,25)
+        Background = &H5F5F53&
+        Expand = True
+        Padding = 5
+        { Panel1 HBox
+          MoveScaled(2,1,39,4)
+          Padding = 2
+          { ButtonFrontSensorLeft Button
+            MoveScaled(0,0,9,3)
+            Text = ("&Left")
+          }
+          { Panel3 Panel
+            MoveScaled(9,0,2,2)
+            Expand = True
+          }
+          { ButtonFrontSensorCenter Button
+            MoveScaled(11,0,9,3)
+            Text = ("&Center")
+          }
+          { Panel2 Panel
+            MoveScaled(21,0,1,2)
+            Expand = True
+          }
+          { ButtonFrontSensorRight Button
+            MoveScaled(23,0,9,3)
+            Text = ("&Right")
+          }
+        }
+        { Panel4 HBox
+          MoveScaled(1,6,39,4)
+          Padding = 2
+          { ButtonFrontSensorUp Button
+            MoveScaled(1,0,9,3)
+            Text = ("&Up")
+          }
+          { Panel6 Panel
+            MoveScaled(10,0,3,2)
+            Expand = True
+          }
+          { ButtonFrontSensorCenter2 Button
+            MoveScaled(13,0,9,3)
+            Text = ("C&enter")
+          }
+          { Panel5 Panel
+            MoveScaled(22,1,2,2)
+            Expand = True
+          }
+          { ButtonFrontSensorDown Button
+            MoveScaled(25,0,9,3)
+            Text = ("&Down")
+          }
+        }
+        { Panel16 Panel
+          MoveScaled(2,10,37,2)
+        }
+        { Panel7 HBox
+          MoveScaled(1,13,39,4)
+          Padding = 2
+          { ButtonYes Button YesNo
+            Name = "ButtonYes"
+            MoveScaled(1,0,9,3)
+            Text = ("&Yes")
+          }
+          { Panel8 Panel
+            MoveScaled(10,0,3,2)
+            Expand = True
+          }
+          { ButtonCentreAll Button
+            MoveScaled(13,0,9,3)
+            Text = ("Centre &All")
+          }
+          { Panel15 Panel
+            MoveScaled(22,1,2,2)
+            Expand = True
+          }
+          { ButtonNo Button YesNo
+            Name = "ButtonNo"
+            MoveScaled(25,0,9,3)
+            Text = ("&No")
+          }
+        }
+        { LabelJoyStick Label
+          MoveScaled(0,16,39,8)
+          Font = Font["Bold"]
+          Foreground = Color.Background
+          Expand = True
+          Text = ("Hold the shift key and move the mouse over \nthis area to move the robot's front sensor")
+          Alignment = Align.Center
+        }
+      }
+      { PanelJoyStick Panel
+        MoveScaled(6,1,39,22)
+        Visible = False
+        Background = Color.LightForeground
+        Tracking = True
+        Expand = True
+        Border = Border.Plain
+      }
+      { SliderUDFrontSensor Slider
+        MoveScaled(47,0,3,24)
+        MinValue = -90
+        MaxValue = 90
+      }
+    }
+    { HBox1 HBox
+      MoveScaled(0,4,53,4)
+      { Panel12 Panel
+        MoveScaled(1,1,3,2)
+      }
+      { SliderLRFrontSensor Slider
+        MoveScaled(7,1,29,3)
+        Expand = True
+        MinValue = -90
+        MaxValue = 90
+      }
+      { Panel11 Panel
+        MoveScaled(46,0,3,3)
+      }
+    }
+    { HBox3 HBox
+      MoveScaled(1,0,52,2.5556)
+      { LabelFrontSensor Label
+        MoveScaled(5.8889,0.7778,34.7778,2.5556)
+        Font = Font["Bold"]
+        Expand = True
+        Text = ("Front Sensor")
+        Alignment = Align.Center
+      }
+    }
+  }
+  { Panel14 VBox
+    MoveScaled(1,37,54,9)
+    Background = &HDFDFDF&
+    { LabelSteering Label
+      MoveScaled(11,0,34.7778,2.5556)
+      Font = Font["Bold"]
+      Expand = True
+      Text = ("Steering")
+      Alignment = Align.Center
+    }
+    { HBox2 HBox
+      MoveScaled(2,3,50,5)
+      Padding = 10
+      { SliderSteering Slider
+        MoveScaled(2,0,42,5)
+        Expand = True
+        MinValue = -45
+        MaxValue = 45
+      }
+    }
+  }
+  { VBoxSonar VBox
+    MoveScaled(7,46,40,8)
+    { LabelSteering2 Label
+      MoveScaled(0,0,34.7778,2.5556)
+      Font = Font["Bold"]
+      Expand = True
+      Text = ("Sonar")
+      Alignment = Align.Center
+    }
+    { LabelSonar Label
+      MoveScaled(5,4,28,4)
+      Font = Font["Bold"]
+      Alignment = Align.Center
+    }
+  }
+  { Timer1 #Timer
+    #MoveScaled(50,57)
+  }
+}
