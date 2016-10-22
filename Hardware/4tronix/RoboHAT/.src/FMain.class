@@ -3,12 +3,6 @@
 Public Sonic As New Ultrasonic
 Public Obstacles As New InfraRedObstacleSensors
 
-Public Sub _new()
-End
-
-Public Sub Form_Open()
-End
-
 Public Sub Form_Close()
   Me.Sonic.Close
   Me.Obstacles.Close

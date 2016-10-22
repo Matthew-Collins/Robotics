@@ -5,10 +5,12 @@ Count=0
 Count=0
 
 [FCommit]
-LastCommit="New RoboHat UI - Tested Using UltraSonic and IR Sensors\n---- This line and the following will be ignored ----\n\nM       .directory\nM       .icon.png\nM       .project\nM       .settings\nM       .src/FMain.class\nM       .src/FMain.form\nA       .src/GPIO_Sysfs_Pin.class\nA       .src/GPIO_Utility_Pin.class\nA       .src/InfraRedObstacleSensors.class\nA       .src/Ultrasonic.class"
+LastCommit="Merge Projects\n---- This line and the following will be ignored ----\n\nM       .project\nA       .src/FMain1.class\nA       .src/FMain1.form\nA       .src/FMain2.class\nA       .src/FMain2.form"
 
 [OpenFile]
-Count=0
+Count=1
+Active=1
+File[1]=".src/FMain2.class:0.2"
 
 [VersionControl]
 User="matthew-collins"

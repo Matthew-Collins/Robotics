@@ -4,7 +4,7 @@
   MoveScaled(0,0,57,64)
   Arrangement = Arrange.Vertical
   { Panel13 Panel
-    MoveScaled(-8.5714,1.4286,55,35)
+    MoveScaled(0,0,55,35)
     Background = &HBFBFBF&
     Border = Border.Plain
     { Panel9 HBox
@@ -133,9 +133,9 @@
       }
     }
     { HBox3 HBox
-      MoveScaled(1,0,52,2.5714)
+      MoveScaled(1,0,52,2.5556)
       { LabelFrontSensor Label
-        MoveScaled(5.8571,0.7143,34.7143,2.5714)
+        MoveScaled(5.8889,0.6667,34.6667,2.5556)
         Font = Font["Bold"]
         Expand = True
         Text = ("Front Sensor")
@@ -147,7 +147,7 @@
     MoveScaled(1,37,54,9)
     Background = &HDFDFDF&
     { LabelSteering Label
-      MoveScaled(11,0,34.7143,2.5714)
+      MoveScaled(11,0,34.6667,2.5556)
       Font = Font["Bold"]
       Expand = True
       Text = ("Steering")
@@ -168,7 +168,7 @@
     MoveScaled(1,47,54,9)
     Background = &HDFDFDF&
     { LabelSteering3 Label
-      MoveScaled(11,0,34.7143,2.5714)
+      MoveScaled(11,0,34.6667,2.5556)
       Font = Font["Bold"]
       Expand = True
       Text = ("Throttle and Brake")
@@ -188,7 +188,7 @@
   { VBoxSonar VBox
     MoveScaled(7,56,40,8)
     { LabelSteering2 Label
-      MoveScaled(0,0,34.7143,2.5714)
+      MoveScaled(0,0,34.6667,2.5556)
       Font = Font["Bold"]
       Expand = True
       Text = ("Sonar")

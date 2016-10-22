@@ -2,216 +2,272 @@
 
 Public sb As Process
 Public bShiftTrigger As Boolean
+Public Sonic As New Ultrasonic
+Public Obstacles As New InfraRedObstacleSensors
+
+Public ServoUpDown As Integer = 0
+Public ServoLeftRight As Integer = 1
 
 Public Sub Form_Open()
-
-sb = Exec ["sudo", "/home/pi/Documents/robohat/servod", "--pcm", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins
-
-Wait 0.25
-ButtonFrontSensorCenter_Click
-Wait 0.25
-ButtonFrontSensorCenter2_Click
-Wait 0.25
-SliderSteering_Change
-
-Me.Center
-Wait
-
-Timer1.delay = 1000
-Timer1.Start
-
+  
+  sb = Exec ["sudo", "/home/pi/Documents/robohat/servod", "--pcm", "--p1pins=18,22", "--idle-timeout=20000", ">", "/dev/auto"] 'REMOVED "--p1pins=18,22", - Defaults to "7,11,12,13,15,16,18,22" for p1pins
+  
+  Wait 0.25
+  ButtonFrontSensorCenter_Click
+  Wait 0.25
+  ButtonFrontSensorCenter2_Click
+  Wait 0.25
+  'SliderSteering_Change
+  
+  Me.Center
+  Wait
+  
+  Timer1.delay = 1000
+  Timer1.Start
+  
 End
 
 Public Sub ButtonFrontSensorCenter_Click()
-Dim siDegrees As Short = 0
 
-Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderLRFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = 0
+  
+  Servo(ServoUpDown, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderLRFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonFrontSensorLeft_Click()
-Dim siDegrees As Short = -90
 
-Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderLRFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = -90
+  
+  Servo(ServoUpDown, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderLRFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonFrontSensorRight_Click()
-Dim siDegrees As Short = 90
 
-Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderLRFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = 90
+  
+  Servo(ServoUpDown, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderLRFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonFrontSensorUp_Click()
-Dim siDegrees As Short = 90
 
-Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderUDFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = 90
+  
+  Servo(ServoLeftRight, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderUDFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonFrontSensorCenter2_Click()
-Dim siDegrees As Short = 20
 
-Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderUDFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = 20
+  
+  Servo(ServoLeftRight, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderUDFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonFrontSensorDown_Click()
-Dim siDegrees As Short = -90
 
-Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-SliderUDFrontSensor.Value = siDegrees
-
+  Dim siDegrees As Short = -90
+  
+  Servo(ServoLeftRight, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  SliderUDFrontSensor.Value = siDegrees
+  
 End
 
 Public Sub ButtonCentreAll_Click()
-
-ButtonFrontSensorCenter2_Click
-ButtonFrontSensorCenter_Click
-
+  
+  ButtonFrontSensorCenter2_Click
+  ButtonFrontSensorCenter_Click
+  
 End
 
 Public Sub SliderLRFrontSensor_Change()
-Dim siDegrees As Short = SliderLRFrontSensor.Value
 
-Servo(6, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-
+  Dim siDegrees As Short = SliderLRFrontSensor.Value
+  
+  Servo(ServoUpDown, siDegrees) 'Shell "echo 6=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  
 End
 
 Public Sub SliderUDFrontSensor_Change()
-Dim siDegrees As Short = SliderUDFrontSensor.Value
 
-Servo(7, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-
+  Dim siDegrees As Short = SliderUDFrontSensor.Value
+  
+  Servo(ServoLeftRight, siDegrees) 'Shell "echo 7=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  
 End
 
 Public Sub PanelJoyStick_MouseMove()
-Dim siX, siY As Short
 
-siX = Mouse.X - 90
-siY = Mouse.Y - 90
-
-If siX > 90 Then siX = 90
-If siX < -90 Then siX = -90
-
-If siY > 90 Then siY = 90
-If siY < -90 Then siY = -90
-
-If bShiftTrigger Then
-  Servo(7, siY) 'Shell "echo 7=" & Str(50 + ((90 - siY) * 200 / 180)) & " > /dev/servoblaster"
-  Servo(6, siX) 'Shell "echo 6=" & Str(50 + ((90 - siX) * 200 / 180)) & " > /dev/servoblaster"
-  SliderLRFrontSensor.Value = siX
-  SliderUDFrontSensor.Value = siY
-End If
-
+  Dim siX, siY As Short
+  
+  siX = Mouse.X - 90
+  siY = Mouse.Y - 90
+  
+  If siX > 90 Then siX = 90
+  If siX < -90 Then siX = -90
+  
+  If siY > 90 Then siY = 90
+  If siY < -90 Then siY = -90
+  
+  If bShiftTrigger Then
+    Servo(ServoLeftRight, siY) 'Shell "echo 7=" & Str(50 + ((90 - siY) * 200 / 180)) & " > /dev/servoblaster"
+    Servo(ServoUpDown, siX) 'Shell "echo 6=" & Str(50 + ((90 - siX) * 200 / 180)) & " > /dev/servoblaster"
+    SliderLRFrontSensor.Value = siX
+    SliderUDFrontSensor.Value = siY
+  End If
+  
 End
 
 Public Sub Form_KeyPress()
-
-If Key.Shift Then 
-  bShiftTrigger = True
-  PanelControls.Visible = False
-  PanelJoyStick.Visible = True
-End If
-
+  
+  If Key.Shift Then 
+    bShiftTrigger = True
+    PanelControls.Visible = False
+    PanelJoyStick.Visible = True
+  End If
+  
 End
 
 Public Sub Form_KeyRelease()
-
+  
   bShiftTrigger = False
   PanelControls.Visible = True
   PanelJoyStick.Visible = False
-
+  
 End
 
-Public Sub SliderSteering_Change()
-Dim siDegrees As Short = SliderSteering.Value
-
-Servo(2, siDegrees)
-
-End
+' Public Sub SliderSteering_Change()
+' 
+' '   Dim siDegrees As Short = SliderSteering.Value
+'   
+' '   Servo(2, siDegrees)
+'   
+' End
 
 Public Sub YesNo_Click()
-Dim siDegrees As Short
-Dim siCount, siYesNo As Short
-Dim fDelay As Float
 
-If Last.text = "&No" Then 
-  siYesNo = 6
-  fDelay = 0.4
-Else
-  siYesNo = 7
-  fDelay = 0.1
-End If
-
-Servo(6, 0)
-Servo(7, 20)
-
-For siCount = 0 To 5
-  siDegrees = -60
+  Dim siDegrees As Short
+  Dim siCount, siYesNo As Short
+  Dim fDelay As Float
+  
+  If Last.text = "&No" Then 
+    siYesNo = ServoUpDown
+    fDelay = 0.4
+  Else
+    siYesNo = ServoLeftRight
+    fDelay = 0.1
+  End If
+  
+  Servo(ServoUpDown, 0)
+  Servo(ServoLeftRight, 20)
+  
+  For siCount = 0 To 5
+    siDegrees = -60
+    Servo(siYesNo, siDegrees)
+    Wait fDelay
+    siDegrees = 60
+    Servo(siYesNo, siDegrees)
+    Wait fDelay
+  Next
+  
+  If siYesNo = ServoLeftRight Then 
+    siDegrees = 20
+  Else
+    siDegrees = 0
+  End If
+  
   Servo(siYesNo, siDegrees)
-  Wait fDelay
-  siDegrees = 60
-  Servo(siYesNo, siDegrees)
-  Wait fDelay
-Next
-
-If siYesNo = 7 Then 
-  siDegrees = 20
-Else
-  siDegrees = 0
-End If
-
-Servo(siYesNo, siDegrees)
-
+  
 End
 
-Public Sub Timer1_Timer()
-Dim sLine As String
-Dim siLine As Short
-
-Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
-
-If Left(sLine, 8) <> "Distance" Then Return
-
-sLine = Left(sline, Len(sline) - 1)
-LabelSonar.text = sLine & " cms"
-
-sLine = Replace(sLine, "Distance: ", "")
-siLine = Val(sLine)
-
-If siLine < 10 And siLine > 4 Then
-  VBoxSonar.Background = Color.Yellow
-  LabelSonar.Foreground = Color.Black
-End If
-
-If siLine < 4 Then
-  VBoxSonar.Background = Color.Red
-  LabelSonar.Foreground = Color.Yellow
-End If
-
-If siLine >= 10 Then
-  VBoxSonar.Background = Color.Green
-  LabelSonar.Foreground = Color.Black
-End If
-
-
-End
+' Public Sub Timer1_Timer()
+' Dim sLine As String
+' Dim siLine As Short
+' 
+' Shell "python /home/pi/robohat/sonarTestCO.py" To sLine
+' 
+' If Left(sLine, 8) <> "Distance" Then Return
+' 
+' sLine = Left(sline, Len(sline) - 1)
+' LabelSonar.text = sLine & " cms"
+' 
+' sLine = Replace(sLine, "Distance: ", "")
+' siLine = Val(sLine)
+' 
+' If siLine < 10 And siLine > 4 Then
+'   VBoxSonar.Background = Color.Yellow
+'   LabelSonar.Foreground = Color.Black
+' End If
+' 
+' If siLine < 4 Then
+'   VBoxSonar.Background = Color.Red
+'   LabelSonar.Foreground = Color.Yellow
+' End If
+' 
+' If siLine >= 10 Then
+'   VBoxSonar.Background = Color.Green
+'   LabelSonar.Foreground = Color.Black
+' End If
+' 
+' 
+' End
 
 Public Sub Servo(siEcho As Short, siDegrees As Short)
-
-Shell "echo " & Str(siEcho) & "=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
-
+  
+  Shell "echo " & Str(siEcho) & "=" & Str(50 + ((90 - siDegrees) * 200 / 180)) & " > /dev/servoblaster"
+  
 End
 
 Public Sub Form_Close()
+  
+  Me.Sonic.Close
+  Me.Obstacles.Close
+  sb.Kill
+  
+End
 
-sb.Kill
+Public Sub Timer1_Timer()
 
+  Dim Distance As Short = Me.Sonic.GetDistance()
+    
+  LabelSonar.text = "Distance: " & Str(Distance) & " cms"
+  
+  If Distance < 10 And Distance > 4 Then
+    VBoxSonar.Background = Color.Yellow
+    LabelSonar.Foreground = Color.Black
+  End If
+  
+  If Distance < 4 Then
+    VBoxSonar.Background = Color.Red
+    LabelSonar.Foreground = Color.Yellow
+  End If
+  
+  If Distance >= 10 Then
+    VBoxSonar.Background = Color.Green
+    LabelSonar.Foreground = Color.Black
+  End If
+
+  IRLeft.Value = Obstacles.IsLeftOn()
+  Print Obstacles.IsLeftOn()
+  IRRight.Value = Obstacles.IsRightOn()
+  Me.SetPanelColors(IRLeftPanel, IRLeft.Value)
+  Me.SetPanelColors(IRRightPanel, IRRight.Value)
+
+End
+
+
+Public Sub SetPanelColors(UI As Panel, Value As Boolean)
+  If Value Then
+    UI.Background = Color.Red
+  Else
+    UI.Background = Color.Green
+  Endif
 End

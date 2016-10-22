@@ -1,20 +1,20 @@
 ' Gambas class file
 
-Public Picon As New PiconZero
+'Public Picon As New PiconZero
 Public Sonic As New Ultrasonic
 
 Public Sub Form_Open()
-  With Me.Picon
-    .Reversals[0] = True
-    .Reversals[1] = True
-    .Reversals[2] = True
-    .Trims[0] = -6
-    .Trims[1] = -20
-    .Trims[2] = 10
-    .EndPoints[1, 1] = 120
-    .EndPoints[2, 0] = 65
-    .EndPoints[2, 1] = 136
-  End With
+  ' With Me.Picon
+  '   .Reversals[0] = True
+  '   .Reversals[1] = True
+  '   .Reversals[2] = True
+  '   .Trims[0] = -6
+  '   .Trims[1] = -20
+  '   .Trims[2] = 10
+  '   .EndPoints[1, 1] = 120
+  '   .EndPoints[2, 0] = 65
+  '   .EndPoints[2, 1] = 136
+  ' End With
   ButtonCentreAll_Click
   Me.Center
   Timer1.Delay = 3000
