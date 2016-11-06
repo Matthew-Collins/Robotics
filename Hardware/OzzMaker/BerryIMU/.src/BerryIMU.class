@@ -8,8 +8,8 @@ Const REVISION_PI2_AND_PI3 As Integer = &H01
 
 'Registers / etc:
 Const MAG_ADDRESS As Integer = &H1e
-Const ACC_ADDRESS As Integer = &H1e
-Const GYR_ADDRESS As Integer = &H6a
+Const ACC_ADDRESS As Integer = &H6a '&H1e Switched
+Const GYR_ADDRESS As Integer = &H1e '&H6a
 
 'LSM9DS0 Gyro Registers  
 Const WHO_AM_I_G As Integer = &H0F
@@ -20,10 +20,10 @@ Const CTRL_REG4_G As Integer = &H23
 Const CTRL_REG5_G As Integer = &H24
 Const REFERENCE_G As Integer = &H25
 Const STATUS_REG_G As Integer = &H27
-Const OUT_X_L_G As Integer = &H28
-Const OUT_X_H_G As Integer = &H29
-Const OUT_Y_L_G As Integer = &H2A
-Const OUT_Y_H_G As Integer = &H2B
+Const OUT_X_L_G As Integer = &H2A '&H28 Switched
+Const OUT_X_H_G As Integer = &H2B '&H29
+Const OUT_Y_L_G As Integer = &H28 '&H2A
+Const OUT_Y_H_G As Integer = &H29 '&H2B
 Const OUT_Z_L_G As Integer = &H2C
 Const OUT_Z_H_G As Integer = &H2D
 Const FIFO_CTRL_REG_G As Integer = &H2E
@@ -94,35 +94,41 @@ Const TIME_LIMIT As Integer = &H3B
 Const TIME_LATENCY As Integer = &H3C
 Const TIME_WINDOW As Integer = &H3D
 
+Const RAD_TO_DEG As Float = 57.29578
+Const M_PI As Float = 3.14159265358979323846
+Const G_GAIN As Float = 0.070  '[deg / s / LSB] If you change the dps For gyro, you need To update this value accordingly
+Const AA As Float = 0.40       'Complementary filter constant
+
 Public Accelerometer As I2c
 Public Gyro As I2c
 
 Public Sub _new()
+
   Me.Accelerometer = New I2c(REVISION_PI2_AND_PI3, ACC_ADDRESS)
   Me.Gyro = New I2c(REVISION_PI2_AND_PI3, GYR_ADDRESS)
 
-  Me.Gyro.Detect
+  'Switched Init Sequence from Gyro to Accelerometer
 
   'initialise the accelerometer
-  Me.Accelerometer.Write8(CTRL_REG1_XM, &X01100111) 'z, y, x axis enabled, continuos update, 100 Hz data rate
-  Me.Accelerometer.Write8(CTRL_REG2_XM, &X00100000) '+ / - 16 G full scale
+  Me.Gyro.Write8(CTRL_REG1_XM, &X01100111) 'z, y, x axis enabled, continuos update, 100 Hz data rate
+  Me.Gyro.Write8(CTRL_REG2_XM, &X00100000) '+ / - 16 G full scale
 
   'initialise the gyroscope
-  Me.Gyro.Write8(CTRL_REG1_G, &X00001111) 'Normal power mode, all axes enabled
-  Me.Gyro.Write8(CTRL_REG4_G, &X00110000) 'Continuos update, 2000 dps full scale
+  Me.Accelerometer.Write8(CTRL_REG1_G, &X00001111) 'Normal power mode, all axes enabled
+  Me.Accelerometer.Write8(CTRL_REG4_G, &X00110000) 'Continuos update, 2000 dps full scale
 
 End
 
 Public Function AccelerometerX() As Integer
-  Return cSigned(Me.Accelerometer.Read16(OUT_X_L_G))
+  Return cSigned(Me.Accelerometer.Read16(OUT_X_L_A))
 End
 
 Public Function AccelerometerY() As Integer
-  Return cSigned(Me.Accelerometer.Read16(OUT_Y_L_G))
+  Return cSigned(Me.Accelerometer.Read16(OUT_Y_L_A))
 End
 
 Public Function AccelerometerZ() As Integer
-  Return cSigned(Me.Accelerometer.Read16(OUT_Z_L_G))
+  Return cSigned(Me.Accelerometer.Read16(OUT_Z_L_A))
 End
 
 Public Function GyroX() As Integer
@@ -136,6 +142,178 @@ End
 Public Function GyroZ() As Integer
   Return cSigned(Me.Gyro.Read16(OUT_Z_L_G))
 End
+
+' Public oldXAccRawValue As Integer = 0
+' Public oldYAccRawValue As Integer = 0
+' Public oldZAccRawValue As Integer = 0
+' 
+' Public LastLoop As Float = Timer()
+
+Public Sub GetValues(ByRef GyroX As Integer, ByRef GyroY As Integer, ByRef GyroZ As Integer, ByRef AccelerometerX As Integer, ByRef AccelerometerY As Integer, ByRef AccelerometerZ As Integer, ByRef ComboX As Integer, ByRef ComboY As Integer, ByRef ComboZ As Integer)
+
+  GyroX = Me.GyroX
+  GyroY = Me.GyroY
+  GyroZ = Me.GyroZ
+  AccelerometerX = Me.AccelerometerX
+  AccelerometerY = Me.AccelerometerY
+  AccelerometerZ = Me.AccelerometerZ
+
+  'Combine and Filter Values
+
+
+
+
+  'Return Values
+  ComboX = GyroX
+  ComboY = GyroY
+  ComboZ = GyroZ
+
+
+'   'Read the accelerometer and gyroscope values
+  ' Dim ACCx As Integer = Me.AccelerometerX()
+  ' Dim ACCy As Integer = Me.AccelerometerY()
+  ' Dim ACCz As Integer = Me.AccelerometerZ()
+  ' Dim GYRx As Integer = Me.GyroX()
+  ' Dim GYRy As Integer = Me.GyroY()
+  ' Dim GYRz As Integer = Me.GyroZ()
+  ' 
+  ' Dim a, b As Date
+  ' Dim LP As Long 
+  ' 
+  ' b = Now - a
+  ' a = Now
+  ' LP = b / (10000000 * 1)
+  
+' 
+' '         
+' '         ##Calculate Loop Period(LP).How long between Gyro Reads
+' '         b = datetime.datetime.now() - a
+' '         a = datetime.datetime.now()
+' '         LP = b.microseconds / (1000000 * 1.0)
+' '         Print "Loop Time | %5.2f|" % (LP),
+' '         
+'  
+'   LastLoop = Timer
+'   
+
+'         
+'         
+'         
+'         #Apply low pass filter To reduce noise
+'         ACC_LPF_FACTOR = 0.05
+'         ACCx = ACCx * ACC_LPF_FACTOR + oldXAccRawValue * (1 - ACC_LPF_FACTOR);
+'         ACCy = ACCy * ACC_LPF_FACTOR + oldYAccRawValue * (1 - ACC_LPF_FACTOR);
+'         ACCz = ACCz * ACC_LPF_FACTOR + oldZAccRawValue * (1 - ACC_LPF_FACTOR);
+'         oldXAccRawValue = ACCx;
+'         oldYAccRawValue = ACCy;
+'         oldZAccRawValue = ACCz;
+'         
+'         
+'         #Convert Gyro raw To degrees per second
+'         rate_gyr_x = GYRx * G_GAIN
+'         rate_gyr_y = GYRy * G_GAIN
+'         rate_gyr_z = GYRz * G_GAIN
+' 
+' 
+'         #Calculate the angles From the gyro. 
+'         gyroXangle += rate_gyr_x * LP
+'         gyroYangle += rate_gyr_y * LP
+'         gyroZangle += rate_gyr_z * LP
+' 
+' 
+'         ##Convert Accelerometer values To degrees
+'         AccXangle = (math.atan2(ACCy, ACCz) + M_PI) * RAD_TO_DEG
+'         AccYangle = (math.atan2(ACCz, ACCx) + M_PI) * RAD_TO_DEG
+'         AccZangle = (math.atan2(ACCy, ACCx) + M_PI) * RAD_TO_DEG
+'         
+'         ####################################################################
+'         ######################Correct rotation value ########################
+'         ####################################################################
+'         #Change the rotation value Of the accelerometer To - / + 180 And
+'         #Move the Y axis '0' point to up.
+'         #
+'         #Two different pieces Of code are used depending On how your IMU Is Mounted.
+'         #If IMU Is Up the correct way, Skull logo Is Facing down, Use these lines
+'         #AccXangle -= 180.0
+'         #If AccYangle > 90:
+'         #AccYangle -= 270.0
+'         #else:
+'         #AccYangle += 90.0
+'         #
+'         #
+'         #
+'         #
+'         #If IMU Is Upside down E.g Skull logo Is Facing up;
+'         If AccXangle > 180:
+'                 AccXangle -= 360.0
+'         AccYangle -= 90
+'         If (AccYangle > 180):
+'                 AccYangle -= 360.0
+'         ############################End ##################################
+'         If AccZangle > 180:
+'                 AccZangle -= 360.0
+' 
+'                 
+'         #Complementary filter used To combine the accelerometer And gyro values.
+'         CFangleX = AA * (CFangleX + rate_gyr_x * LP) + (1 - AA) * AccXangle
+'         CFangleY = AA * (CFangleY + rate_gyr_y * LP) + (1 - AA) * AccYangle
+'         CFangleZ = AA * (CFangleZ + rate_gyr_z * LP) + (1 - AA) * AccZangle
+' 
+' 
+'         If 0: #Change To '0' to stop showing the angles from the accelerometer
+'                 Print ("\033[1;34;40mACCX Angle %5.2f ACCY Angle %5.2f  ACCZ Angle %5.2f  \033[0m  " % (AccXangle, AccYangle, AccZangle)),
+'         
+'         If 0: #Change To '0' to stop  showing the angles from the gyro
+'                 Print ("\033[1;31;40m\tGRYX Angle %5.2f  GYRY Angle %5.2f  GYRZ Angle %5.2f" % (gyroXangle, gyroYangle, gyroZangle)),
+' 
+'         If 1: #Change To '0' to stop  showing the angles from the complementary filter
+'                 Print ("\033[1;35;40m   \tCFangleX Angle %5.2f \033[1;36;40m  CFangleY Angle %5.2f  \033[1;33;40m  CFangleZ Angle %5.2f\33[1;32;40m" % (CFangleX, CFangleY, CFangleZ))
+' 
+' 
+' 
+'         
+'         
+'         #limit the angles
+'         If CFangleX > angleLimit:
+'                 CFangleX = angleLimit
+'         If CFangleX < - angleLimit:
+'                 CFangleX = - angleLimit
+'         If CFangleY > angleLimit:
+'                 CFangleY = angleLimit
+'         If CFangleY < - angleLimit:
+'                 CFangleY = - angleLimit
+'                 
+'         
+'         If CFangleY > 70 Or CFangleY < -70: # If Y angle Is Not between - 70 And 70, Then only show large horizontal bar.
+'                 ACC_LPF_FACTOR = 0.05 #lower low pass filter
+'                 hBposition = (Int(scaleHonly(CFangleZ)), 190)
+'                 screen.blit(img_background_H_only, screen_rect)#Blit the New Image To the surface
+'                 screen.blit(img_Hbubble_H_only, hBposition)#Blit the New Image To the surface
+'                 screen.blit(img_overlay_H_only, screen_rect)#Blit the New Image To the surface
+'         else:
+'                 ACC_LPF_FACTOR = 0.3
+'                 
+'                 hBposition = (Int(scaleH(CFangleX)), 244)
+'                 vBposition = (398, Int(scaleV(CFangleY)))
+'                 newcBposition = (Int(scaleCH(CFangleX)), Int(scaleCV(CFangleY)))
+'                 
+'                 #confirm that center bubble Is Within the circle;
+'                 If(is_in_circle(181, 117, 90, newcBposition[0], newcBposition[1])):
+'                         cBposition = newcBposition
+'                 #Blit the New Images To the surface
+'                 screen.blit(img_background, screen_rect)
+'                 screen.blit(img_Hbubble, hBposition)
+'                 screen.blit(img_Vbubble, vBposition)
+'                 screen.blit(img_Cbubble, cBposition)
+'                 screen.blit(img_overlay, screen_rect)
+'         
+'         pygame.display.flip()#Show the New Image On the TFT
+'         
+
+  
+End
+
+
 
 Public Function cSigned(Value As Integer) As Integer
   If Value < 32768 

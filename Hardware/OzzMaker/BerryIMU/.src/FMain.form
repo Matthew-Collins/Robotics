@@ -1,15 +1,16 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,99,50)
+  MoveScaled(0,0,99,71)
   { Timer1 #Timer
     #MoveScaled(1,1)
     Enabled = True
+    Delay = 1
   }
-  { Label1 Label
+  { GryoLabel Label
     MoveScaled(12,1,34,10)
   }
-  { Label2 Label
+  { AccelerometerLabel Label
     MoveScaled(57,1,34,10)
   }
   { GyroX Slider
@@ -65,5 +66,35 @@
   { Label8 Label
     MoveScaled(56,10,24,4)
     Text = ("X:")
+  }
+  { ComboY Slider
+    MoveScaled(35,55,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { ComboZ Slider
+    MoveScaled(35,63,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { Label9 Label
+    MoveScaled(35,51,24,4)
+    Text = ("Y:")
+  }
+  { Label10 Label
+    MoveScaled(35,59,24,4)
+    Text = ("Z:")
+  }
+  { Label11 Label
+    MoveScaled(35,43,24,4)
+    Text = ("X:")
+  }
+  { ComboLabel Label
+    MoveScaled(36,34,34,10)
+  }
+  { ComboX Slider
+    MoveScaled(35,47,24,4)
+    MinValue = -3000
+    MaxValue = 3000
   }
 }

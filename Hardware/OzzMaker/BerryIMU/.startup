@@ -2,9 +2,9 @@ FMain
 BerryIMU
 0
 0
-0.0.0
+0.0.1
 
 gb.image
-gb.gui
+gb.qt4
 gb.form
 
