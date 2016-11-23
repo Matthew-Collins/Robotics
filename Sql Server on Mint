@@ -1,0 +1,21 @@
+Sql Server vNext for Linux Mint v18.0
+
+From:
+https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu
+
+Database Engine:
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server.list | sudo tee /etc/apt/sources.list.d/mssql-server.list
+sudo apt-get update
+sudo apt-get install -y mssql-server
+sudo /opt/mssql/bin/sqlservr-setup
+systemctl status mssql-server
+
+Tools (Not Compatable with Gambas):
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+sudo apt-get update 
+sudo apt-get install mssql-tools
+
+Thanks
+Matt
