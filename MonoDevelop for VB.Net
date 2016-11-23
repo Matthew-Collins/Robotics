@@ -9,6 +9,7 @@ sudo apt-get install mono-vbnc
 sudo apt-get install monodevelop
 
 1) Create New VB.Net Project:
+
 2) If below error appears:
 
 Error while trying to load the project 
@@ -32,6 +33,16 @@ etc...
 Change this line to:
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
  
+
+4) In case of issues: Try Turning This Setting Off (then On again) - Shows More Error Information:
+Open Solution
+Right Click Project (2nd Node Down in Solution) > Options
+On Build > General Section
+Un-Tick "Use MSBuild build engine ...." 
+
+
+5) Visual Form Designer in VB.Net does not work - Why !!
+
 Thanks
 Matt
   
