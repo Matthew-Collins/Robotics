@@ -1,0 +1,33 @@
+MonoDevelop v6.1.2 (FlatPak) for C#
+
+Install on Mint v18.0
+
+From:
+http://flatpak.org/getting.html
+
+sudo add-apt-repository ppa:alexlarsson/flatpak
+sudo apt update
+sudo apt install flatpak
+
+From:
+http://www.monodevelop.com/download/linux/
+
+wget https://sdk.gnome.org/keys/gnome-sdk.gpg
+flatpak remote-add --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/
+flatpak install gnome org.freedesktop.Platform 1.4
+
+Download:
+wget https://download.mono-project.com/monodevelop/monodevelop-6.1.2.44-1.flatpak
+
+Install:
+flatpak install --user --bundle monodevelop-6.1.2.44-1.flatpak
+
+Run:
+flatpak run com.xamarin.MonoDevelop
+
+
+
+Missing: VB.Net Compiler - why !!
+
+Thanks
+Matt
