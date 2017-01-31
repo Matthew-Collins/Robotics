@@ -7,9 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Canvas>
-        <Button x:Name="ButtonUp" Canvas.Left="273" Canvas.Top="38" Width="59">Up</Button>
-        <Button x:Name="ButtonLeft" Canvas.Left="194" Canvas.Top="82" Width="56">Left</Button>
-        <Button x:Name="ButtonRight" Canvas.Left="358" Canvas.Top="82">Right</Button>
-        <Button x:Name="ButtonDown" Canvas.Left="273" Canvas.Top="128">Down</Button>
+        <RelativePanel>
+            <TextBlock x:Name="Label0" Width="500">Servo 0:</TextBlock>
+            <Slider x:Name="Channel0" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label0"/>
+            <TextBlock x:Name="Label1" Width="500" RelativePanel.Below="Channel0">Servo 1:</TextBlock>
+            <Slider x:Name="Channel1" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label1"/>
+            <TextBlock x:Name="Label2" Width="500" RelativePanel.Below="Channel1">Servo 2:</TextBlock>
+            <Slider x:Name="Channel2" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label2"/>
+            <TextBlock x:Name="Label3" Width="500" RelativePanel.Below="Channel2">Servo 3:</TextBlock>
+            <Slider x:Name="Channel3" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label3"/>
+            <TextBlock x:Name="Label4" Width="500" RelativePanel.Below="Channel3">Servo 4:</TextBlock>
+            <Slider x:Name="Channel4" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label4"/>
+            <TextBlock x:Name="Label5" Width="500" RelativePanel.Below="Channel4">Servo 5:</TextBlock>
+            <Slider x:Name="Channel5" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label5"/>
+            <Button x:Name="CenterAll" RelativePanel.Below="Channel5" RelativePanel.AlignHorizontalCenterWith="Channel5">Center All</Button>
+            <TextBlock x:Name="Status" Width="500" RelativePanel.Below="CenterAll">Loading...</TextBlock>
+        </RelativePanel>
     </Canvas>
 </Page>

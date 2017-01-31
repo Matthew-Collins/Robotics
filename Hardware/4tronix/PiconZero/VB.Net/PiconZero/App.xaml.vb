@@ -15,7 +15,7 @@ NotInheritable Class App
         ' Show graphics profiling information while debugging.
         If System.Diagnostics.Debugger.IsAttached Then
             ' Display the current frame rate counters
-            Me.DebugSettings.EnableFrameRateCounter = True
+            'Me.DebugSettings.EnableFrameRateCounter = True
         End If
 #End If
 
