@@ -65,7 +65,6 @@ Public Sub OneStep(Direction As Integer, StepStyle As Integer)
 ' 		pwm_a = pwm_b = 255
 ' 
 ' 		#first determine what sort Of stepping procedure we 're up to
-
 ' 		If (style == Adafruit_MotorHAT.SINGLE):
 '     			If ((self.currentstep / (self.MICROSTEPS / 2)) % 2): 
 ' 				#we 're at an odd step, weird
@@ -79,7 +78,6 @@ Public Sub OneStep(Direction As Integer, StepStyle As Integer)
 ' 					self.currentstep += self.MICROSTEPS
 ' 				else:
 ' 					self.currentstep -= self.MICROSTEPS
-
 ' 		If (style == Adafruit_MotorHAT.DOUBLE):
 ' 			If Not (self.currentstep / (self.MICROSTEPS / 2) % 2):
 ' 				#we 're at an even step, weird
@@ -93,7 +91,6 @@ Public Sub OneStep(Direction As Integer, StepStyle As Integer)
 ' 					self.currentstep += self.MICROSTEPS
 ' 				else:
 ' 					self.currentstep -= self.MICROSTEPS
-
 ' 		If (style == Adafruit_MotorHAT.INTERLEAVE):
 ' 			If (dir == Adafruit_MotorHAT.FORWARD):
 ' 				self.currentstep += self.MICROSTEPS / 2

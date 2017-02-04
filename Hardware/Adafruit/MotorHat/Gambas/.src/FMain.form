@@ -8,7 +8,7 @@
   }
   { TurnRight1 Button
     MoveScaled(7,10,16,4)
-    Text = ("Turn Right")
+    Text = ("Turn Rigth")
   }
   { TurnLeft2 Button
     MoveScaled(29,4,16,4)
@@ -16,6 +16,6 @@
   }
   { TurnRight2 Button
     MoveScaled(29,10,16,4)
-    Text = ("Turn Right")
+    Text = ("Turn Rigth")
   }
 }
