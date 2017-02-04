@@ -1,17 +1,11 @@
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Net.Http
-Imports Windows.ApplicationModel.Background
-Imports Windows.System.Threading
 Imports AdafruitClassLibrary
+Imports Windows.ApplicationModel.Background
 
 Public NotInheritable Class StartupTask
     Implements IBackgroundTask
 
     Private MotorHat As MotorHat
-    Private Stepper As MotorHat.Stepper
+    Private Steppers As New List(Of MotorHat.Stepper)
 
     Public Async Sub Run(taskInstance As IBackgroundTaskInstance) Implements IBackgroundTask.Run
 
@@ -20,22 +14,26 @@ Public NotInheritable Class StartupTask
         Me.MotorHat = New MotorHat()
         Await MotorHat.InitAsync(1600).ConfigureAwait(False)
 
-        Me.Stepper = MotorHat.GetStepper(200, 1)
-        Me.Stepper.SetSpeed(200)
+        Me.Steppers.Add(MotorHat.GetStepper(200, 1))
+        Me.Steppers.Add(MotorHat.GetStepper(200, 2))
 
-        Stepper.step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.SINGLE)
-        Stepper.step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.SINGLE)
+        For x = 0 To 1
+            Me.Steppers(x).SetSpeed(500)
 
-        Stepper.step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
-        Stepper.step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.SINGLE)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.SINGLE)
 
-        Stepper.step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.INTERLEAVE)
-        Stepper.step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.INTERLEAVE)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
 
-        'Stepper.step(10, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.MICROSTEP)
-        'Stepper.step(10, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.MICROSTEP)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.INTERLEAVE)
+            Me.Steppers(x).step(200, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.INTERLEAVE)
 
-        Stepper.Release()
+            'Stepper.step(10, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.MICROSTEP)
+            'Stepper.step(10, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.MICROSTEP)
+
+            Me.Steppers(x).Release()
+        Next
 
     End Sub
 
