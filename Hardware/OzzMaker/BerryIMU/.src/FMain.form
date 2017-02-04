@@ -1,100 +1,188 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,99,71)
+  MoveScaled(0,0,90,48)
+  Arrangement = Arrange.Vertical
+  Padding = 5
+  { Panel1 HBox
+    MoveScaled(0,0,80,4)
+    { GryoLabel Label
+      MoveScaled(1,0,34,4)
+    }
+    { AccelerometerLabel Label
+      MoveScaled(45,0,34,4)
+    }
+  }
+  { Panel3 HBox
+    MoveScaled(-2,6,79,4)
+    { Label1 Label
+      MoveScaled(0,0,5,4)
+      Text = ("X: ")
+      Alignment = Align.Right
+    }
+    { GyroX Slider
+      MoveScaled(8,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Label8 Label
+      MoveScaled(32,0,14,4)
+      Expand = True
+      Text = ("X: ")
+      Alignment = Align.Right
+    }
+    { AccelerometerX Slider
+      MoveScaled(48,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel11 Panel
+      MoveScaled(73,0,5,3)
+    }
+  }
+  { Panel4 HBox
+    MoveScaled(1,10,82,4)
+    { Label2 Label
+      MoveScaled(0,0,5,4)
+      Text = ("Y: ")
+      Alignment = Align.Right
+    }
+    { GyroY Slider
+      MoveScaled(8,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { LabelGY Label
+      MoveScaled(34,0,9,4)
+    }
+    { Label3 Label
+      MoveScaled(46,0,5,4)
+      Expand = True
+      Text = ("Y: ")
+      Alignment = Align.Right
+    }
+    { AccelerometerY Slider
+      MoveScaled(52,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel10 Panel
+      MoveScaled(77,0,5,3)
+    }
+  }
+  { Panel5 HBox
+    MoveScaled(0,14,84,4)
+    { Label12 Label
+      MoveScaled(0,0,5,4)
+      Text = ("Z: ")
+      Alignment = Align.Right
+    }
+    { GyroZ Slider
+      MoveScaled(8,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { LabelGZ Label
+      MoveScaled(35,0,9,4)
+    }
+    { Label13 Label
+      MoveScaled(43,0,5,4)
+      Expand = True
+      Text = ("Z: ")
+      Alignment = Align.Right
+    }
+    { AccelerometerZ Slider
+      MoveScaled(52,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel9 Panel
+      MoveScaled(78,1,5,3)
+    }
+  }
+  { HBox1 HBox
+    MoveScaled(4,18,56,4)
+    { LabelCalibrating Label
+      MoveScaled(8,0,28,3)
+      Font = Font["Bold,+3"]
+      Expand = True
+      Alignment = Align.Center
+    }
+  }
+  { Panel6 HBox
+    MoveScaled(-8,24,55,4)
+    { Panel8 Panel
+      MoveScaled(0,0,5,3)
+      Expand = True
+    }
+    { ComboLabel Label
+      MoveScaled(12,0,34,4)
+    }
+    { Panel7 Panel
+      MoveScaled(49,1,5,3)
+      Expand = True
+    }
+  }
+  { Panel12 HBox
+    MoveScaled(-8,28,53,4)
+    { Label14 Label
+      MoveScaled(12,0,5,4)
+      Expand = True
+      Text = ("X: ")
+      Alignment = Align.Right
+    }
+    { ComboX Slider
+      MoveScaled(19,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel13 Panel
+      MoveScaled(47,0,5,3)
+      Expand = True
+    }
+  }
+  { Panel2 HBox
+    MoveScaled(-5,32,50,4)
+    { Label9 Label
+      MoveScaled(0,0,5,4)
+      Expand = True
+      Text = ("Y: ")
+      Alignment = Align.Right
+    }
+    { ComboY Slider
+      MoveScaled(15,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel14 Panel
+      MoveScaled(46,0,5,3)
+      Expand = True
+    }
+  }
+  { Panel18 HBox
+    MoveScaled(3,36,53,4)
+    { Label15 Label
+      MoveScaled(0,0,5,4)
+      Expand = True
+      Text = ("Z: ")
+      Alignment = Align.Right
+    }
+    { ComboZ Slider
+      MoveScaled(16,0,24,4)
+      MinValue = -3000
+      MaxValue = 3000
+    }
+    { Panel19 Panel
+      MoveScaled(45,0,5,3)
+      Expand = True
+    }
+  }
   { Timer1 #Timer
-    #MoveScaled(1,1)
+    #MoveScaled(51,25)
     Enabled = True
     Delay = 1
   }
-  { GryoLabel Label
-    MoveScaled(12,1,34,10)
-  }
-  { AccelerometerLabel Label
-    MoveScaled(57,1,34,10)
-  }
-  { GyroX Slider
-    MoveScaled(13,14,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { AccelerometerX Slider
-    MoveScaled(56,14,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { GyroY Slider
-    MoveScaled(13,22,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { GyroZ Slider
-    MoveScaled(13,30,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { AccelerometerY Slider
-    MoveScaled(56,22,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { AccelerometerZ Slider
-    MoveScaled(56,30,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { Label3 Label
-    MoveScaled(13,10,24,4)
-    Text = ("X:")
-  }
-  { Label4 Label
-    MoveScaled(13,18,24,4)
-    Text = ("Y:")
-  }
-  { Label5 Label
-    MoveScaled(13,26,24,4)
-    Text = ("Z:")
-  }
-  { Label6 Label
-    MoveScaled(56,18,24,4)
-    Text = ("Y:")
-  }
-  { Label7 Label
-    MoveScaled(56,26,24,4)
-    Text = ("Z:")
-  }
-  { Label8 Label
-    MoveScaled(56,10,24,4)
-    Text = ("X:")
-  }
-  { ComboY Slider
-    MoveScaled(35,55,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { ComboZ Slider
-    MoveScaled(35,63,24,4)
-    MinValue = -3000
-    MaxValue = 3000
-  }
-  { Label9 Label
-    MoveScaled(35,51,24,4)
-    Text = ("Y:")
-  }
-  { Label10 Label
-    MoveScaled(35,59,24,4)
-    Text = ("Z:")
-  }
-  { Label11 Label
-    MoveScaled(35,43,24,4)
-    Text = ("X:")
-  }
-  { ComboLabel Label
-    MoveScaled(36,34,34,10)
-  }
-  { ComboX Slider
-    MoveScaled(35,47,24,4)
-    MinValue = -3000
-    MaxValue = 3000
+  { TimerCalibration #Timer
+    #MoveScaled(52,28)
   }
 }

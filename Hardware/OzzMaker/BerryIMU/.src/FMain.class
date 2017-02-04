@@ -1,32 +1,134 @@
 ' Gambas class file
 
 Public IMU As New BerryIMU
+Public siCount As New Short[] 
+Public siSorted As Short[]
+Public siSize As Short = 50
+Public siAdj As Short
+Public siAvg As Short
+Public siAdder As Short
 
 Public Sub _new()
+Dim siCounter As Short
+
+For siCounter = 0 To siSize
+  siCount.Add(0)
+Next
+
+Me.H = 350
+Me.W = 650
+
+'Test16 ''TESTING ONLY
+
+Message.Title = "Calibration"
+Message.Info("Place robot upright on a static surface for calibration\nPress OK when ready to start calibration", "OK")
+
+TimerCalibration.Delay = 5000
+TimerCalibration.Start
+LabelCalibrating.Text = "Calibrating - Please wait"
+
 End
 
-Public Sub Form_Open()
+Public Sub Test16()
+Dim iValue As Integer
+Dim siCount As Short
+
+For siCount = 1 To 10
+  iValue = i2c.Read16(&H01)
+  Print iValue
+Next
+
+Stop
+
+End
+
+Public Sub TimerCalibration_Timer()
+
+If siAvg = 0 Then Return
+If siAvg < 0 Then siAdj = Abs(siAvg)
+If siAvg > 0 Then siAdj = - siAvg
+LabelCalibrating.text = ""
+TimerCalibration.Stop
+Shell "espeak 'Calabration completed'"
+
 End
 
 Public Sub Timer1_Timer()
 
-  Dim BalancePoint As Integer = 50
-
-  GyroX.Value = Me.IMU.GyroX()
-  GyroY.Value = Me.IMU.GyroY()
-  GyroZ.Value = Me.IMU.GyroZ()
-
-  AccelerometerX.Value = Me.IMU.AccelerometerX()
-  AccelerometerY.Value = Me.IMU.AccelerometerY()
-  AccelerometerZ.Value = Me.IMU.AccelerometerZ()
-
-  GryoLabel.Text = "Gyro:\n" & "x=" & Me.IMU.GyroX() & " y=" & Me.IMU.GyroY() & " z=" & Me.IMU.GyroZ()
-  AccelerometerLabel.Text = "Accelerometer:\n" & "x=" & Me.IMU.AccelerometerX() & " y=" & Me.IMU.AccelerometerY() & " z=" & Me.IMU.AccelerometerZ()
-
-  If Me.IMU.GyroY() > BalancePoint Then
-    ComboY.value = 3000
-  Else
-    ComboY.value = -3000
-  Endif
+'AverageTogether
+AverageRoll
 
 End
+
+Public Sub AverageTogether()
+Dim siLoop, siTotal As Short
+
+GyroY.Value = Me.IMU.GyroY() 
+LabelGY.text = GyroY.Value 
+
+If siAdder < siSize Then
+  siCount[siAdder] = GyroY.Value
+  Inc siAdder
+  Return
+Else
+  For siLoop = 0 To siSize - 1
+    siTotal += siCount[siLoop]
+  Next
+  siAvg = siTotal / siSize
+  siAdder = 0
+Endif
+
+GyroZ.value = siAvg + siAdj
+LabelGZ.Text = Str(Int(GyroZ.value / 10))
+
+End
+
+Public Sub AverageRoll()
+Dim siLoop, siTotal As Short
+
+  'GyroX.Value = Me.IMU.GyroX()
+  GyroY.Value = Me.IMU.GyroY() 
+  LabelGY.text = GyroY.Value 
+  'GyroZ.Value = Me.IMU.GyroZ()
+
+  'AccelerometerX.Value = Me.IMU.AccelerometerX()
+  'AccelerometerY.Value = Me.IMU.AccelerometerY()
+  'AccelerometerZ.Value = Me.IMU.AccelerometerZ()
+
+  
+siCount.Remove(0, 1)
+siCount.add(GyroY.Value)
+siSorted = siCount.Copy().Sort()
+
+siSorted.Remove(0, 1)
+siSorted.Remove(siSize - 2, 1)
+
+'For siCounter = 0 To 2
+'  Print siSorted[siCounter]
+'Next
+For siLoop = 0 To siSize - 3
+  siTotal += siSorted[siLoop]
+Next
+
+siAvg = siTotal / siSize
+
+'Print siAvg
+  GyroZ.value = siAvg + siAdj
+  LabelGZ.Text = Str(GyroZ.value)
+
+End
+
+Public Sub PrintOut()
+
+
+  GryoLabel.Text = "Gyro:\n" & "y=" & Str(GyroY.Value) '& " y=" & Str(GyroY.Value) & " z=" & Str(GyroZ.Value)
+  AccelerometerLabel.Text = "Accelerometer:\n" & " y = " & Str(AccelerometerY.Value) '& " y = " & Str(AccelerometerY.Value) & " z = " & Str(AccelerometerZ.value)
+
+  ComboY.value = GyroY.Value + AccelerometerY.Value
+
+  Print GyroY.Value
+
+End
+
+
+

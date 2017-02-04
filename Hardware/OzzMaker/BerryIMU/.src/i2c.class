@@ -36,7 +36,7 @@ Public Function Read8(Register As Integer) As Integer
   Return HexStringToInteger(Returnvalue)
 End
 
-Public Function Read16(Register As Integer) As Integer
+Public Function Read16t(Register As Integer) As Integer
   Return Me.Read8(Register) + (Me.Read8(Register + 1) * Base16)
 End
 
@@ -46,8 +46,67 @@ End
 '   Return HexStringToInteger(Returnvalue) 'Wrong Value = Lower Value Twice
 ' End
 
+Public Function Read16(Register As Integer) As Integer
+  Dim ReturnValue As Integer
+  Dim DumpValue As String
+  Dim Lines As String[]
+  Dim First As String
+  Dim Second As String
+  Shell "i2cdump -y " & Me.Revison & " " & Me.Address To DumpValue
+  Lines = Split(DumpValue, "\n")
+  First = Mid(Lines[3], 29, 2)
+  Second = Mid(Lines[3], 32, 2)
+  Print Lines[0]
+  Print Lines[3]
+  'Print First
+  'Print Second
+  'Print 
+  ReturnValue = HexStringToInteger("0x" & Second & First) 'Wrong Value = Lower Value Twice
+  Print Hex(Register)
+  Print Str(cSigned(Me.Read16t(Register)))
+  Print ReturnValue
+  Print
+  Return ReturnValue
+End
+
+' Public Function Read16(Register As Integer) As Integer
+'   Dim ReturnValue As Integer
+'   Dim DumpValue As String
+'   Dim Lines As String[]
+'   Dim First As String
+'   Dim Second As String
+'   Shell "i2cdump -y " & Me.Revison & " " & Me.Address To DumpValue
+'   Lines = Split(DumpValue, "\n")
+'   'First = Mid(Lines[3], 29, 2)
+'   Second = Mid(Lines[3], 32, 2)
+'   Print Lines[0]
+'   Print Lines[3]
+'   'Print First
+'   'Print Second
+'   'Print 
+'   ReturnValue = HexStringToInteger("0x" & Second & First) 'Wrong Value = Lower Value Twice
+'   Print Hex(Register)
+'   Print Str(cSigned8Byte(Me.Read16t(Register)))
+'   Print ReturnValue
+'   Print
+'   Return ReturnValue
+' End
+
 Public Function HexStringToInteger(Value As String) As Integer
   Return CInt(Val(Replace(Replace(Value, "0x", "&H"), "\n", "")))
 End Function
 
-
+Public Function cSigned(Value As Integer) As Integer
+  If Value < 32768 
+    Return Value
+  Else 
+    Return Value - 65536
+  End If
+End
+Public Function cSigned8Byte(Value As Integer) As Integer
+  If Value < 127
+    Return Value
+  Else 
+    Return Value - 256
+  End If
+End
