@@ -21,7 +21,7 @@
             <TextBlock x:Name="Label5" Width="500" RelativePanel.Below="Channel4">Servo 5:</TextBlock>
             <Slider x:Name="Channel5" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label5"/>
             <Button x:Name="CenterAll" RelativePanel.Below="Channel5" RelativePanel.AlignHorizontalCenterWith="Channel5">Center All</Button>
-            <TextBlock x:Name="Status" Width="500" RelativePanel.Below="CenterAll">Loading...</TextBlock>
+            <TextBlock x:Name="Distance" Width="500" RelativePanel.Below="CenterAll">Distance:</TextBlock>
         </RelativePanel>
     </Canvas>
 </Page>
