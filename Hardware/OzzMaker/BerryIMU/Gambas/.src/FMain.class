@@ -1,0 +1,32 @@
+' Gambas class file
+
+Public IMU As New BerryIMU
+
+Public Sub _new()
+End
+
+Public Sub Form_Open()
+End
+
+Public Sub Timer1_Timer()
+
+  Dim BalancePoint As Integer = 50
+
+  GyroX.Value = Me.IMU.GyroX()
+  GyroY.Value = Me.IMU.GyroY()
+  GyroZ.Value = Me.IMU.GyroZ()
+
+  AccelerometerX.Value = Me.IMU.AccelerometerX()
+  AccelerometerY.Value = Me.IMU.AccelerometerY()
+  AccelerometerZ.Value = Me.IMU.AccelerometerZ()
+
+  GryoLabel.Text = "Gyro:\n" & "x=" & Me.IMU.GyroX() & " y=" & Me.IMU.GyroY() & " z=" & Me.IMU.GyroZ()
+  AccelerometerLabel.Text = "Accelerometer:\n" & "x=" & Me.IMU.AccelerometerX() & " y=" & Me.IMU.AccelerometerY() & " z=" & Me.IMU.AccelerometerZ()
+
+  If Me.IMU.GyroY() > BalancePoint Then
+    ComboY.value = 3000
+  Else
+    ComboY.value = -3000
+  Endif
+
+End

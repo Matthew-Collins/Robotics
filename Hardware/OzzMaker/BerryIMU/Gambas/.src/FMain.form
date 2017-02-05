@@ -1,0 +1,100 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,99,71)
+  { Timer1 #Timer
+    #MoveScaled(1,1)
+    Enabled = True
+    Delay = 1
+  }
+  { GryoLabel Label
+    MoveScaled(12,1,34,10)
+  }
+  { AccelerometerLabel Label
+    MoveScaled(57,1,34,10)
+  }
+  { GyroX Slider
+    MoveScaled(13,14,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { AccelerometerX Slider
+    MoveScaled(56,14,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { GyroY Slider
+    MoveScaled(13,22,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { GyroZ Slider
+    MoveScaled(13,30,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { AccelerometerY Slider
+    MoveScaled(56,22,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { AccelerometerZ Slider
+    MoveScaled(56,30,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { Label3 Label
+    MoveScaled(13,10,24,4)
+    Text = ("X:")
+  }
+  { Label4 Label
+    MoveScaled(13,18,24,4)
+    Text = ("Y:")
+  }
+  { Label5 Label
+    MoveScaled(13,26,24,4)
+    Text = ("Z:")
+  }
+  { Label6 Label
+    MoveScaled(56,18,24,4)
+    Text = ("Y:")
+  }
+  { Label7 Label
+    MoveScaled(56,26,24,4)
+    Text = ("Z:")
+  }
+  { Label8 Label
+    MoveScaled(56,10,24,4)
+    Text = ("X:")
+  }
+  { ComboY Slider
+    MoveScaled(35,55,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { ComboZ Slider
+    MoveScaled(35,63,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+  { Label9 Label
+    MoveScaled(35,51,24,4)
+    Text = ("Y:")
+  }
+  { Label10 Label
+    MoveScaled(35,59,24,4)
+    Text = ("Z:")
+  }
+  { Label11 Label
+    MoveScaled(35,43,24,4)
+    Text = ("X:")
+  }
+  { ComboLabel Label
+    MoveScaled(36,34,34,10)
+  }
+  { ComboX Slider
+    MoveScaled(35,47,24,4)
+    MinValue = -3000
+    MaxValue = 3000
+  }
+}

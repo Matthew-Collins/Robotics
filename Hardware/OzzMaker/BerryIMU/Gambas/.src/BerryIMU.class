@@ -322,13 +322,6 @@ Public Function cSigned(Value As Integer) As Integer
     Return Value - 65536
   End If
 End
-Public Function cSigned8Byte(Value As Integer) As Integer
-  If Value < 127
-    Return Value
-  Else 
-    Return Value - 256
-  End If
-End
 
 
 ' 
