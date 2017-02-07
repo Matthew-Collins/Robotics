@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="BerryIMU.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BerryIMU"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Canvas>
+        <RelativePanel>
+
+            <TextBlock x:Name="LabelGyroX" Width="500">GyroX:</TextBlock>
+            <Slider x:Name="GyroX" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelGyroX"/>
+
+            <TextBlock x:Name="LabelAccelerometerX" Width="500" RelativePanel.Below="GyroX">GyroX X:</TextBlock>
+            <Slider x:Name="AccelerometerX" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelAccelerometerX"/>
+
+            <TextBlock x:Name="LabelFilteredX" Width="500" RelativePanel.Below="AccelerometerX">Filtered X:</TextBlock>
+            <Slider x:Name="FilteredX" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelFilteredX"/>
+
+            <TextBlock x:Name="LabelGyroY" Width="500" RelativePanel.Below="FilteredX">GyroY:</TextBlock>
+            <Slider x:Name="GyroY" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelGyroY"/>
+
+            <TextBlock x:Name="LabelAccelerometerY" Width="500" RelativePanel.Below="GyroY">Accelerometer Y:</TextBlock>
+            <Slider x:Name="AccelerometerY" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelAccelerometerY"/>
+
+            <TextBlock x:Name="LabelFilteredY"  Width="500" RelativePanel.Below="AccelerometerY">Filtered Y:</TextBlock>
+            <Slider x:Name="FilteredY" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelFilteredY"/>
+
+            <TextBlock x:Name="LabelGyroZ" Width="500" RelativePanel.Below="FilteredY">Gyro Z:</TextBlock>
+            <Slider x:Name="GyroZ" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelGyroZ"/>
+
+            <TextBlock x:Name="LabelAccelerometerZ" Width="500" RelativePanel.Below="GyroZ">Accelerometer Z:</TextBlock>
+            <Slider x:Name="AccelerometerZ" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelAccelerometerZ"/>
+
+            <TextBlock x:Name="LabelFilteredZ" Width="500" RelativePanel.Below="AccelerometerZ">Filtered Z:</TextBlock>
+            <Slider x:Name="FilteredZ" Minimum="-3000" Maximum="3000" Value="0" Width="500" RelativePanel.Below="LabelFilteredZ"/>
+
+        </RelativePanel>
+    </Canvas>
+</Page>
