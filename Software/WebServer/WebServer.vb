@@ -15,7 +15,7 @@ Public NotInheritable Class WebServer
     End Sub
     Private Async Sub Listener_Request(sender As Object, e As HttpListenerRequestEventArgs) Handles Listener.Request
         If e.Request.Method = HttpMethods.Get Then
-            Await e.Response.WriteContentAsync($"Hello from Server at: {DateTime.Now}{vbCrLf}")
+            Await e.Response.WriteContentAsync($"Hello from Server at: {DateTime.Now}{vbCrLf}Path: {e.Request.RequestUri.PathAndQuery}")
         Else
             e.Response.MethodNotAllowed()
         End If
