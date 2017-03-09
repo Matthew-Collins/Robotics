@@ -1,0 +1,29 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  { Timer1 #Timer
+    #MoveScaled(40,40)
+    Enabled = True
+  }
+  { DistancePanel Panel
+    MoveScaled(18,35,15,9)
+    { Distance Label
+      MoveScaled(2,3,12,3)
+    }
+  }
+  { IRRightPanel Panel
+    MoveScaled(33,24,14,9)
+    { IRRight CheckBox
+      MoveScaled(2,3,11,3)
+      Text = ("IR Right")
+    }
+  }
+  { IRLeftPanel Panel
+    MoveScaled(3,24,15,9)
+    { IRLeft CheckBox
+      MoveScaled(2,3,11,3)
+      Text = ("IR Left")
+    }
+  }
+}

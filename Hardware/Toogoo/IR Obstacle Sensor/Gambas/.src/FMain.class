@@ -1,0 +1,34 @@
+' Gambas class file
+
+Public Sonic As New Ultrasonic
+Public Obstacles As New InfraRedObstacleSensors
+
+Public Sub _new()
+End
+
+Public Sub Form_Open()
+End
+
+Public Sub Form_Close()
+  Me.Sonic.Close
+  Me.Obstacles.Close
+End
+
+Public Sub Timer1_Timer()
+  Dim iDistance As Integer = Sonic.GetDistance()
+  Distance.Text = "Distance: " & iDistance
+  Me.SetPanelColors(DistancePanel, iDistance <= 5)
+  IRLeft.Value = Obstacles.IsLeftOn()
+  IRRight.Value = Obstacles.IsRightOn()
+  Me.SetPanelColors(IRLeftPanel, IRLeft.Value)
+  Me.SetPanelColors(IRRightPanel, IRRight.Value)
+End
+
+Public Sub SetPanelColors(UI As Panel, Value As Boolean)
+  If Value Then
+    UI.Background = Color.Red
+  Else
+    UI.Background = Color.Green
+  Endif
+End
+

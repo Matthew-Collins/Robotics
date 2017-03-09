@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="PiconZero.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PiconZero"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Canvas>
+        <RelativePanel>
+            <TextBlock x:Name="Label0" Width="500">Servo 0:</TextBlock>
+            <Slider x:Name="Channel0" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label0"/>
+            <TextBlock x:Name="Label1" Width="500" RelativePanel.Below="Channel0">Servo 1:</TextBlock>
+            <Slider x:Name="Channel1" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label1"/>
+            <TextBlock x:Name="Label2" Width="500" RelativePanel.Below="Channel1">Servo 2:</TextBlock>
+            <Slider x:Name="Channel2" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label2"/>
+            <TextBlock x:Name="Label3" Width="500" RelativePanel.Below="Channel2">Servo 3:</TextBlock>
+            <Slider x:Name="Channel3" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label3"/>
+            <TextBlock x:Name="Label4" Width="500" RelativePanel.Below="Channel3">Servo 4:</TextBlock>
+            <Slider x:Name="Channel4" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label4"/>
+            <TextBlock x:Name="Label5" Width="500" RelativePanel.Below="Channel4">Servo 5:</TextBlock>
+            <Slider x:Name="Channel5" Minimum="-90" Maximum="90" Value="0" Width="500" RelativePanel.Below="Label5"/>
+            <Button x:Name="CenterAll" RelativePanel.Below="Channel5" RelativePanel.AlignHorizontalCenterWith="Channel5">Center All</Button>
+            <TextBlock x:Name="Distance" Width="500" RelativePanel.Below="CenterAll">Distance:</TextBlock>
+        </RelativePanel>
+    </Canvas>
+</Page>

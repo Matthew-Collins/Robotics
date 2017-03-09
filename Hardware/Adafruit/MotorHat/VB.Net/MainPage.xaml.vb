@@ -26,13 +26,13 @@ Public NotInheritable Class MainPage
 
     End Sub
     Private Sub StepperThread1_DoWork(sender As Object, e As DoWorkEventArgs) Handles StepperThread1.DoWork
-        Me.Stepper1.step(100, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
-        Me.Stepper1.step(100, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
+        Me.Stepper1.step(1000, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
+        Me.Stepper1.step(1000, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
         Me.Stepper1.Release()
     End Sub
     Private Sub StepperThread2_DoWork(sender As Object, e As DoWorkEventArgs) Handles StepperThread2.DoWork
-        Me.Stepper2.step(100, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
-        Me.Stepper2.step(100, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
+        Me.Stepper2.step(1000, MotorHat.Stepper.Command.FORWARD, MotorHat.Stepper.Style.DOUBLE)
+        Me.Stepper2.step(1000, MotorHat.Stepper.Command.BACKWARD, MotorHat.Stepper.Style.DOUBLE)
         Me.Stepper2.Release()
     End Sub
     Private Sub StepperThread1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles StepperThread1.RunWorkerCompleted

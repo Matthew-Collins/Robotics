@@ -1,0 +1,19 @@
+[Breakpoints]
+Count=0
+
+[DebugWindow]
+Count=0
+
+[FCommit]
+LastCommit="Successfully Read from Ultrasonic Range Finder with Sysfs\n---- This line and the following will be ignored ----\n\nM       .settings\nD       .src/GPIO.class\nA       .src/GPIO_Sysfs_Pin.class\nM       .src/Ultrasonic.class"
+
+[OpenFile]
+Count=0
+
+[VersionControl]
+User="matthew-collins"
+RememberPassword=0
+
+[Watches]
+Count=0
+

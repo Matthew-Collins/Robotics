@@ -131,26 +131,63 @@ Public Class BerryIMU
         End With
         Return BerryIMU
     End Function
-    Public Sub GetValues(ByRef GyroX As Double, ByRef GyroY As Double, ByRef GyroZ As Double,
-                         ByRef AccelerometerX As Double, ByRef AccelerometerY As Double, ByRef AccelerometerZ As Double,
-                         ByRef FilteredX As Double, ByRef FilteredY As Double, ByRef FilteredZ As Double)
+    Public Function GetValues() As Axis
+        Dim Axis As New Axis
+        With Axis
 
-        Dim GyroBuffer(5) As Byte
-        Me.Gyro.WriteRead({OUT_Y_L_G}, GyroBuffer)
-        GyroX = BitConverter.ToInt16(GyroBuffer, 2)
-        GyroY = BitConverter.ToInt16(GyroBuffer, 0)
-        GyroZ = BitConverter.ToInt16(GyroBuffer, 4)
+            'Read Gryo
+            Dim GyroBuffer(5) As Byte
+            Me.Gyro.WriteRead({OUT_Y_L_G}, GyroBuffer)
 
-        Dim AccelerometerBuffer(5) As Byte
-        Me.Accelerometer.WriteRead({OUT_X_L_A}, GyroBuffer)
-        AccelerometerX = BitConverter.ToInt16(AccelerometerBuffer, 0)
-        AccelerometerY = BitConverter.ToInt16(AccelerometerBuffer, 2)
-        AccelerometerZ = BitConverter.ToInt16(AccelerometerBuffer, 4)
+            .GyroX = BitConverter.ToInt16(GyroBuffer, 0) ' 2)
+            .GyroY = BitConverter.ToInt16(GyroBuffer, 2) ' 0)
+            .GyroZ = BitConverter.ToInt16(GyroBuffer, 4) ' 4)
 
-        'Filter Values
-        FilteredX = GyroX
-        FilteredY = GyroY
-        FilteredZ = GyroZ
+            'Read Accelerometer
+            Dim AccelerometerBuffer(5) As Byte
+            Me.Accelerometer.WriteRead({OUT_X_L_A}, AccelerometerBuffer)
 
-    End Sub
+            .AccelerometerX = BitConverter.ToInt16(AccelerometerBuffer, 0)
+            .AccelerometerY = BitConverter.ToInt16(AccelerometerBuffer, 2)
+            .AccelerometerZ = BitConverter.ToInt16(AccelerometerBuffer, 4)
+
+            'Me.RawValues.Add(.Self)
+
+        End With
+        Return Axis
+    End Function
+
+    'Public Sub CalculateFilters()
+    '    Dim Last = Me.RawValues.Last
+
+    '    If Me.RawValues.Count < 5 Then
+    '        Dim Total As Axis
+
+
+    '    Else
+
+    '    End If
+    'End Sub
+
+    'Private RawValues As List(Of Axis)
+
+    Public Class Axis
+
+        Public Self As Axis = Me
+        Public At As DateTime = DateTime.Now
+
+        Public GyroX As Short
+        Public GyroY As Short
+        Public GyroZ As Short
+
+        Public AccelerometerX As Short
+        Public AccelerometerY As Short
+        Public AccelerometerZ As Short
+
+        Public FilteredX As Short
+        Public FilteredY As Short
+        Public FilteredZ As Short
+
+    End Class
+
 End Class
